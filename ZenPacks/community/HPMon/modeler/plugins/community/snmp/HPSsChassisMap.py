@@ -1,7 +1,7 @@
 ################################################################################
 #
 # This program is part of the HPMon Zenpack for Zenoss.
-# Copyright (C) 2008 Egor Puzanov.
+# Copyright (C) 2008, 2009, 2010, 2011 Egor Puzanov.
 #
 # This program can be used under the GNU General Public License version 2
 # You can find full information here: http://www.zenoss.com/oss
@@ -12,9 +12,9 @@ __doc__="""HPSsChassisMap
 
 HPSsChassisMap maps the cpqSsChassisTable table to cpqSsChassis objects
 
-$Id: HPSsChassisMap.py,v 1.1 2009/08/18 17:07:53 egor Exp $"""
+$Id: HPSsChassisMap.py,v 1.2 2011/01/02 20:55:58 egor Exp $"""
 
-__version__ = '$Revision: 1.1 $'[11:-2]
+__version__ = '$Revision: 1.2 $'[11:-2]
 
 from Products.DataCollector.plugins.CollectorPlugin import GetTableMap
 from HPExpansionCardMap import HPExpansionCardMap
@@ -56,16 +56,16 @@ class HPSsChassisMap(HPExpansionCardMap):
         """collect snmp information from this device"""
         log.info('processing %s for device %s', self.name(), device.id)
         getdata, tabledata = results
-        cardtable = tabledata.get('cpqSsChassisTable')
         if not device.id in HPExpansionCardMap.oms:
             HPExpansionCardMap.oms[device.id] = []
-        for oid, card in cardtable.iteritems():
+        for oid, card in tabledata.get('cpqSsChassisTable', {}).iteritems():
             try:
                 om = self.objectMap(card)
                 om.snmpindex = oid.strip('.')
-                om.id = self.prepId("cpqSsChassis%s" % om.snmpindex.replace('.', '_'))
+                om.id=self.prepId("cpqSsChassis%s"%om.snmpindex.replace('.','_'))
                 om.slot = getattr(om, 'slot', 0)
-                om.model = self.models.get(getattr(om, 'model', 1), '%s (%d)' %(self.models[1], om.model))
+                om.model = self.models.get(getattr(om, 'model', 1),
+                                        '%s (%d)' %(self.models[1], om.model))
                 om.setProductKey = "%s" % om.model
             except AttributeError:
                 continue

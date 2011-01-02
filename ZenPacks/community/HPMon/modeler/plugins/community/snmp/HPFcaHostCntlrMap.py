@@ -1,7 +1,7 @@
 ################################################################################
 #
 # This program is part of the HPMon Zenpack for Zenoss.
-# Copyright (C) 2008 Egor Puzanov.
+# Copyright (C) 2008, 2009, 2010, 2011 Egor Puzanov.
 #
 # This program can be used under the GNU General Public License version 2
 # You can find full information here: http://www.zenoss.com/oss
@@ -12,9 +12,9 @@ __doc__="""HPFcaHostCntlrMap
 
 HPFcaHostCntlrMap maps the cpqFcaHostCntlrTable table to cpqFcaHostCntlr objects
 
-$Id: HPFcaHostCntlrMap.py,v 1.1 2009/08/18 16:45:53 egor Exp $"""
+$Id: HPFcaHostCntlrMap.py,v 1.2 2011/01/02 19:08:28 egor Exp $"""
 
-__version__ = '$Revision: 1.1 $'[11:-2]
+__version__ = '$Revision: 1.2 $'[11:-2]
 
 from Products.DataCollector.plugins.CollectorPlugin import GetTableMap
 from HPExpansionCardMap import HPExpansionCardMap
@@ -71,22 +71,28 @@ class HPFcaHostCntlrMap(HPExpansionCardMap):
                 28: 'HP FC2142SR 4Gb PCI-e HBA',
                 29: 'HP FC2242SR 4Gb PCI-e DC HBA',
                 30: 'Emulex based BL20p Fibre Channel Mezz HBA',
+                31: 'HP StorageWorks 81Q 8Gb PCI-e FC HBA',
+                32: 'HP StorageWorks 82Q 8Gb PCI-e Dual Port FC HBA',
+                33: 'QLogic QMH2562 8Gb FC HBA for HP BladeSystem c-Class',
+                34: 'HP StorageWorks 81E 8Gb PCI-e FC HBA',
+                35: 'HP StorageWorks 82E 8Gb PCI-e Dual Port FC HBA',
+                36: 'Emulex LPe 1205-HP 8Gb FC HBA for HP BladeSystem c-Class',
                 }
 
     def process(self, device, results, log):
         """collect snmp information from this device"""
         log.info('processing %s for device %s', self.name(), device.id)
         getdata, tabledata = results
-        cardtable = tabledata.get('cpqFcaHostCntlrTable')
         if not device.id in HPExpansionCardMap.oms:
             HPExpansionCardMap.oms[device.id] = []
-        for oid, card in cardtable.iteritems():
+        for oid, card in tabledata.get('cpqFcaHostCntlrTable', {}).iteritems():
             try:
                 om = self.objectMap(card)
                 om.snmpindex = oid.strip('.')
                 om.id = self.prepId("cpqFcaHostCntlr%s" % om.snmpindex)
                 om.slot = getattr(om, 'slot', 0)
-                om.model = self.models.get(getattr(om, 'model', 1), '%s (%d)' %(self.models[1], om.model))
+                om.model = self.models.get(getattr(om, 'model', 1),
+                                        '%s (%d)' %(self.models[1], om.model))
                 om.setProductKey = "%s" % om.model
             except AttributeError:
                 continue

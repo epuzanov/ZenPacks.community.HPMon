@@ -1,7 +1,7 @@
 ################################################################################
 #
 # This program is part of the HPMon Zenpack for Zenoss.
-# Copyright (C) 2008 Egor Puzanov.
+# Copyright (C) 2008, 2009, 2010, 2011 Egor Puzanov.
 #
 # This program can be used under the GNU General Public License version 2
 # You can find full information here: http://www.zenoss.com/oss
@@ -10,15 +10,15 @@
 
 __doc__="""HPHardDiskMap
 
-HPHardDiskMap maps the cpqDaPhyDrvTable, cpqFcaPhyDrvTable or cpqScsiPhyDrvTabletables
-to disks objects
+HPHardDiskMap maps the cpqDaPhyDrvTable, cpqFcaPhyDrvTable or
+cpqScsiPhyDrvTabletables to disks objects
 
-$Id: HPHardDiskMap.py,v 1.0 2008/11/13 12:20:53 egor Exp $"""
+$Id: HPHardDiskMap.py,v 1.1 2011/01/02 19:26:23 egor Exp $"""
 
-__version__ = '$Revision: 1.0 $'[11:-2]
+__version__ = '$Revision: 1.1 $'[11:-2]
 
 import re
-from Products.DataCollector.plugins.CollectorPlugin import SnmpPlugin, GetTableMap, GetMap
+from Products.DataCollector.plugins.CollectorPlugin import SnmpPlugin, GetMap
 
 class HPHardDiskMap(SnmpPlugin):
     """Map HP/Compaq insight manager Hard Disk tables to model."""
@@ -34,6 +34,7 @@ class HPHardDiskMap(SnmpPlugin):
             2: 7200,
             3: 10000,
             4: 15000,
+            5: 5,
             }
 
     diskTypes = {1: 'other',

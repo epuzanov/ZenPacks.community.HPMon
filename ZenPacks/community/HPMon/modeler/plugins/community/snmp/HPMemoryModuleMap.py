@@ -1,7 +1,7 @@
 ################################################################################
 #
 # This program is part of the HPMon Zenpack for Zenoss.
-# Copyright (C) 2008, 2009, 2010 Egor Puzanov.
+# Copyright (C) 2008, 2009, 2010, 2011 Egor Puzanov.
 #
 # This program can be used under the GNU General Public License version 2
 # You can find full information here: http://www.zenoss.com/oss
@@ -12,9 +12,9 @@ __doc__="""HPMemoryModuleMap
 
 HPMemoryModuleMap maps the cpqSiMemModuleTable table to cpqSiMemModule objects
 
-$Id: HPMemoryModuleMap.py,v 1.3 2010/11/09 13:12:17 egor Exp $"""
+$Id: HPMemoryModuleMap.py,v 1.4 2011/01/02 20:25:43 egor Exp $"""
 
-__version__ = '$Revision: 1.3 $'[11:-2]
+__version__ = '$Revision: 1.4 $'[11:-2]
 
 from Products.ZenUtils.Utils import convToUnits
 from Products.DataCollector.plugins.CollectorPlugin import SnmpPlugin, GetTableMap
@@ -76,13 +76,19 @@ class HPMemoryModuleMap(SnmpPlugin):
                 10: 'RIMM',
                 11: 'SRIMM',
                 12: 'FB-DIMM',
+                13: 'DIMM DDR',
+                14: 'DIMM DDR2',
+                15: 'DIMM DDR3',
+                16: 'DIMM FBD2',
+                17: 'FB-DIMM DDR2',
+                18: 'FB-DIMM DDR3',
                 }
 
     technologies = { 1: 'other',
                     2: 'FPM',
                     3: 'EDO',
                     4: 'burstEDO',
-                    5: 'DDR',
+                    5: 'Synchronous',
                     6: 'RDRAM',
                     }
 
@@ -113,8 +119,8 @@ class HPMemoryModuleMap(SnmpPlugin):
                         model.append(getattr(om, '_manufacturer', ''))
                     if self.technologies.get(om._technology, '') != '':
                         model.append(self.technologies.get(om._technology, ''))
-                    if self.slottypes.get(om._slottype, '') != '' and om._slottype > 1:
-                        model.append(self.slottypes.get(om._slottype, ''))
+                    if 2 < int(getattr(om, '_slottype', 0)) < 19:
+                        model.append(self.slottypes[int(om._slottype)])
                     model.append(convToUnits(om.size))
                     if getattr(om, '_frequency', 0) > 0:
                         model.append("%sMHz" % getattr(om, '_frequency', 0))
@@ -124,7 +130,6 @@ class HPMemoryModuleMap(SnmpPlugin):
                 else:
                     om.monitor = False
                 rm.append(om)
-		print om
             except AttributeError:
                 continue
         return rm

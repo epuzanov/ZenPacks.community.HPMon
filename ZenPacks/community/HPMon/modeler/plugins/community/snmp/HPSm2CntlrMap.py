@@ -1,7 +1,7 @@
 ################################################################################
 #
 # This program is part of the HPMon Zenpack for Zenoss.
-# Copyright (C) 2008 Egor Puzanov.
+# Copyright (C) 2008, 2009, 2010, 2011 Egor Puzanov.
 #
 # This program can be used under the GNU General Public License version 2
 # You can find full information here: http://www.zenoss.com/oss
@@ -12,9 +12,9 @@ __doc__="""HPSm2CntlrMap
 
 HPSm2CntlrMap maps the cpqSm2CntlrTable table to cpqSm2Cntlr objects
 
-$Id: HPSm2CntlrMap.py,v 1.0 2008/11/13 12:20:53 egor Exp $"""
+$Id: HPSm2CntlrMap.py,v 1.1 2011/01/02 20:52:29 egor Exp $"""
 
-__version__ = '$Revision: 1.0 $'[11:-2]
+__version__ = '$Revision: 1.1 $'[11:-2]
 
 from Products.DataCollector.plugins.CollectorPlugin import GetTableMap
 from HPExpansionCardMap import HPExpansionCardMap
@@ -57,25 +57,26 @@ class HPSm2CntlrMap(HPExpansionCardMap):
                 5: 'Compaq Integrated Remote Insight Lights-Out Edition Board',
                 6: 'Compaq Integrated Remote Insight Lights-Out Edition Ver.II Board',
                 7: 'HP Integrated Lights-Out 2 Edition Board',
+                8: 'HP Lights-Out 100 Edition Board',
+                9: 'HP Integrated Lights-Out 3 Edition Board',
                 }
 
     def process(self, device, results, log):
         """collect snmp information from this device"""
         log.info('processing %s for device %s', self.name(), device.id)
         getdata, tabledata = results
-        cardtable = tabledata.get('cpqSm2CntlrTable')
-        iloniccardtable = tabledata.get('cpqSm2NicConfigTable')
         if not device.id in HPExpansionCardMap.oms:
             HPExpansionCardMap.oms[device.id] = []
-        for oid, card in cardtable.iteritems():
+        for oid, card in tabledata.get('cpqSm2CntlrTable', {}).iteritems():
             try:
                 om = self.objectMap(card)
                 om.snmpindex = oid.strip('.')
                 om.id = self.prepId("cpqSm2Cntlr%s" % om.snmpindex)
                 om.slot = getattr(om, 'slot', 0)
-                om.model = self.models.get(getattr(om, 'model', 1), '%s (%d)' %(self.models[1], om.model))
+                om.model = self.models.get(getattr(om, 'model', 1),
+                                        '%s (%d)' %(self.models[1], om.model))
                 om.setProductKey = "%s" % om.model
-                for nic in iloniccardtable.values():
+                for nic in tabledata.get('cpqSm2NicConfigTable', {}).values():
 #                    om.nicmodel = nic['model']
                     om.macaddress = self.asmac(nic['macaddress'])
                     om.ipaddress = nic['ipaddress']

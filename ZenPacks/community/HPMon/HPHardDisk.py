@@ -1,7 +1,7 @@
 ################################################################################
 #
 # This program is part of the HPMon Zenpack for Zenoss.
-# Copyright (C) 2008 Egor Puzanov.
+# Copyright (C) 2008, 2009, 2010, 2011 Egor Puzanov.
 #
 # This program can be used under the GNU General Public License version 2
 # You can find full information here: http://www.zenoss.com/oss
@@ -12,9 +12,9 @@ __doc__="""HPHardDisk
 
 HPHardDisk is an abstraction of a harddisk.
 
-$Id: HPHardDisk.py,v 1.1 2010/06/29 10:37:31 egor Exp $"""
+$Id: HPHardDisk.py,v 1.2 2011/01/02 18:54:47 egor Exp $"""
 
-__version__ = "$Revision: 1.1 $"[11:-2]
+__version__ = "$Revision: 1.2 $"[11:-2]
 
 from Products.ZenUtils.Utils import convToUnits
 from Products.ZenModel.DeviceComponent import DeviceComponent
@@ -83,8 +83,12 @@ class HPHardDisk(HardDisk, HPComponent):
         """
         Return the RPM in tradition form ie 7200, 10K
         """
-        if int(self.rpm) == 1:
-            return 'Unknown'
+        if int(self.rpm) < 10:
+            return {2: '7200',
+                    3: '10K',
+                    4: '15K',
+                    5: 'SSD',
+                    }.get(int(self.rpm), 'Unknown')
         if int(self.rpm) < 10000:
             return int(self.rpm)
         else:

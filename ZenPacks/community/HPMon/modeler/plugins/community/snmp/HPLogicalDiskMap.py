@@ -1,7 +1,7 @@
 ################################################################################
 #
 # This program is part of the HPMon Zenpack for Zenoss.
-# Copyright (C) 2008 Egor Puzanov.
+# Copyright (C) 2008, 2009, 2010, 2011 Egor Puzanov.
 #
 # This program can be used under the GNU General Public License version 2
 # You can find full information here: http://www.zenoss.com/oss
@@ -10,15 +10,15 @@
 
 __doc__="""HPLogicalDiskMap
 
-HPLogicalDiskMap maps the cpqDaLogDrvTable, cpqFcaLogDrvTable or cpqScsiLogDrvTabletables
-to disks objects
+HPLogicalDiskMap maps the cpqDaLogDrvTable, cpqFcaLogDrvTable or
+cpqScsiLogDrvTabletables to disks objects
 
-$Id: HPHardDiskMap.py,v 1.0 2009/04/24 13:13:53 egor Exp $"""
+$Id: HPHardDiskMap.py,v 1.1 2011/01/02 20:07:25 egor Exp $"""
 
-__version__ = '$Revision: 1.0 $'[11:-2]
+__version__ = '$Revision: 1.1 $'[11:-2]
 
 import re
-from Products.DataCollector.plugins.CollectorPlugin import SnmpPlugin, GetTableMap, GetMap
+from Products.DataCollector.plugins.CollectorPlugin import SnmpPlugin, GetMap
 
 class HPLogicalDiskMap(SnmpPlugin):
     """Map HP/Compaq insight manager Logical Disk tables to model."""

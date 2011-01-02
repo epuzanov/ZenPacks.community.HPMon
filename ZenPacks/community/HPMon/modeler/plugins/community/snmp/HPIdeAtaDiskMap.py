@@ -1,7 +1,7 @@
 ################################################################################
 #
 # This program is part of the HPMon Zenpack for Zenoss.
-# Copyright (C) 2008 Egor Puzanov.
+# Copyright (C) 2008, 2009, 2010, 2011 Egor Puzanov.
 #
 # This program can be used under the GNU General Public License version 2
 # You can find full information here: http://www.zenoss.com/oss
@@ -12,9 +12,9 @@ __doc__="""HPIdeAtaDiskMap
 
 HPIdeAtaDiskMap maps the cpqIdeAtaDiskTable to disks objects
 
-$Id: HPIdeAtaDiskMap.py,v 1.1 2009/08/18 16:49:53 egor Exp $"""
+$Id: HPIdeAtaDiskMap.py,v 1.2 2011/01/02 19:57:32 egor Exp $"""
 
-__version__ = '$Revision: 1.1 $'[11:-2]
+__version__ = '$Revision: 1.2 $'[11:-2]
 
 from Products.DataCollector.plugins.CollectorPlugin import GetTableMap
 from HPHardDiskMap import HPHardDiskMap
@@ -49,18 +49,18 @@ class HPIdeAtaDiskMap(HPHardDiskMap):
         """collect snmp information from this device"""
         log.info('processing %s for device %s', self.name(), device.id)
         getdata, tabledata = results
-        disktable = tabledata.get('cpqIdeAtaDiskTable')
         if not device.id in HPHardDiskMap.oms:
             HPHardDiskMap.oms[device.id] = []
-        for oid, disk in disktable.iteritems():
+        for oid, disk in tabledata.get('cpqIdeAtaDiskTable', {}).iteritems():
             try:
                 om = self.objectMap(disk)
                 om.snmpindex = oid.strip('.')
-                om.id = self.prepId("HardDisk%s" % om.snmpindex).replace('.', '_')
+                om.id = self.prepId("HardDisk%s"%om.snmpindex).replace('.','_')
                 if hasattr(om, 'vendor'):
                     om.description = "%s %s" % (om.vendor, om.description)
                 om.setProductKey = om.description
-                om.diskType = self.diskTypes.get(getattr(om, 'diskType', 1), '%s (%d)' %(self.diskTypes[1], om.diskType))
+                om.diskType = self.diskTypes.get(getattr(om, 'diskType', 1),
+                                    '%s (%d)' %(self.diskTypes[1], om.diskType))
                 om.rpm = self.rpms.get(getattr(om, 'rpm', 1), om.rpm)
                 om.size = "%d" % (getattr(om, 'size', 0) * 1048576)
                 if hasattr(om, 'bay'):

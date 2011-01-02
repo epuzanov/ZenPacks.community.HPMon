@@ -1,7 +1,7 @@
 ################################################################################
 #
 # This program is part of the HPMon Zenpack for Zenoss.
-# Copyright (C) 2008, 2009, 2010 Egor Puzanov.
+# Copyright (C) 2008, 2009, 2010, 2011 Egor Puzanov.
 #
 # This program can be used under the GNU General Public License version 2
 # You can find full information here: http://www.zenoss.com/oss
@@ -12,9 +12,9 @@ __doc__="""HPFanMap
 
 HPFanMap maps the cpqHeFltTolFanTable table to fab objects
 
-$Id: HPFanMap.py,v 1.2 2010/06/30 21:25:39 egor Exp $"""
+$Id: HPFanMap.py,v 1.3 2011/01/02 19:01:17 egor Exp $"""
 
-__version__ = '$Revision: 1.2 $'[11:-2]
+__version__ = '$Revision: 1.3 $'[11:-2]
 
 
 from Products.DataCollector.plugins.CollectorPlugin import SnmpPlugin, GetTableMap
@@ -59,6 +59,11 @@ class HPFanMap(SnmpPlugin):
                 11: 'ambient',
                 12: 'chassis',
                 13: 'bridgeCard',
+                14: 'managementBoard',
+                15: 'backplane',
+                16: 'networkSlot',
+                17: 'bladeSlot',
+                18: 'virtual',
                 }
 
     def process(self, device, results, log):
@@ -66,9 +71,8 @@ class HPFanMap(SnmpPlugin):
         log.info('processing %s for device %s', self.name(), device.id)
         getdata, tabledata = results
         rm = self.relMap()
-        fantable = tabledata.get('cpqHeFltTolFanTable')
         localecounter = {}
-        for oid, fan in fantable.iteritems():
+        for oid, fan in tabledata.get('cpqHeFltTolFanTable', {}).iteritems():
             try:
                 om = self.objectMap(fan)
                 if om._present < 3: continue

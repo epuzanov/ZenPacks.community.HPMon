@@ -1,7 +1,7 @@
 ################################################################################
 #
 # This program is part of the HPMon Zenpack for Zenoss.
-# Copyright (C) 2008 Egor Puzanov.
+# Copyright (C) 2008, 2009, 2010, 2011 Egor Puzanov.
 #
 # This program can be used under the GNU General Public License version 2
 # You can find full information here: http://www.zenoss.com/oss
@@ -12,9 +12,9 @@ __doc__="""HPPowerSupplyMap
 
 HPPowerSupplyMap maps the cpqHeFltTolPowerSupplyTable table to powersupplies objects
 
-$Id: HPPowerSupplyMap.py,v 1.1 2009/08/18 16:58:53 egor Exp $"""
+$Id: HPPowerSupplyMap.py,v 1.2 2011/01/02 20:27:03 egor Exp $"""
 
-__version__ = '$Revision: 1.1 $'[11:-2]
+__version__ = '$Revision: 1.2 $'[11:-2]
 
 from Products.DataCollector.plugins.CollectorPlugin import SnmpPlugin, GetTableMap
 
@@ -27,7 +27,7 @@ class HPPowerSupplyMap(SnmpPlugin):
     compname = "hw"
 
     snmpGetTableMaps = (
-        GetTableMap('cpqHeFltTolPowerSupplyTable',
+        GetTableMap('cpqHeFltTolPSTable',
                     '.1.3.6.1.4.1.232.6.2.9.3.1',
                     {
                         '.3': '_present',
@@ -50,14 +50,14 @@ class HPPowerSupplyMap(SnmpPlugin):
         log.info('processing %s for device %s', self.name(), device.id)
         getdata, tabledata = results
         rm = self.relMap()
-        pstable = tabledata.get('cpqHeFltTolPowerSupplyTable')
-        for oid, ps in pstable.iteritems():
+        for oid, ps in tabledata.get('cpqHeFltTolPSTable', {}).iteritems():
             try:
                 om = self.objectMap(ps)
                 if om._present < 3: continue
                 om.snmpindex = oid.strip('.')
                 om.id = self.prepId("PSU%s" % om.snmpindex.replace('.', '_'))
-                om.type = "%s" % self.typemap.get(getattr(om, 'type', 1), '%s (%d)' %(self.typemap[1], om.type))
+                om.type = "%s" % self.typemap.get(getattr(om, 'type', 1),
+                                        '%s (%d)' %(self.typemap[1], om.type))
             except AttributeError:
                 continue
             rm.append(om)

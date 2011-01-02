@@ -1,7 +1,7 @@
 ################################################################################
 #
 # This program is part of the HPMon Zenpack for Zenoss.
-# Copyright (C) 2008, 2009, 2010 Egor Puzanov.
+# Copyright (C) 2008, 2009, 2010, 2011 Egor Puzanov.
 #
 # This program can be used under the GNU General Public License version 2
 # You can find full information here: http://www.zenoss.com/oss
@@ -12,9 +12,9 @@ __doc__="""HPDaCntlrMap
 
 HPDaCntlrMap maps the cpqDaCntlrTable table to cpqDaCntlr objects
 
-$Id: HPDaCntlrMap.py,v 1.2 2010/11/05 14:33:55 egor Exp $"""
+$Id: HPDaCntlrMap.py,v 1.3 2011/01/02 18:29:48 egor Exp $"""
 
-__version__ = '$Revision: 1.2 $'[11:-2]
+__version__ = '$Revision: 1.3 $'[11:-2]
 
 from Products.ZenUtils.Utils import convToUnits
 from Products.DataCollector.plugins.CollectorPlugin import GetTableMap
@@ -77,6 +77,15 @@ class HPDaCntlrMap(HPExpansionCardMap):
             34: 'HP Smart Array P800 Controller',
             35: 'HP Smart Array E500 Controller',
             36: 'HP Smart Array P700m Controller',
+            37: 'HP Smart Array P212 Controller',
+            38: 'HP Smart Array P410 Controller',
+            39: 'HP Smart Array P410i Controller',
+            40: 'HP Smart Array P411 Controller',
+            41: 'HP Smart Array B110i SATA RAID Controller',
+            42: 'HP Smart Array P712m Controller',
+            43: 'HP Smart Array P711m Controller',
+            44: 'HP Smart Array P812 Controller',
+            45: 'HP StorageWorks 1210m Scalable Storage Controller',
             }
 
     redundancyTypes = {1: 'other',
@@ -91,18 +100,19 @@ class HPDaCntlrMap(HPExpansionCardMap):
         """collect snmp information from this device"""
         log.info('processing %s for device %s', self.name(), device.id)
         getdata, tabledata = results
-        cardtable = tabledata.get('cpqDaCntlrTable')
         if not device.id in HPExpansionCardMap.oms:
             HPExpansionCardMap.oms[device.id] = []
-        for oid, card in cardtable.iteritems():
+        for oid, card in tabledata.get('cpqDaCntlrTable', {}).iteritems():
             try:
                 om = self.objectMap(card)
                 om.snmpindex = oid.strip('.')
                 om.id = self.prepId("cpqDaCntlr%s" % om.snmpindex)
                 om.slot = getattr(om, 'slot', 0)
-                om.model = self.models.get(getattr(om, 'model', 1), '%s (%d)' %(self.models[1], om.model))
+                om.model = self.models.get(getattr(om, 'model', 1),
+                                        '%s (%d)' %(self.models[1], om.model))
                 om.setProductKey = "%s" % om.model
-                om.redundancyType = self.redundancyTypes.get(getattr(om, 'redundancyType', 1))
+                om.redundancyType = self.redundancyTypes.get(getattr(om,
+                                                        'redundancyType', 1))
             except AttributeError:
                 continue
             HPExpansionCardMap.oms[device.id].append(om)

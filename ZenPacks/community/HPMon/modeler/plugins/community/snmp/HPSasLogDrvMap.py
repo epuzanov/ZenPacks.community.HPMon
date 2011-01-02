@@ -1,7 +1,7 @@
 ################################################################################
 #
 # This program is part of the HPMon Zenpack for Zenoss.
-# Copyright (C) 2008 Egor Puzanov.
+# Copyright (C) 2008, 2009, 2010, 2011 Egor Puzanov.
 #
 # This program can be used under the GNU General Public License version 2
 # You can find full information here: http://www.zenoss.com/oss
@@ -12,9 +12,9 @@ __doc__="""HPSasLogDrvMap
 
 HPSasLogDrvMap maps the cpqSasLogDrvTable to disks objects
 
-$Id: HPSasLogDrvMap.py,v 1.1 2009/08/18 17:00:53 egor Exp $"""
+$Id: HPSasLogDrvMap.py,v 1.2 2011/01/02 20:33:21 egor Exp $"""
 
-__version__ = '$Revision: 1.0 $'[11:-2]
+__version__ = '$Revision: 1.2 $'[11:-2]
 
 from Products.DataCollector.plugins.CollectorPlugin import GetTableMap
 from HPLogicalDiskMap import HPLogicalDiskMap
@@ -43,21 +43,25 @@ class HPSasLogDrvMap(HPLogicalDiskMap):
     diskTypes = {1: 'other',
                 2: 'RAID0',
                 3: 'RAID1',
+                4: 'RAID1+0',
+                5: 'RAID5',
+                6: 'RAID1+5',
+                7: 'VOLUME',
                 }
 
     def process(self, device, results, log):
         """collect snmp information from this device"""
         log.info('processing %s for device %s', self.name(), device.id)
         getdata, tabledata = results
-        disktable = tabledata.get('cpqSasLogDrvTable')
         if not device.id in HPLogicalDiskMap.oms:
             HPLogicalDiskMap.oms[device.id] = []
-        for oid, disk in disktable.iteritems():
+        for oid, disk in tabledata.get('cpqSasLogDrvTable', {}).iteritems():
             try:
                 om = self.objectMap(disk)
                 om.snmpindex = oid.strip('.')
-                om.id = self.prepId("LogicalDisk%s" % om.snmpindex).replace('.', '_')
-                om.diskType = self.diskTypes.get(getattr(om, 'diskType', 1), '%s (%d)' %(self.diskTypes[1], om.diskType))
+                om.id=self.prepId("LogicalDisk%s"%om.snmpindex).replace('.','_')
+                om.diskType = self.diskTypes.get(getattr(om, 'diskType', 1),
+                                    '%s (%d)' %(self.diskTypes[1], om.diskType))
                 om.stripesize = "%d" % (getattr(om, 'stripesize', 0) * 1024)
                 om.size = "%d" % (getattr(om, 'size', 0) * 1048576)
             except AttributeError:

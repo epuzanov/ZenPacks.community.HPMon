@@ -1,7 +1,7 @@
 ################################################################################
 #
 # This program is part of the HPMon Zenpack for Zenoss.
-# Copyright (C) 2008 Egor Puzanov.
+# Copyright (C) 2008, 2009, 2010, 2011 Egor Puzanov.
 #
 # This program can be used under the GNU General Public License version 2
 # You can find full information here: http://www.zenoss.com/oss
@@ -12,9 +12,9 @@ __doc__="""HPExpansionCardMap
 
 HPExpansionCardMap maps the cpqSePciSlotTable table to cards objects
 
-$Id: HPExpansionCardMap.py,v 1.1 2009/08/18 16:40:53 egor Exp $"""
+$Id: HPExpansionCardMap.py,v 1.2 2011/01/02 19:41:11 egor Exp $"""
 
-__version__ = '$Revision: 1.1 $'[11:-2]
+__version__ = '$Revision: 1.2 $'[11:-2]
 
 from Products.DataCollector.plugins.CollectorPlugin import SnmpPlugin, GetTableMap
 
@@ -26,7 +26,8 @@ class HPExpansionCardMap(SnmpPlugin):
     relname = "cards"
     compname = "hw"
     deviceProperties = \
-                SnmpPlugin.deviceProperties + ('zHPExpansionCardMapIgnorePci','zCollectorPlugins',)
+                SnmpPlugin.deviceProperties + ( 'zHPExpansionCardMapIgnorePci',
+                                                'zCollectorPlugins',)
     oms = {}
 
     snmpGetTableMaps = (
@@ -49,11 +50,11 @@ class HPExpansionCardMap(SnmpPlugin):
         if not ignorepci:
             getdata, tabledata = results
             pcimap = {}
-            pcicardtable = tabledata.get('cpqSePciSlotTable')
             for om in self.oms[device.id]:
-                if om.modname == "ZenPacks.community.HPMon.cpqSiMemModule": continue
+                if om.modname == "ZenPacks.community.HPMon.cpqSiMemModule":
+                    continue
                 pcimap[int(om.slot)] = 1
-            for oid, card in pcicardtable.iteritems():
+            for oid, card in tabledata.get('cpqSePciSlotTable', {}).iteritems():
                 try:
                     om = self.objectMap(card)
                     om.snmpindex = oid.strip('.')
