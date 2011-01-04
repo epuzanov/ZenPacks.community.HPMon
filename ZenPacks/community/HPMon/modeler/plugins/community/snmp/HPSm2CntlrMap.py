@@ -12,11 +12,12 @@ __doc__="""HPSm2CntlrMap
 
 HPSm2CntlrMap maps the cpqSm2CntlrTable table to cpqSm2Cntlr objects
 
-$Id: HPSm2CntlrMap.py,v 1.1 2011/01/02 20:52:29 egor Exp $"""
+$Id: HPSm2CntlrMap.py,v 1.2 2011/01/05 00:26:09 egor Exp $"""
 
-__version__ = '$Revision: 1.1 $'[11:-2]
+__version__ = '$Revision: 1.2 $'[11:-2]
 
 from Products.DataCollector.plugins.CollectorPlugin import GetTableMap
+from Products.DataCollector.plugins.DataMaps import MultiArgs
 from HPExpansionCardMap import HPExpansionCardMap
 
 class HPSm2CntlrMap(HPExpansionCardMap):
@@ -33,7 +34,7 @@ class HPSm2CntlrMap(HPExpansionCardMap):
                         '.12': 'status',
                         '.15': 'serialNumber',
                         '.18': 'systemId',
-                        '.21': 'model',
+                        '.21': 'setProductKey',
                         '.28': 'hwVer',
                     }
         ),
@@ -41,7 +42,6 @@ class HPSm2CntlrMap(HPExpansionCardMap):
                     '.1.3.6.1.4.1.232.9.2.5.1.1',
                     {
                         '.1': 'snmpindex',
-                        '.2': 'model',
                         '.4': 'macaddress',
                         '.5': 'ipaddress',
                         '.6': 'subnetmask',
@@ -73,11 +73,10 @@ class HPSm2CntlrMap(HPExpansionCardMap):
                 om.snmpindex = oid.strip('.')
                 om.id = self.prepId("cpqSm2Cntlr%s" % om.snmpindex)
                 om.slot = getattr(om, 'slot', 0)
-                om.model = self.models.get(getattr(om, 'model', 1),
-                                        '%s (%d)' %(self.models[1], om.model))
-                om.setProductKey = "%s" % om.model
+                model = self.models.get(int(getattr(om, 'setProductKey', 1)),
+                    '%s (%s)'%(self.models[1], getattr(om, 'setProductKey', 1)))
+                om.setProductKey = MultiArgs(model, model.split()[0])
                 for nic in tabledata.get('cpqSm2NicConfigTable', {}).values():
-#                    om.nicmodel = nic['model']
                     om.macaddress = self.asmac(nic['macaddress'])
                     om.ipaddress = nic['ipaddress']
                     om.subnetmask = nic['subnetmask']

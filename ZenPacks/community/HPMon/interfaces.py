@@ -45,7 +45,7 @@ class IcpqDaCntlrInfo(IcpqIdeControllerInfo):
     """
     redundancyType = schema.Text(title=u"Redundancy Type", readonly=True, group='Details')
     roleString = schema.Text(title=u"Current Role", readonly=True, group='Details')
-    
+
 class IcpqFcTapeCntlrInfo(IcpqIdeControllerInfo):
     """
     Info adapter for cpqFcTapeCntlr components.
@@ -60,7 +60,7 @@ class IcpqFcaCntlrInfo(IcpqIdeControllerInfo):
     roleString = schema.Text(title=u"Current Role", readonly=True, group='Details')
     wwnn = schema.Text(title=u"World Wide Node Name", readonly=True, group='Details')
     wwpn = schema.Text(title=u"World Wide Port Name", readonly=True, group='Details')
-    
+
 class IcpqFcaHostCntlrInfo(IcpqIdeControllerInfo):
     """
     Info adapter for cpqFcaHostCntlr components.
@@ -68,7 +68,7 @@ class IcpqFcaHostCntlrInfo(IcpqIdeControllerInfo):
     ROMRev = schema.Text(title=u"ROM Version", readonly=True, group='Details')
     wwnn = schema.Text(title=u"World Wide Node Name", readonly=True, group='Details')
     wwpn = schema.Text(title=u"World Wide Port Name", readonly=True, group='Details')
-    
+
 class IcpqNicIfPhysAdapterInfo(IComponentInfo):
     """
     Info adapter for cpqNicIfPhysAdapter components.

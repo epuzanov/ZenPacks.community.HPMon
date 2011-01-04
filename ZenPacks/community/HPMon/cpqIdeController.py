@@ -1,7 +1,7 @@
 ################################################################################
 #
 # This program is part of the HPMon Zenpack for Zenoss.
-# Copyright (C) 2008, 2009, 2010 Egor Puzanov.
+# Copyright (C) 2008, 2009, 2010, 2011 Egor Puzanov.
 #
 # This program can be used under the GNU General Public License version 2
 # You can find full information here: http://www.zenoss.com/oss
@@ -12,16 +12,16 @@ __doc__="""cpqIdeController
 
 cpqIdeController is an abstraction of a HP IDE Controller.
 
-$Id: cpqIdeController.py,v 1.1 2010/06/30 16:24:13 egor Exp $"""
+$Id: cpqIdeController.py,v 1.2 2011/01/04 23:22:40 egor Exp $"""
 
-__version__ = "$Revision: 1.1 $"[11:-2]
+__version__ = "$Revision: 1.2 $"[11:-2]
 
-from HPExpansionCard import *
+from HPExpansionCard import HPExpansionCard
+from HPComponent import *
 
 class cpqIdeController(HPExpansionCard):
     """IDE Controller object"""
 
-    model = ""
     FWRev = ""
 
     statusmap ={1: (DOT_GREY, SEV_WARNING, 'other'),
@@ -33,7 +33,6 @@ class cpqIdeController(HPExpansionCard):
     monitor = True
 
     _properties = HPExpansionCard._properties + (
-        {'id':'model', 'type':'string', 'mode':'w'},
         {'id':'FWRev', 'type':'string', 'mode':'w'},
     )
 

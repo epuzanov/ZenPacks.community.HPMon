@@ -1,7 +1,7 @@
 ################################################################################
 #
 # This program is part of the HPMon Zenpack for Zenoss.
-# Copyright (C) 2008, 2009, 2010 Egor Puzanov.
+# Copyright (C) 2008, 2009, 2010, 2011 Egor Puzanov.
 #
 # This program can be used under the GNU General Public License version 2
 # You can find full information here: http://www.zenoss.com/oss
@@ -12,11 +12,12 @@ __doc__="""cpqFcaLogDrv
 
 cpqFcaLogDrv is an abstraction of a HP FCA Logical Disk.
 
-$Id: cpqFcaLogDrv.py,v 1.1 2010/06/30 16:22:18 egor Exp $"""
+$Id: cpqFcaLogDrv.py,v 1.2 2011/01/04 23:20:23 egor Exp $"""
 
-__version__ = "$Revision: 1.1 $"[11:-2]
+__version__ = "$Revision: 1.2 $"[11:-2]
 
-from HPLogicalDisk import *
+from HPLogicalDisk import HPLogicalDisk
+from HPComponent import *
 
 class cpqFcaLogDrv(HPLogicalDisk):
     """cpqFcaLogDrv object

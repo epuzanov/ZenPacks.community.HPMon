@@ -1,7 +1,7 @@
 ################################################################################
 #
 # This program is part of the HPMon Zenpack for Zenoss.
-# Copyright (C) 2008, 2009, 2010 Egor Puzanov.
+# Copyright (C) 2008, 2009, 2010, 2011 Egor Puzanov.
 #
 # This program can be used under the GNU General Public License version 2
 # You can find full information here: http://www.zenoss.com/oss
@@ -12,11 +12,11 @@ __doc__="""HPLogicalDisk
 
 HPLogicalDisk is an abstraction of a harddisk.
 
-$Id: HPLogicalDisk.py,v 1.1 2010/06/29 10:41:03 egor Exp $"""
+$Id: HPLogicalDisk.py,v 1.2 2011/01/04 23:12:51 egor Exp $"""
 
-__version__ = "$Revision: 1.1 $"[11:-2]
+__version__ = "$Revision: 1.2 $"[11:-2]
 
-from ZenPacks.community.deviceAdvDetail.LogicalDisk import *
+from ZenPacks.community.deviceAdvDetail.LogicalDisk import LogicalDisk
 from HPComponent import *
 
 class HPLogicalDisk(LogicalDisk, HPComponent):

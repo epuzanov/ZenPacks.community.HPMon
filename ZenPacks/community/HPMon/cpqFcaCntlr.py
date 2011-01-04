@@ -1,7 +1,7 @@
 ################################################################################
 #
 # This program is part of the HPMon Zenpack for Zenoss.
-# Copyright (C) 2008, 2009, 2010 Egor Puzanov.
+# Copyright (C) 2008, 2009, 2010, 2011 Egor Puzanov.
 #
 # This program can be used under the GNU General Public License version 2
 # You can find full information here: http://www.zenoss.com/oss
@@ -12,16 +12,16 @@ __doc__="""cpqFcaCntlr
 
 cpqFcaCntlr is an abstraction of a HP FC Array Controller.
 
-$Id: cpqFcaCntlr.py,v 1.1 2010/06/30 16:20:56 egor Exp $"""
+$Id: cpqFcaCntlr.py,v 1.2 2011/01/04 23:19:14 egor Exp $"""
 
-__version__ = "$Revision: 1.1 $"[11:-2]
+__version__ = "$Revision: 1.2 $"[11:-2]
 
-from HPExpansionCard import *
+from HPExpansionCard import HPExpansionCard
+from HPComponent import *
 
 class cpqFcaCntlr(HPExpansionCard):
     """HP Disk Array Controller object"""
 
-    model = ""
     FWRev = ""
     redundancyType = ""
     wwpn = ""
@@ -41,7 +41,6 @@ class cpqFcaCntlr(HPExpansionCard):
     monitor = True
 
     _properties = HPExpansionCard._properties + (
-        {'id':'model', 'type':'string', 'mode':'w'},
         {'id':'FWRev', 'type':'string', 'mode':'w'},
         {'id':'redundancyType', 'type':'string', 'mode':'w'},
         {'id':'wwpn', 'type':'string', 'mode':'w'},

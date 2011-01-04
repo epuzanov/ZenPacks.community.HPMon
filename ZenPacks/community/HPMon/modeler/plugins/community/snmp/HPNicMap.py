@@ -1,7 +1,7 @@
 ################################################################################
 #
 # This program is part of the HPMon Zenpack for Zenoss.
-# Copyright (C) 2008 Egor Puzanov.
+# Copyright (C) 2008, 2009, 2010, 2011 Egor Puzanov.
 #
 # This program can be used under the GNU General Public License version 2
 # You can find full information here: http://www.zenoss.com/oss
@@ -12,11 +12,12 @@ __doc__="""HPNicMap
 
 HPNicMap maps the cpqNicIfPhysAdapterTable table to cpqNicIfPhysAdapter objects
 
-$Id: HPNicMap.py,v 1.1 2009/08/18 16:57:53 egor Exp $"""
+$Id: HPNicMap.py,v 1.2 2011/01/04 20:14:22 egor Exp $"""
 
-__version__ = '$Revision: 1.1 $'[11:-2]
+__version__ = '$Revision: 1.2 $'[11:-2]
 
 from Products.DataCollector.plugins.CollectorPlugin import GetTableMap
+from Products.DataCollector.plugins.DataMaps import MultiArgs
 from HPExpansionCardMap import HPExpansionCardMap
 
 class HPNicMap(HPExpansionCardMap):
@@ -37,7 +38,7 @@ class HPNicMap(HPExpansionCardMap):
                         '.11': 'duplex',
                         '.14': 'status',
                         '.33': 'speed',
-                        '.39': 'model',
+                        '.39': 'setProductKey',
                     }
         ),
         GetTableMap('cpqSePciSlotTable',
@@ -99,11 +100,14 @@ class HPNicMap(HPExpansionCardMap):
                 if int(om.slot) < 0: continue
                 om.port = getattr(om, 'port', 0)
                 om.id =self.prepId("cpqNicIfPhysAdapter%d_%d"%(om.slot,om.port))
-                if not hasattr(om, 'model'):
-                    om.model = pciirqmap.get(om._irq, "Unknown Network Adapter")
                 om.duplex = self.duplexs.get(getattr(om, 'duplex', 1), 'other')
-                om.setProductKey = "%s" % om.model
-                om.role = self.roles.get(getattr(om, 'role', 1), 'unknown (%d)'%om.role)
+                if not getattr(om, 'setProductKey', ''):
+                    om.setProductKey = pciirqmap.get(om._irq,
+                                                    "Unknown Network Adapter")
+                om.setProductKey = MultiArgs(om.setProductKey,
+                                                om.setProductKey.split()[0])
+                om.role = self.roles.get(getattr(om, 'role', 1),
+                                        'unknown (%d)' % getattr(om, 'role', 1))
                 if hasattr(om, 'macaddress'):
                     om.macaddress = self.asmac(om.macaddress)
             except AttributeError:

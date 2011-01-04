@@ -1,7 +1,7 @@
 ################################################################################
 #
 # This program is part of the HPMon Zenpack for Zenoss.
-# Copyright (C) 2008, 2009, 2010 Egor Puzanov.
+# Copyright (C) 2008, 2009, 2010, 2011 Egor Puzanov.
 #
 # This program can be used under the GNU General Public License version 2
 # You can find full information here: http://www.zenoss.com/oss
@@ -12,12 +12,11 @@ __doc__="""HPPowerSupply
 
 HPPowerSupply is an abstraction of a PowerSupply.
 
-$Id: HPPowerSupply.py,v 1.1 2010/06/29 10:41:56 egor Exp $"""
+$Id: HPPowerSupply.py,v 1.2 2011/01/04 23:13:30 egor Exp $"""
 
-__version__ = "$Revision: 1.1 $"[11:-2]
+__version__ = "$Revision: 1.2 $"[11:-2]
 
-from Products.ZenModel.DeviceComponent import DeviceComponent
-from Products.ZenModel.PowerSupply import *
+from Products.ZenModel.PowerSupply import PowerSupply
 from HPComponent import *
 
 class HPPowerSupply(PowerSupply, HPComponent):
@@ -42,7 +41,7 @@ class HPPowerSupply(PowerSupply, HPComponent):
                 15:(DOT_ORANGE, SEV_ERROR, 'Calibration Table Invalid'),
                 }
 
-    _properties = HWComponent._properties + (
+    _properties = PowerSupply._properties + (
         {'id':'status', 'type':'int', 'mode':'w'},
     )
 

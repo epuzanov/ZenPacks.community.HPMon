@@ -12,11 +12,12 @@ __doc__="""HPFcTapeCntlrMap
 
 HPFcTapeCntlrMap maps the cpqFcTapeCntlrTable table to cpqFcTapeCntlr objects
 
-$Id: HPFcTapeCntlrMap.py,v 1.2 2011/01/02 19:45:38 egor Exp $"""
+$Id: HPFcTapeCntlrMap.py,v 1.3 2011/01/05 00:16:55 egor Exp $"""
 
-__version__ = '$Revision: 1.2 $'[11:-2]
+__version__ = '$Revision: 1.3 $'[11:-2]
 
 from Products.DataCollector.plugins.CollectorPlugin import GetTableMap
+from Products.DataCollector.plugins.DataMaps import MultiArgs
 from HPExpansionCardMap import HPExpansionCardMap
 
 class HPFcTapeCntlrMap(HPExpansionCardMap):
@@ -32,7 +33,7 @@ class HPFcTapeCntlrMap(HPExpansionCardMap):
                         '.2': 'status',
                         '.5': 'wwnn',
                         '.6': 'FWRev',
-                        '.8': 'model',
+                        '.8': 'setProductKey',
                         '.9': 'serialNumber',
                     }
         ),
@@ -51,8 +52,10 @@ class HPFcTapeCntlrMap(HPExpansionCardMap):
                 om.id = self.prepId("cpqFcTapeCntlr%s" % om.snmpindex.replace(
                                                                     '.', '_'))
                 om.slot = getattr(om, 'slot', 0)
-                if not om.model: om.model = 'Unknown FC Tape Controller'
-                om.setProductKey = "%s" % om.model
+                if not getattr(om, 'setProductKey', ''):
+                    om.setProductKey = 'Unknown FC Tape Controller'
+                om.setProductKey = MultiArgs(om.setProductKey,
+                                            om.setProductKey.split()[0])
             except AttributeError:
                 continue
             HPExpansionCardMap.oms[device.id].append(om)

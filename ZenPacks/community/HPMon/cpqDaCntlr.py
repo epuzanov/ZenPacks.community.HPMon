@@ -1,7 +1,7 @@
 ################################################################################
 #
 # This program is part of the HPMon Zenpack for Zenoss.
-# Copyright (C) 2008, 2009, 2010 Egor Puzanov.
+# Copyright (C) 2008, 2009, 2010, 2011 Egor Puzanov.
 #
 # This program can be used under the GNU General Public License version 2
 # You can find full information here: http://www.zenoss.com/oss
@@ -12,24 +12,24 @@ __doc__="""cpqDaCntlr
 
 cpqDaCntlr is an abstraction of a HP Smart Array Controller.
 
-$Id: cpqDaCntlr.py,v 1.2 2010/11/05 14:29:40 egor Exp $"""
+$Id: cpqDaCntlr.py,v 1.3 2011/01/04 23:16:33 egor Exp $"""
 
-__version__ = "$Revision: 1.2 $"[11:-2]
+__version__ = "$Revision: 1.3 $"[11:-2]
 
 import inspect
-from HPExpansionCard import *
+from HPExpansionCard import HPExpansionCard
+from HPComponent import *
 
 class cpqDaCntlr(HPExpansionCard):
     """Disk Aray Controller object"""
 
     portal_type = meta_type = 'ExpansionCard'
 
-    model = ""
     FWRev = ""
     role = 1
     redundancyType = ""
     __ifindex = "1"
-    
+
     # we monitor RAID Controllers
     monitor = True
 
@@ -40,7 +40,6 @@ class cpqDaCntlr(HPExpansionCard):
                 }
 
     _properties = HPExpansionCard._properties + (
-        {'id':'model', 'type':'string', 'mode':'w'},
         {'id':'FWRev', 'type':'string', 'mode':'w'},
         {'id':'role', 'type':'int', 'mode':'w'},
         {'id':'redundancyType', 'type':'string', 'mode':'w'},

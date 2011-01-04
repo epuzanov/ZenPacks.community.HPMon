@@ -13,11 +13,12 @@ __doc__="""HPIdeControllerMap
 HPIdeControllerMap maps the cpqIdeControllerTable table to cpqIdeController
 objects
 
-$Id: HPIdeControllerMap.py,v 1.2 2011/01/02 20:00:08 egor Exp $"""
+$Id: HPIdeControllerMap.py,v 1.3 2011/01/05 00:21:40 egor Exp $"""
 
-__version__ = '$Revision: 1.2 $'[11:-2]
+__version__ = '$Revision: 1.3 $'[11:-2]
 
 from Products.DataCollector.plugins.CollectorPlugin import GetTableMap
+from Products.DataCollector.plugins.DataMaps import MultiArgs
 from HPExpansionCardMap import HPExpansionCardMap
 
 class HPIdeControllerMap(HPExpansionCardMap):
@@ -52,8 +53,10 @@ class HPIdeControllerMap(HPExpansionCardMap):
                 om.id = self.prepId("cpqIdeController%s" % om.snmpindex)
                 om.slot = getattr(om, 'slot', 0)
                 if om.slot == -1: om.slot = 0
-                om.model = getattr(om, 'model', 'Unknown IDE Controller')
-                om.setProductKey = "%s" % om.model
+                if not getattr(om, 'setProductKey', ''):
+                    om.setProductKey = 'Unknown IDE Controller'
+                om.setProductKey = MultiArgs(om.setProductKey,
+                                            om.setProductKey.split()[0])
             except AttributeError:
                 continue
             HPExpansionCardMap.oms[device.id].append(om)

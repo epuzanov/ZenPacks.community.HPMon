@@ -12,11 +12,12 @@ __doc__="""HPScsiPhyDrvMap
 
 HPScsiPhyDrvMap maps the cpqScsiPhyDrvTable to disks objects
 
-$Id: HPScsiPhyDrvMap.py,v 1.2 2011/01/02 20:47:33 egor Exp $"""
+$Id: HPScsiPhyDrvMap.py,v 1.3 2011/01/05 00:25:09 egor Exp $"""
 
-__version__ = '$Revision: 1.2 $'[11:-2]
+__version__ = '$Revision: 1.3 $'[11:-2]
 
 from Products.DataCollector.plugins.CollectorPlugin import GetTableMap
+from Products.DataCollector.plugins.DataMaps import MultiArgs
 from HPHardDiskMap import HPHardDiskMap
 
 class HPScsiPhyDrvMap(HPHardDiskMap):
@@ -56,9 +57,9 @@ class HPScsiPhyDrvMap(HPHardDiskMap):
                 om = self.objectMap(disk)
                 om.snmpindex = oid.strip('.')
                 om.id = self.prepId("HardDisk%s"%om.snmpindex).replace('.','_')
-                if hasattr(om, 'vendor'):
-                    om.description = "%s %s" % (om.vendor, om.description)
-                om.setProductKey = om.description
+                if not getattr(om,'description',''):om.description='Unknown Disk'
+                om.setProductKey = MultiArgs(om.description,
+                                            om.description.split()[0])
                 om.diskType = self.diskTypes.get(getattr(om, 'diskType', 1),
                                                 self.diskTypes[1])
                 om.rpm = self.rpms.get(getattr(om, 'rpm', 1), om.rpm)

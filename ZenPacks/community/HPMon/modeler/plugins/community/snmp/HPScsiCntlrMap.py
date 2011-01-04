@@ -12,11 +12,12 @@ __doc__="""HPScsiCntlrMap
 
 HPScsiCntlrMap maps the cpqScsiCntlrTable table to cpqScsiCntlr objects
 
-$Id: HPScsiCntlrMap.py,v 1.2 2011/01/02 20:43:57 egor Exp $"""
+$Id: HPScsiCntlrMap.py,v 1.3 2011/01/05 00:24:43 egor Exp $"""
 
-__version__ = '$Revision: 1.2 $'[11:-2]
+__version__ = '$Revision: 1.3 $'[11:-2]
 
 from Products.DataCollector.plugins.CollectorPlugin import GetTableMap
+from Products.DataCollector.plugins.DataMaps import MultiArgs
 from HPExpansionCardMap import HPExpansionCardMap
 
 class HPScsiCntlrMap(HPExpansionCardMap):
@@ -29,7 +30,7 @@ class HPScsiCntlrMap(HPExpansionCardMap):
         GetTableMap('cpqScsiCntlrTable',
                     '.1.3.6.1.4.1.232.5.2.2.1.1',
                     {
-                        '.3': 'model',
+                        '.3': 'setProductKey',
                         '.4': 'FWRev',
                         '.6': 'slot',
                         '.7': 'status',
@@ -77,9 +78,9 @@ class HPScsiCntlrMap(HPExpansionCardMap):
                 om.snmpindex = oid.strip('.')
                 om.id=self.prepId("cpqScsiCntlr%s"%om.snmpindex.replace('.','_'))
                 om.slot = getattr(om, 'slot', 0)
-                om.model = self.models.get(getattr(om, 'model', 16),
-                                        '%s (%d)' %(self.models[16], om.model))
-                om.setProductKey = "%s" % om.model
+                model = self.models.get(int(getattr(om, 'setProductKey', 1)),
+                    '%s (%s)'%(self.models[1], getattr(om, 'setProductKey', 1)))
+                om.setProductKey = MultiArgs(model, model.split()[0])
                 om.scsiwidth = self.scsiwidths.get(getattr(om, 'scsiwidth', 1),
                                 '%s (%d)' %(self.scsiwidths[1], om.scsiwidth))
             except AttributeError:

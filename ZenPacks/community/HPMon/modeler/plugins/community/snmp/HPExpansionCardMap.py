@@ -12,11 +12,12 @@ __doc__="""HPExpansionCardMap
 
 HPExpansionCardMap maps the cpqSePciSlotTable table to cards objects
 
-$Id: HPExpansionCardMap.py,v 1.2 2011/01/02 19:41:11 egor Exp $"""
+$Id: HPExpansionCardMap.py,v 1.3 2011/01/05 00:13:35 egor Exp $"""
 
-__version__ = '$Revision: 1.2 $'[11:-2]
+__version__ = '$Revision: 1.3 $'[11:-2]
 
 from Products.DataCollector.plugins.CollectorPlugin import SnmpPlugin, GetTableMap
+from Products.DataCollector.plugins.DataMaps import MultiArgs
 
 class HPExpansionCardMap(SnmpPlugin):
     """Map HP/Compaq insight manager PCI table to model."""
@@ -26,8 +27,8 @@ class HPExpansionCardMap(SnmpPlugin):
     relname = "cards"
     compname = "hw"
     deviceProperties = \
-                SnmpPlugin.deviceProperties + ( 'zHPExpansionCardMapIgnorePci',
-                                                'zCollectorPlugins',)
+                SnmpPlugin.deviceProperties + ( 'zHPExpansionCardMapIgnorePci',)
+
     oms = {}
 
     snmpGetTableMaps = (
@@ -35,7 +36,7 @@ class HPExpansionCardMap(SnmpPlugin):
                     '.1.3.6.1.4.1.232.1.2.13.1.1',
                     {
                         '.3': 'slot',
-                        '.5': '_model',
+                        '.5': 'setProductKey',
                     }
         ),
     )
@@ -61,7 +62,10 @@ class HPExpansionCardMap(SnmpPlugin):
                     if int(om.slot) == 0: continue
                     if int(om.slot) in pcimap: continue
                     om.id = self.prepId("cpqSePciSlot%d" % om.slot)
-                    om.setProductKey = "%s" % om._model
+                    if not getattr(om, 'setProductKey', ''):
+                        om.setProductKey = 'Unknown Card'
+                    om.setProductKey = MultiArgs(om.setProductKey,
+                                                om.setProductKey.split()[0])
                 except AttributeError:
                     continue
                 self.oms[device.id].append(om)
@@ -69,4 +73,3 @@ class HPExpansionCardMap(SnmpPlugin):
             rm.append(om)
         del self.oms[device.id]
         return rm
-

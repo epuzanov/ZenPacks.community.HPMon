@@ -1,7 +1,7 @@
 ################################################################################
 #
 # This program is part of the HPMon Zenpack for Zenoss.
-# Copyright (C) 2008, 2009, 2010 Egor Puzanov.
+# Copyright (C) 2008, 2009, 2010, 2011 Egor Puzanov.
 #
 # This program can be used under the GNU General Public License version 2
 # You can find full information here: http://www.zenoss.com/oss
@@ -12,21 +12,21 @@ __doc__="""cpqSsChassis
 
 cpqSsChassis is an abstraction of a HP Storage System Chassis.
 
-$Id: cpqSsChassis.py,v 1.1 2010/06/30 16:31:41 egor Exp $"""
+$Id: cpqSsChassis.py,v 1.2 2011/01/04 23:30:01 egor Exp $"""
 
-__version__ = "$Revision: 1.1 $"[11:-2]
+__version__ = "$Revision: 1.2 $"[11:-2]
 
-from HPExpansionCard import *
+from HPExpansionCard import HPExpansionCard
 from cpqFcaCntlr import cpqFcaCntlr
 from cpqFcaPhyDrv import cpqFcaPhyDrv
 from cpqFcaLogDrv import cpqFcaLogDrv
+from HPComponent import *
 
 class cpqSsChassis(HPExpansionCard):
     """HP Storage System Chassis object"""
 
     name = ""
     connectionType = 1
-    model = ""
 
     # we monitor RAID Controllers
     monitor = True
@@ -41,7 +41,6 @@ class cpqSsChassis(HPExpansionCard):
     _properties = HPExpansionCard._properties + (
         {'id':'name', 'type':'string', 'mode':'w'},
         {'id':'connectionType', 'type':'int', 'mode':'w'},
-        {'id':'model', 'type':'string', 'mode':'w'},
     )
 
     factory_type_information = (

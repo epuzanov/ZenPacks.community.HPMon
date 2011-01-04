@@ -12,11 +12,12 @@ __doc__="""HPSsChassisMap
 
 HPSsChassisMap maps the cpqSsChassisTable table to cpqSsChassis objects
 
-$Id: HPSsChassisMap.py,v 1.2 2011/01/02 20:55:58 egor Exp $"""
+$Id: HPSsChassisMap.py,v 1.3 2011/01/05 00:26:44 egor Exp $"""
 
-__version__ = '$Revision: 1.2 $'[11:-2]
+__version__ = '$Revision: 1.3 $'[11:-2]
 
 from Products.DataCollector.plugins.CollectorPlugin import GetTableMap
+from Products.DataCollector.plugins.DataMaps import MultiArgs
 from HPExpansionCardMap import HPExpansionCardMap
 
 class HPSsChassisMap(HPExpansionCardMap):
@@ -33,7 +34,7 @@ class HPSsChassisMap(HPExpansionCardMap):
                         '.3': 'serialNumber',
                         '.4': 'name',
                         '.11': 'status',
-                        '.19': 'model',
+                        '.19': 'setProductKey',
                     }
         ),
     )
@@ -64,9 +65,9 @@ class HPSsChassisMap(HPExpansionCardMap):
                 om.snmpindex = oid.strip('.')
                 om.id=self.prepId("cpqSsChassis%s"%om.snmpindex.replace('.','_'))
                 om.slot = getattr(om, 'slot', 0)
-                om.model = self.models.get(getattr(om, 'model', 1),
-                                        '%s (%d)' %(self.models[1], om.model))
-                om.setProductKey = "%s" % om.model
+                model = self.models.get(int(getattr(om, 'setProductKey', 1)),
+                    '%s (%s)'%(self.models[1], getattr(om, 'setProductKey', 1)))
+                om.setProductKey = MultiArgs(model, model.split()[0])
             except AttributeError:
                 continue
             HPExpansionCardMap.oms[device.id].append(om)

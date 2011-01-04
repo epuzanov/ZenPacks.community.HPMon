@@ -1,7 +1,7 @@
 ################################################################################
 #
 # This program is part of the HPMon Zenpack for Zenoss.
-# Copyright (C) 2008, 2009, 2010 Egor Puzanov.
+# Copyright (C) 2008, 2009, 2010, 2011 Egor Puzanov.
 #
 # This program can be used under the GNU General Public License version 2
 # You can find full information here: http://www.zenoss.com/oss
@@ -12,20 +12,19 @@ __doc__="""HPFan
 
 HPFan is an abstraction of a fan or probe.
 
-$Id: HPFan.py,v 1.1 2010/06/29 10:36:44 egor Exp $"""
+$Id: HPFan.py,v 1.2 2011/01/04 23:11:37 egor Exp $"""
 
-__version__ = "$Revision: 1.1 $"[11:-2]
+__version__ = "$Revision: 1.2 $"[11:-2]
 
-from Products.ZenModel.DeviceComponent import DeviceComponent
-from Products.ZenModel.Fan import *
-from HPComponent import *
+from Products.ZenModel.Fan import Fan
+from HPComponent import HPComponent
 
 class HPFan(Fan, HPComponent):
     """Fan object"""
 
     status = 1
 
-    _properties = HWComponent._properties + (
+    _properties = Fan._properties + (
                  {'id':'status', 'type':'int', 'mode':'w'},
                  )
 

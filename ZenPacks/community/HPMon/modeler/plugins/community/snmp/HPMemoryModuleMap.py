@@ -12,12 +12,13 @@ __doc__="""HPMemoryModuleMap
 
 HPMemoryModuleMap maps the cpqSiMemModuleTable table to cpqSiMemModule objects
 
-$Id: HPMemoryModuleMap.py,v 1.4 2011/01/02 20:25:43 egor Exp $"""
+$Id: HPMemoryModuleMap.py,v 1.5 2011/01/05 00:22:16 egor Exp $"""
 
-__version__ = '$Revision: 1.4 $'[11:-2]
+__version__ = '$Revision: 1.5 $'[11:-2]
 
 from Products.ZenUtils.Utils import convToUnits
 from Products.DataCollector.plugins.CollectorPlugin import SnmpPlugin, GetTableMap
+from Products.DataCollector.plugins.DataMaps import MultiArgs
 
 class HPMemoryModuleMap(SnmpPlugin):
     """Map HP/Compaq insight manager cpqSiMemModuleTable table to model."""
@@ -100,8 +101,8 @@ class HPMemoryModuleMap(SnmpPlugin):
         if not cardtable:
             mmstt = tabledata.get('cpqHeResMemModuleTable', {})
             cardtable = tabledata.get('cpqSiMemModuleTable', {})
-	    for oid in cardtable.keys():
-	        cardtable[oid]['status'] = mmstt.get(oid, {}).get('status', 1)
+            for oid in cardtable.keys():
+                cardtable[oid]['status'] = mmstt.get(oid, {}).get('status', 1)
             self.maptype = "cpqSiMemModule"
             self.modname = "ZenPacks.community.HPMon.cpqSiMemModule"
         rm = self.relMap()
@@ -117,6 +118,8 @@ class HPMemoryModuleMap(SnmpPlugin):
                     model = []
                     if getattr(om, '_manufacturer', '') != '':
                         model.append(getattr(om, '_manufacturer', ''))
+                        manuf = getattr(om, '_manufacturer', '')
+                    else: manuf = 'Unknown'
                     if self.technologies.get(om._technology, '') != '':
                         model.append(self.technologies.get(om._technology, ''))
                     if 2 < int(getattr(om, '_slottype', 0)) < 19:
@@ -126,7 +129,7 @@ class HPMemoryModuleMap(SnmpPlugin):
                         model.append("%sMHz" % getattr(om, '_frequency', 0))
                     if getattr(om, '_speed', 0) > 0:
                         model.append("%sns" % getattr(om, '_speed', 0))
-                    om.setProductKey = "%s" % " ".join(model)
+                    om.setProductKey = MultiArgs(" ".join(model), manuf)
                 else:
                     om.monitor = False
                 rm.append(om)

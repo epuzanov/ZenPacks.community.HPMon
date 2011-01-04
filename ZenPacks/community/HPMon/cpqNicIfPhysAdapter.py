@@ -1,7 +1,7 @@
 ################################################################################
 #
 # This program is part of the HPMon Zenpack for Zenoss.
-# Copyright (C) 2008, 2009, 2010 Egor Puzanov.
+# Copyright (C) 2008, 2009, 2010, 2011 Egor Puzanov.
 #
 # This program can be used under the GNU General Public License version 2
 # You can find full information here: http://www.zenoss.com/oss
@@ -12,16 +12,16 @@ __doc__="""cpqNicIfPhysAdapter
 
 cpqNicIfPhysAdapter is an abstraction of a HP NIC.
 
-$Id: cpqNicIfPhysAdapter.py,v 1.1 2010/06/30 16:25:15 egor Exp $"""
+$Id: cpqNicIfPhysAdapter.py,v 1.2 2011/01/04 23:24:01 egor Exp $"""
 
-__version__ = "$Revision: 1.1 $"[11:-2]
+__version__ = "$Revision: 1.2 $"[11:-2]
 
-from HPExpansionCard import *
+from HPExpansionCard import HPExpansionCard
+from HPComponent import *
 
 class cpqNicIfPhysAdapter(HPExpansionCard):
     """NIC object"""
 
-    model = ""
     role = ""
     macaddress = ""
     duplex = ""
@@ -38,7 +38,6 @@ class cpqNicIfPhysAdapter(HPExpansionCard):
                 }
 
     _properties = HPExpansionCard._properties + (
-        {'id':'model', 'type':'string', 'mode':'w'},
         {'id':'role', 'type':'string', 'mode':'w'},
         {'id':'macaddress', 'type':'string', 'mode':'w'},
         {'id':'duplex', 'type':'string', 'mode':'w'},

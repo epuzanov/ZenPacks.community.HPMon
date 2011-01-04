@@ -57,7 +57,7 @@ class updateTemplatesWithStatusThreshold( ZenPackMigration ):
             if template.id not in hpTemplates: continue
             for threshold in template.thresholds():
                 if isinstance(threshold, StatusThreshold): continue
-	        if threshold.id != '%s status'%template.id: continue
+                if threshold.id != '%s status'%template.id: continue
                 new = StatusThreshold(threshold.id)
                 template.thresholds.removeRelation(threshold)
                 setattr(new, "dsnames", getattr(threshold, "dsnames"))

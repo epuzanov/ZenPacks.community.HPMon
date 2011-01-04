@@ -1,7 +1,7 @@
 ################################################################################
 #
 # This program is part of the HPMon Zenpack for Zenoss.
-# Copyright (C) 2008, 2009, 2010 Egor Puzanov.
+# Copyright (C) 2008, 2009, 2010, 2011 Egor Puzanov.
 #
 # This program can be used under the GNU General Public License version 2
 # You can find full information here: http://www.zenoss.com/oss
@@ -12,16 +12,16 @@ __doc__="""cpqSm2Cntlr
 
 cpqSm2Cntlr is an abstraction of a HP iLO Board.
 
-$Id: cpqSm2Cntlr.py,v 1.1 2010/06/30 16:31:02 egor Exp $"""
+$Id: cpqSm2Cntlr.py,v 1.2 2010/01/04 23:29:15 egor Exp $"""
 
-__version__ = "$Revision: 1.1 $"[11:-2]
+__version__ = "$Revision: 1.2 $"[11:-2]
 
-from HPExpansionCard import *
+from HPExpansionCard import HPExpansionCard
+from HPComponent import *
 
 class cpqSm2Cntlr(HPExpansionCard):
     """iLO Board object"""
 
-    model = ""
     romRev = ""
     hwVer = ""
     systemId = ""
@@ -40,7 +40,6 @@ class cpqSm2Cntlr(HPExpansionCard):
     monitor = True
 
     _properties = HPExpansionCard._properties + (
-        {'id':'model', 'type':'string', 'mode':'w'},
         {'id':'romRev', 'type':'string', 'mode':'w'},
         {'id':'hwVer', 'type':'string', 'mode':'w'},
         {'id':'systemId', 'type':'string', 'mode':'w'},

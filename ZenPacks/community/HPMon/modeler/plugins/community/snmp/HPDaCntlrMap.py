@@ -12,12 +12,13 @@ __doc__="""HPDaCntlrMap
 
 HPDaCntlrMap maps the cpqDaCntlrTable table to cpqDaCntlr objects
 
-$Id: HPDaCntlrMap.py,v 1.3 2011/01/02 18:29:48 egor Exp $"""
+$Id: HPDaCntlrMap.py,v 1.4 2011/01/05 00:12:42 egor Exp $"""
 
-__version__ = '$Revision: 1.3 $'[11:-2]
+__version__ = '$Revision: 1.4 $'[11:-2]
 
 from Products.ZenUtils.Utils import convToUnits
 from Products.DataCollector.plugins.CollectorPlugin import GetTableMap
+from Products.DataCollector.plugins.DataMaps import MultiArgs
 from HPExpansionCardMap import HPExpansionCardMap
 
 class HPDaCntlrMap(HPExpansionCardMap):
@@ -30,7 +31,7 @@ class HPDaCntlrMap(HPExpansionCardMap):
         GetTableMap('cpqDaCntlrTable',
                     '.1.3.6.1.4.1.232.3.2.2.1.1',
                     {
-                        '.2': 'model',
+                        '.2': 'setProductKey',
                         '.3': 'FWRev',
                         '.5': 'slot',
                         '.6': 'status',
@@ -89,7 +90,7 @@ class HPDaCntlrMap(HPExpansionCardMap):
             }
 
     redundancyTypes = {1: 'other',
-                        2: 'Not Redundancy',
+                        2: 'No Redundancy',
                         3: 'Driver Duplexing',
                         4: 'Active-Standby',
                         5: 'Primary-Secondary',
@@ -99,6 +100,7 @@ class HPDaCntlrMap(HPExpansionCardMap):
     def process(self, device, results, log):
         """collect snmp information from this device"""
         log.info('processing %s for device %s', self.name(), device.id)
+        log.info('%s', getattr(device, 'zCollectorPlugins', 'None'))
         getdata, tabledata = results
         if not device.id in HPExpansionCardMap.oms:
             HPExpansionCardMap.oms[device.id] = []
@@ -108,9 +110,9 @@ class HPDaCntlrMap(HPExpansionCardMap):
                 om.snmpindex = oid.strip('.')
                 om.id = self.prepId("cpqDaCntlr%s" % om.snmpindex)
                 om.slot = getattr(om, 'slot', 0)
-                om.model = self.models.get(getattr(om, 'model', 1),
-                                        '%s (%d)' %(self.models[1], om.model))
-                om.setProductKey = "%s" % om.model
+                model = self.models.get(int(getattr(om, 'setProductKey', 1)),
+                    '%s (%s)'%(self.models[1], getattr(om, 'setProductKey', 1)))
+                om.setProductKey = MultiArgs(model, model.split()[0])
                 om.redundancyType = self.redundancyTypes.get(getattr(om,
                                                         'redundancyType', 1))
             except AttributeError:

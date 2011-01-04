@@ -5,7 +5,7 @@
         exportFields python:[('getParentDeviceName','Device'), 
                             ('slot','Slot'), 
                             ('name','Component'), 
-                            ('model', 'Model'),
+                            ('getProductName', 'Model'),
                             ('FWRev','Firmware')];">
 <tal:block metal:use-macro="here/reportMacros/macros/exportableReport">
 <tal:block metal:fill-slot="report">
@@ -43,7 +43,7 @@
             <a class="tablevalues" tal:attributes="href comp/getPrimaryUrlPath"
                 tal:content="comp/name">smtp</a>
         </td>
-        <td class="tablevalues" tal:content="comp/model"/>
+        <td class="tablevalues" tal:content="structure comp/getProductLink"/>
         <td class="tablevalues" tal:content="comp/FWRev"/>
     </tr>
     <tr>

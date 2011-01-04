@@ -12,11 +12,12 @@ __doc__="""HPFcaHostCntlrMap
 
 HPFcaHostCntlrMap maps the cpqFcaHostCntlrTable table to cpqFcaHostCntlr objects
 
-$Id: HPFcaHostCntlrMap.py,v 1.2 2011/01/02 19:08:28 egor Exp $"""
+$Id: HPFcaHostCntlrMap.py,v 1.3 2011/01/05 00:19:50 egor Exp $"""
 
-__version__ = '$Revision: 1.2 $'[11:-2]
+__version__ = '$Revision: 1.3 $'[11:-2]
 
 from Products.DataCollector.plugins.CollectorPlugin import GetTableMap
+from Products.DataCollector.plugins.DataMaps import MultiArgs
 from HPExpansionCardMap import HPExpansionCardMap
 
 class HPFcaHostCntlrMap(HPExpansionCardMap):
@@ -30,7 +31,7 @@ class HPFcaHostCntlrMap(HPExpansionCardMap):
                     '.1.3.6.1.4.1.232.16.2.7.1.1',
                     {
                         '.2': 'slot',
-                        '.3': 'model',
+                        '.3': 'setProductKey',
                         '.4': 'status',
                         '.6': 'wwnn',
                         '.10': 'serialNumber',
@@ -91,9 +92,9 @@ class HPFcaHostCntlrMap(HPExpansionCardMap):
                 om.snmpindex = oid.strip('.')
                 om.id = self.prepId("cpqFcaHostCntlr%s" % om.snmpindex)
                 om.slot = getattr(om, 'slot', 0)
-                om.model = self.models.get(getattr(om, 'model', 1),
-                                        '%s (%d)' %(self.models[1], om.model))
-                om.setProductKey = "%s" % om.model
+                model = self.models.get(int(getattr(om, 'setProductKey', 1)),
+                    '%s (%s)'%(self.models[1], getattr(om, 'setProductKey', 1)))
+                om.setProductKey = MultiArgs(model, model.split()[0])
             except AttributeError:
                 continue
             HPExpansionCardMap.oms[device.id].append(om)

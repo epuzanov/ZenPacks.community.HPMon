@@ -1,7 +1,7 @@
 ################################################################################
 #
 # This program is part of the HPMon Zenpack for Zenoss.
-# Copyright (C) 2008, 2009, 2010 Egor Puzanov.
+# Copyright (C) 2008, 2009, 2010, 2011 Egor Puzanov.
 #
 # This program can be used under the GNU General Public License version 2
 # You can find full information here: http://www.zenoss.com/oss
@@ -12,23 +12,21 @@ __doc__="""HPExpansionCard
 
 HPExpansionCard is an abstraction of a PCI card.
 
-$Id: HPExpansionCard.py,v 1.1 2010/06/29 10:40:17 egor Exp $"""
+$Id: HPExpansionCard.py,v 1.2 2011/01/04 23:11:06 egor Exp $"""
 
-__version__ = "$Revision: 1.1 $"[11:-2]
+__version__ = "$Revision: 1.2 $"[11:-2]
 
-from Products.ZenModel.ExpansionCard import *
+from Products.ZenModel.ExpansionCard import ExpansionCard
 from HPComponent import *
 
 class HPExpansionCard(ExpansionCard, HPComponent):
     """ExpansionCard object"""
-    slot = 0
     status = 1
 
     # we don't monitor cards
     monitor = False
 
-    _properties = HWComponent._properties + (
-        {'id':'slot', 'type':'int', 'mode':'w'},
+    _properties = ExpansionCard._properties + (
         {'id':'status', 'type':'int', 'mode':'w'},
     )
 

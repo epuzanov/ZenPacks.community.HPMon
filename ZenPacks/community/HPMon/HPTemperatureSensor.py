@@ -1,7 +1,7 @@
 ################################################################################
 #
 # This program is part of the HPMon Zenpack for Zenoss.
-# Copyright (C) 2008, 2009, 2010 Egor Puzanov.
+# Copyright (C) 2008, 2009, 2010, 2011 Egor Puzanov.
 #
 # This program can be used under the GNU General Public License version 2
 # You can find full information here: http://www.zenoss.com/oss
@@ -12,12 +12,11 @@ __doc__="""HPTemperatureSensor
 
 HPTemperatureSensor is an abstraction of a temperature sensor or probe.
 
-$Id: HPTemperatureSensor.py,v 1.1 2010/06/29 10:42:57 egor Exp $"""
+$Id: HPTemperatureSensor.py,v 1.2 2011/01/04 23:14:17 egor Exp $"""
 
-__version__ = "$Revision: 1.1 $"[11:-2]
+__version__ = "$Revision: 1.2 $"[11:-2]
 
-from Products.ZenModel.DeviceComponent import DeviceComponent
-from Products.ZenModel.TemperatureSensor import *
+from Products.ZenModel.TemperatureSensor import TemperatureSensor
 from HPComponent import *
 
 class HPTemperatureSensor(TemperatureSensor, HPComponent):
@@ -26,7 +25,7 @@ class HPTemperatureSensor(TemperatureSensor, HPComponent):
     threshold = 0
     status = 1
 
-    _properties = HWComponent._properties + (
+    _properties = TemperatureSensor._properties + (
                 {'id':'status', 'type':'int', 'mode':'w'},
                 {'id':'threshold', 'type':'int', 'mode':'w'},
                 )

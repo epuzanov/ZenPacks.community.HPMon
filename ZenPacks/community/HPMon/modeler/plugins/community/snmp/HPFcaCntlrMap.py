@@ -12,11 +12,12 @@ __doc__="""HPFcaCntlrMap
 
 HPFcaCntlrMap maps the cpqFcaCntlrTable table to cpqFcaCntlr objects
 
-$Id: HPFcaCntlrMap.py,v 1.2 2011/01/02 19:50:18 egor Exp $"""
+$Id: HPFcaCntlrMap.py,v 1.3 2011/01/05 00:18:09 egor Exp $"""
 
-__version__ = '$Revision: 1.2 $'[11:-2]
+__version__ = '$Revision: 1.3 $'[11:-2]
 
 from Products.DataCollector.plugins.CollectorPlugin import GetTableMap
+from Products.DataCollector.plugins.DataMaps import MultiArgs
 from HPExpansionCardMap import HPExpansionCardMap
 
 class HPFcaCntlrMap(HPExpansionCardMap):
@@ -30,7 +31,7 @@ class HPFcaCntlrMap(HPExpansionCardMap):
                     '.1.3.6.1.4.1.232.16.2.2.1.1',
                     {
                         '.1': 'chassis',
-                        '.3': 'model',
+                        '.3': 'setProductKey',
                         '.4': 'FWRev',
                         '.5': 'status',
                         '.8': 'wwpn',
@@ -63,7 +64,7 @@ class HPFcaCntlrMap(HPExpansionCardMap):
             }
 
     redundancyTypes =  {1: 'other',
-                        2: 'Not Redundancy',
+                        2: 'No Redundancy',
                         3: 'Active-Standby',
                         4: 'Primary-Secondary',
                         5: 'Active-Active',
@@ -86,9 +87,9 @@ class HPFcaCntlrMap(HPExpansionCardMap):
                 om.snmpindex = oid.strip('.')
                 om.id=self.prepId("cpqFcaCntlr%s"%om.snmpindex.replace('.','_'))
                 om.slot = getattr(om, 'slot', 0)
-                om.model = self.models.get(getattr(om, 'model', 1),
-                                        '%s (%d)' %(self.models[1], om.model))
-                om.setProductKey = "%s" % om.model
+                model = self.models.get(int(getattr(om, 'setProductKey', 1)),
+                    '%s (%s)'%(self.models[1], getattr(om, 'setProductKey', 1)))
+                om.setProductKey = MultiArgs(model, model.split()[0])
                 om.redundancyType = self.redundancyTypes.get(getattr(om,
                                         'redundancyType', 1), om.redundancyType)
                 om.chassis = chassismap.get(om.chassis, '')
