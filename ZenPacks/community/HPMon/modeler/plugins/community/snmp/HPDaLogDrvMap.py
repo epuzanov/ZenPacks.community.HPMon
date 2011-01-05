@@ -12,9 +12,9 @@ __doc__="""HPDaLogDrvMap
 
 HPDaLogDrvMap maps the cpqDaLogDrvTable to disks objects
 
-$Id: HPDaLogDrvMap.py,v 1.2 2011/01/02 18:37:16 egor Exp $"""
+$Id: HPDaLogDrvMap.py,v 1.3 2011/01/05 19:24:24 egor Exp $"""
 
-__version__ = '$Revision: 1.2 $'[11:-2]
+__version__ = '$Revision: 1.3 $'[11:-2]
 
 from Products.DataCollector.plugins.CollectorPlugin import GetTableMap
 from HPLogicalDiskMap import HPLogicalDiskMap
@@ -62,8 +62,8 @@ class HPDaLogDrvMap(HPLogicalDiskMap):
                 om.id=self.prepId("LogicalDisk%s"%om.snmpindex).replace('.','_')
                 om.diskType = self.diskTypes.get(getattr(om, 'diskType', 1),
                                     '%s (%d)' %(self.diskTypes[1], om.diskType))
-                om.stripesize = "%d" % (getattr(om, 'stripesize', 0) * 1024)
-                om.size = "%d" % (getattr(om, 'size', 0) * 1048576)
+                om.stripesize = getattr(om, 'stripesize', 0) * 1024
+                om.size = getattr(om, 'size', 0) * 1048576
             except AttributeError:
                 continue
             HPLogicalDiskMap.oms[device.id].append(om)

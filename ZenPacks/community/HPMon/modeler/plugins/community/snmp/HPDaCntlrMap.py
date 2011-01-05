@@ -12,9 +12,9 @@ __doc__="""HPDaCntlrMap
 
 HPDaCntlrMap maps the cpqDaCntlrTable table to cpqDaCntlr objects
 
-$Id: HPDaCntlrMap.py,v 1.4 2011/01/05 00:12:42 egor Exp $"""
+$Id: HPDaCntlrMap.py,v 1.5 2011/01/05 19:20:33 egor Exp $"""
 
-__version__ = '$Revision: 1.4 $'[11:-2]
+__version__ = '$Revision: 1.5 $'[11:-2]
 
 from Products.ZenUtils.Utils import convToUnits
 from Products.DataCollector.plugins.CollectorPlugin import GetTableMap
@@ -100,7 +100,6 @@ class HPDaCntlrMap(HPExpansionCardMap):
     def process(self, device, results, log):
         """collect snmp information from this device"""
         log.info('processing %s for device %s', self.name(), device.id)
-        log.info('%s', getattr(device, 'zCollectorPlugins', 'None'))
         getdata, tabledata = results
         if not device.id in HPExpansionCardMap.oms:
             HPExpansionCardMap.oms[device.id] = []

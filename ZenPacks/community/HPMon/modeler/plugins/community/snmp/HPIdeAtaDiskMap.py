@@ -12,9 +12,9 @@ __doc__="""HPIdeAtaDiskMap
 
 HPIdeAtaDiskMap maps the cpqIdeAtaDiskTable to disks objects
 
-$Id: HPIdeAtaDiskMap.py,v 1.3 2011/01/05 00:21:13 egor Exp $"""
+$Id: HPIdeAtaDiskMap.py,v 1.4 2011/01/05 19:29:41 egor Exp $"""
 
-__version__ = '$Revision: 1.3 $'[11:-2]
+__version__ = '$Revision: 1.4 $'[11:-2]
 
 from Products.DataCollector.plugins.CollectorPlugin import GetTableMap
 from Products.DataCollector.plugins.DataMaps import MultiArgs
@@ -62,8 +62,8 @@ class HPIdeAtaDiskMap(HPHardDiskMap):
                                             om.description.split()[0])
                 om.diskType = self.diskTypes.get(getattr(om, 'diskType', 1),
                                     '%s (%d)' %(self.diskTypes[1], om.diskType))
-                om.rpm = self.rpms.get(getattr(om, 'rpm', 1), om.rpm)
-                om.size = "%d" % (getattr(om, 'size', 0) * 1048576)
+                om.rpm = self.rpms.get(getattr(om,'rpm',1), getattr(om,'rpm',1))
+                om.size = getattr(om, 'size', 0) * 1048576
                 if hasattr(om, 'bay'):
                     if int(om.bay) > 3:
                         om.bay = int(om.bay) - 4
