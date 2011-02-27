@@ -1022,7 +1022,7 @@ AVERAGE
 500
 </property>
 <property type="string" id="units" mode="w" >
-milliseconds
+seconds
 </property>
 <property type="boolean" id="log" mode="w" >
 False
@@ -1063,7 +1063,7 @@ Latency
 -1
 </property>
 <property type="string" id="rpn" mode="w" >
-100,/
+100000,/
 </property>
 <property type="string" id="dpName" mode="w" >
 latency_latency
