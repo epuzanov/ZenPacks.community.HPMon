@@ -12,9 +12,9 @@ __doc__="""HPPowerSupply
 
 HPPowerSupply is an abstraction of a PowerSupply.
 
-$Id: HPPowerSupply.py,v 1.2 2011/01/04 23:13:30 egor Exp $"""
+$Id: HPPowerSupply.py,v 1.3 2011/07/07 22:31:39 egor Exp $"""
 
-__version__ = "$Revision: 1.2 $"[11:-2]
+__version__ = "$Revision: 1.3 $"[11:-2]
 
 from Products.ZenModel.PowerSupply import PowerSupply
 from HPComponent import *
@@ -75,6 +75,8 @@ class HPPowerSupply(PowerSupply, HPComponent):
           },
         )
 
+
+    @property
     def state(self):
         return self.statusString()
 

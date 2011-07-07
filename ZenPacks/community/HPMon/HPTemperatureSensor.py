@@ -12,9 +12,9 @@ __doc__="""HPTemperatureSensor
 
 HPTemperatureSensor is an abstraction of a temperature sensor or probe.
 
-$Id: HPTemperatureSensor.py,v 1.2 2011/01/04 23:14:17 egor Exp $"""
+$Id: HPTemperatureSensor.py,v 1.3 2011/07/07 22:32:12 egor Exp $"""
 
-__version__ = "$Revision: 1.2 $"[11:-2]
+__version__ = "$Revision: 1.3 $"[11:-2]
 
 from Products.ZenModel.TemperatureSensor import TemperatureSensor
 from HPComponent import *
@@ -30,6 +30,8 @@ class HPTemperatureSensor(TemperatureSensor, HPComponent):
                 {'id':'threshold', 'type':'int', 'mode':'w'},
                 )
 
+
+    @property
     def state(self):
          return self.statusString()
 

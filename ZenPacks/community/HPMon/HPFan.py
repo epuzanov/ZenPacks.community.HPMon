@@ -12,9 +12,9 @@ __doc__="""HPFan
 
 HPFan is an abstraction of a fan or probe.
 
-$Id: HPFan.py,v 1.3 2011/01/26 20:35:15 egor Exp $"""
+$Id: HPFan.py,v 1.4 2011/07/07 22:30:39 egor Exp $"""
 
-__version__ = "$Revision: 1.3 $"[11:-2]
+__version__ = "$Revision: 1.4 $"[11:-2]
 
 from Products.ZenModel.Fan import Fan
 from HPComponent import *
@@ -28,6 +28,8 @@ class HPFan(Fan, HPComponent):
                  {'id':'status', 'type':'int', 'mode':'w'},
                  )
 
+
+    @property
     def state(self):
         return self.statusString()
 
