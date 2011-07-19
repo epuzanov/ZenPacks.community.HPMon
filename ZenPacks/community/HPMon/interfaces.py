@@ -1,7 +1,7 @@
 ################################################################################
 #
 # This program is part of the HPMon Zenpack for Zenoss.
-# Copyright (C) 2008, 2009, 2010 Egor Puzanov.
+# Copyright (C) 2008, 2009, 2010, 2011 Egor Puzanov.
 #
 # This program can be used under the GNU General Public License version 2
 # You can find full information here: http://www.zenoss.com/oss
@@ -12,9 +12,9 @@ __doc__="""interfaces
 
 describes the form field to the user interface.
 
-$Id: interfaces.py,v 1.0 2010/06/24 12:31:06 egor Exp $"""
+$Id: interfaces.py,v 1.1 2011/07/19 20:40:52 egor Exp $"""
 
-__version__ = "$Revision: 1.0 $"[11:-2]
+__version__ = "$Revision: 1.1 $"[11:-2]
 
 from Products.Zuul.interfaces import IComponentInfo
 from Products.Zuul.form import schema
@@ -51,7 +51,7 @@ class IcpqFcTapeCntlrInfo(IcpqIdeControllerInfo):
     Info adapter for cpqFcTapeCntlr components.
     """
     wwn = schema.Text(title=u"World Wide Node Name", readonly=True, group='Details')
-    
+
 class IcpqFcaCntlrInfo(IcpqIdeControllerInfo):
     """
     Info adapter for cpqFcaCntlr components.
@@ -98,6 +98,7 @@ class IcpqSm2CntlrInfo(IComponentInfo):
     romRev = schema.Text(title=u"ROM Version", readonly=True, group='Details')
     hwVer = schema.Text(title=u"Hardware Version", readonly=True, group='Details')
     systemId = schema.Text(title=u"System ID", readonly=True, group='Details')
+    advLicense = schema.Text(title=u"Advanced License", readonly=True, group='Details')
     macaddress = schema.Text(title=u"MAC Address", readonly=True, group='Network Settings')
     ipaddress = schema.Text(title=u"IP Address", readonly=True, group='Network Settings')
     subnetmask = schema.Text(title=u"Subnet Mask", readonly=True, group='Network Settings')

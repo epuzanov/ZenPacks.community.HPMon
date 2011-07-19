@@ -12,9 +12,9 @@ __doc__="""HPSm2CntlrMap
 
 HPSm2CntlrMap maps the cpqSm2CntlrTable table to cpqSm2Cntlr objects
 
-$Id: HPSm2CntlrMap.py,v 1.2 2011/01/05 00:26:09 egor Exp $"""
+$Id: HPSm2CntlrMap.py,v 1.3 2011/07/19 20:50:10 egor Exp $"""
 
-__version__ = '$Revision: 1.2 $'[11:-2]
+__version__ = '$Revision: 1.3 $'[11:-2]
 
 from Products.DataCollector.plugins.CollectorPlugin import GetTableMap
 from Products.DataCollector.plugins.DataMaps import MultiArgs
@@ -36,6 +36,7 @@ class HPSm2CntlrMap(HPExpansionCardMap):
                         '.18': 'systemId',
                         '.21': 'setProductKey',
                         '.28': 'hwVer',
+                        '.31': 'advLicense',
                     }
         ),
         GetTableMap('cpqSm2NicConfigTable',
@@ -77,10 +78,10 @@ class HPSm2CntlrMap(HPExpansionCardMap):
                     '%s (%s)'%(self.models[1], getattr(om, 'setProductKey', 1)))
                 om.setProductKey = MultiArgs(model, model.split()[0])
                 for nic in tabledata.get('cpqSm2NicConfigTable', {}).values():
-                    om.macaddress = self.asmac(nic['macaddress'])
-                    om.ipaddress = nic['ipaddress']
-                    om.subnetmask = nic['subnetmask']
-                    om.dnsName = nic['dnsName']
+                    om.macaddress = self.asmac(getattr(nic, 'macaddress', ''))
+                    om.ipaddress = getattr(nic, 'ipaddress', '')
+                    om.subnetmask = getattr(nic, 'subnetmask', '')
+                    om.dnsName = getattr(nic, 'dnsName', '')
             except AttributeError:
                 continue
             HPExpansionCardMap.oms[device.id].append(om)

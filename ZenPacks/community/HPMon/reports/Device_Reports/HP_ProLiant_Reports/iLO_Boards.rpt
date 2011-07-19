@@ -2,21 +2,22 @@
         objects python:[card for card in here.getDmdRoot('Devices').getMonitoredComponents() if card.id[:8] == 'cpqSm2Cn'];
         tableName string: iloboards;
         batch python:here.ZenTableManager.getBatch(tableName,objects);
-        exportFields python:[('getParentDeviceName','Device'), 
-                            ('getDeviceProductName','Model'), 
-                            ('name','Component'), 
+        exportFields python:[('getParentDeviceName','Device'),
+                            ('getDeviceProductName','Model'),
+                            ('name','Component'),
                             ('systemId', 'System ID'),
                             ('hwVer', 'HW Ver'),
                             ('romRev', 'ROM Rev'),
                             ('serialNumber', 'Serial Number'),
-                            ('ipaddress','IP Address'), 
-                            ('macaddress','MAC Address')];">
+                            ('ipaddress','IP Address'),
+                            ('macaddress','MAC Address'),
+                            ('advLicense','Adv. License')];">
 <tal:block metal:use-macro="here/reportMacros/macros/exportableReport">
 <tal:block metal:fill-slot="report">
 
 <tal:block metal:use-macro="here/templates/macros/page1">
 <tal:block metal:fill-slot="breadCrumbPane">
-    <span metal:use-macro="here/miscmacros/macros/reportBreadCrumbsList"/>    
+    <span metal:use-macro="here/miscmacros/macros/reportBreadCrumbsList"/>
 </tal:block>
 <tal:block metal:fill-slot="contentPane">
 
@@ -43,15 +44,17 @@
         <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
                             tableName,'serialNumber','Serial Number')"/>
         <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
-                            tableName,'macaddress','IP Address')"/>
+                            tableName,'ipaddress','IP Address')"/>
         <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
                             tableName,'macaddress','MAC Address')"/>
+        <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
+                            tableName,'advLicense','Adv. License')"/>
     </tr>
     <tr tal:repeat="comp batch">
         <td class="tablevalues" 
           tal:content="structure comp/getDeviceLink"/>
         <td class="tablevalues"
-	  tal:content="structure comp/getDeviceProductLink"/>
+          tal:content="structure comp/getDeviceProductLink"/>
         <td class="tablevalues">
             <a class="tablevalues" tal:attributes="href comp/getPrimaryUrlPath"
                 tal:content="comp/name">smtp</a>
@@ -62,6 +65,7 @@
         <td class="tablevalues" tal:content="comp/serialNumber"/>
         <td class="tablevalues" tal:content="comp/ipaddress"/>
         <td class="tablevalues" tal:content="comp/macaddress"/>
+        <td class="tablevalues" tal:content="comp/advLicense"/>
     </tr>
     <tr>
         <td colspan="9" class="tableheader" align='center'>

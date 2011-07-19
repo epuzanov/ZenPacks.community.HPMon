@@ -12,9 +12,9 @@ __doc__="""cpqSm2Cntlr
 
 cpqSm2Cntlr is an abstraction of a HP iLO Board.
 
-$Id: cpqSm2Cntlr.py,v 1.2 2010/01/04 23:29:15 egor Exp $"""
+$Id: cpqSm2Cntlr.py,v 1.3 2011/07/19 20:38:47 egor Exp $"""
 
-__version__ = "$Revision: 1.2 $"[11:-2]
+__version__ = "$Revision: 1.3 $"[11:-2]
 
 from HPExpansionCard import HPExpansionCard
 from HPComponent import *
@@ -29,6 +29,7 @@ class cpqSm2Cntlr(HPExpansionCard):
     ipaddress = ""
     subnetmask = ""
     dnsName = ""
+    advLicense = ""
 
     statusmap ={1: (DOT_GREY, SEV_WARNING, 'other'),
                 2: (DOT_ORANGE, SEV_ERROR, 'No Data'),
@@ -47,6 +48,7 @@ class cpqSm2Cntlr(HPExpansionCard):
         {'id':'ipaddress', 'type':'string', 'mode':'w'},
         {'id':'subnetmask', 'type':'string', 'mode':'w'},
         {'id':'dnsName', 'type':'string', 'mode':'w'},
+        {'id':'advLicense', 'type':'string', 'mode':'w'},
     )
 
     factory_type_information = (

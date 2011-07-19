@@ -24,11 +24,11 @@
       </td>
     </tr>
     <tr>
-      <td class="tableheader" align=left>Snmp Index</td>
-      <td class="tablevalues" tal:content="here/snmpindex">1</td>
+      <td class="tableheader" align=left>System ID</td>
+      <td class="tablevalues" tal:content="here/systemId">1</td>
       <td class="tableheader" align=left>Status</td>
       <td class="tablevalues" tal:content="here/statusString">1</td>
-    </tr>      
+    </tr>
     <tr>
       <td class="tableheader" align=left>Hardware Version</td>
       <td class="tablevalues" tal:content="here/hwVer">1</td>
@@ -50,8 +50,8 @@
     <tr>
       <td class="tableheader" align=left>Serial Number</td>
       <td class="tablevalues" tal:content="here/serialNumber">1</td>
-      <td class="tableheader" align=left>System ID</td>
-      <td class="tablevalues" tal:content="here/systemId">1</td>
+      <td class="tableheader" align=left>Advanced License</td>
+      <td class="tablevalues" tal:content="here/advLicense">1</td>
     </tr>
     <tr tal:condition="manager">
         <td align="left" class="tableheader" colspan="4">
