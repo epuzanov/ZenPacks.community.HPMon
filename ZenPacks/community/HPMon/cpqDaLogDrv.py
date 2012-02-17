@@ -53,11 +53,25 @@ class cpqDaLogDrv(HPLogicalDisk):
 
     def _getSnmpIndex(self):
         frame = inspect.currentframe(2)
+        ifindex = None
+
         try:
+            # This works in Zenoss versions <= 3.
             if 'templ' in frame.f_locals:
-                if frame.f_locals['templ'].id != 'cpqDaLogDrvPerf': ifindex = ''
-                else: ifindex = '.' + self.__ifindex
-        finally: del frame
+                if frame.f_locals['templ'].id != 'cpqDaLogDrvPerf':
+                    ifindex = ''
+                else:
+                    ifindex = '.' + self.__ifindex
+
+            # This works in Zenoss versions >= 4.
+            elif 'oid' in frame.f_locals:
+                if frame.f_locals['oid'].startswith('1.3.6.1.4.1.232.3.2.8.1'):
+                    ifindex = '.' + self.__ifindex
+                else:
+                    ifindex = ''
+        finally:
+            del frame
+
         return self.snmpindex + ifindex
 
     def _setSnmpIndex(self, value):
