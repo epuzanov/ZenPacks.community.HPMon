@@ -13,7 +13,7 @@ class ZenPack(ZenPackBase):
     """
 
     packZProperties = [
-            ('zHPExpansionCardMapIgnorePci', 'False', 'boolean'),
+            ('zHPExpansionCardMapIgnorePci', False, 'boolean'),
             ]
 
 
