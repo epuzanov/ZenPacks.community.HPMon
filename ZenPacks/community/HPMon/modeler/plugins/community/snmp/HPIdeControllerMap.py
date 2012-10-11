@@ -1,7 +1,7 @@
 ################################################################################
 #
 # This program is part of the HPMon Zenpack for Zenoss.
-# Copyright (C) 2008, 2009, 2010, 2011 Egor Puzanov.
+# Copyright (C) 2008-2012 Egor Puzanov.
 #
 # This program can be used under the GNU General Public License version 2
 # You can find full information here: http://www.zenoss.com/oss
@@ -13,9 +13,9 @@ __doc__="""HPIdeControllerMap
 HPIdeControllerMap maps the cpqIdeControllerTable table to cpqIdeController
 objects
 
-$Id: HPIdeControllerMap.py,v 1.3 2011/01/05 00:21:40 egor Exp $"""
+$Id: HPIdeControllerMap.py,v 1.4 2012/10/11 18:57:43 egor Exp $"""
 
-__version__ = '$Revision: 1.3 $'[11:-2]
+__version__ = '$Revision: 1.4 $'[11:-2]
 
 from Products.DataCollector.plugins.CollectorPlugin import GetTableMap
 from Products.DataCollector.plugins.DataMaps import MultiArgs
@@ -52,12 +52,10 @@ class HPIdeControllerMap(HPExpansionCardMap):
                 om.snmpindex = oid.strip('.')
                 om.id = self.prepId("cpqIdeController%s" % om.snmpindex)
                 om.slot = getattr(om, 'slot', 0)
-                if om.slot == -1: 
+                if om.slot == -1:
                     om.slot = 0
                 if not getattr(om, 'setProductKey', ''):
-                    om.setProductKey = 'Unknown IDE Controller'
-                if om.setProductKey == 'Standard IDE Controller':
-                    om.setProductKey = 'HP Onboard Standard IDE Controller'
+                    om.setProductKey = 'Standard IDE Controller'
                 om.setProductKey = MultiArgs(om.setProductKey,
                                             om.setProductKey.split()[0])
             except AttributeError:
