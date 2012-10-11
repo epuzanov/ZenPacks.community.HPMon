@@ -31,7 +31,7 @@ class HPIdeControllerMap(HPExpansionCardMap):
         GetTableMap('cpqIdeControllerTable',
                     '.1.3.6.1.4.1.232.14.2.3.1.1',
                     {
-                        '.3': 'model',
+                        '.3': 'setProductKey',
                         '.4': 'FWRev',
                         '.5': 'slot',
                         '.6': 'status',
@@ -52,9 +52,12 @@ class HPIdeControllerMap(HPExpansionCardMap):
                 om.snmpindex = oid.strip('.')
                 om.id = self.prepId("cpqIdeController%s" % om.snmpindex)
                 om.slot = getattr(om, 'slot', 0)
-                if om.slot == -1: om.slot = 0
+                if om.slot == -1: 
+                    om.slot = 0
                 if not getattr(om, 'setProductKey', ''):
                     om.setProductKey = 'Unknown IDE Controller'
+                if om.setProductKey == 'Standard IDE Controller':
+                    om.setProductKey = 'HP Onboard Standard IDE Controller'
                 om.setProductKey = MultiArgs(om.setProductKey,
                                             om.setProductKey.split()[0])
             except AttributeError:
