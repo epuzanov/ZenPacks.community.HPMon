@@ -1,7 +1,7 @@
 ################################################################################
 #
 # This program is part of the HPMon Zenpack for Zenoss.
-# Copyright (C) 2008, 2009, 2010, 2011 Egor Puzanov.
+# Copyright (C) 2008-2012 Egor Puzanov.
 #
 # This program can be used under the GNU General Public License version 2
 # You can find full information here: http://www.zenoss.com/oss
@@ -12,9 +12,9 @@ __doc__="""HPSm2CntlrMap
 
 HPSm2CntlrMap maps the cpqSm2CntlrTable table to cpqSm2Cntlr objects
 
-$Id: HPSm2CntlrMap.py,v 1.3 2011/07/19 20:50:10 egor Exp $"""
+$Id: HPSm2CntlrMap.py,v 1.4 2012/10/27 16:58:42 egor Exp $"""
 
-__version__ = '$Revision: 1.3 $'[11:-2]
+__version__ = '$Revision: 1.4 $'[11:-2]
 
 from Products.DataCollector.plugins.CollectorPlugin import GetTableMap
 from Products.DataCollector.plugins.DataMaps import MultiArgs
@@ -60,6 +60,7 @@ class HPSm2CntlrMap(HPExpansionCardMap):
                 7: 'HP Integrated Lights-Out 2 Edition Board',
                 8: 'HP Lights-Out 100 Edition Board',
                 9: 'HP Integrated Lights-Out 3 Edition Board',
+                10: 'HP Integrated Lights-Out 4 Edition Board',
                 }
 
     def process(self, device, results, log):

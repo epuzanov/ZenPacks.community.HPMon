@@ -1,7 +1,7 @@
 ################################################################################
 #
 # This program is part of the HPMon Zenpack for Zenoss.
-# Copyright (C) 2008, 2009, 2010, 2011 Egor Puzanov.
+# Copyright (C) 2008-2012 Egor Puzanov.
 #
 # This program can be used under the GNU General Public License version 2
 # You can find full information here: http://www.zenoss.com/oss
@@ -12,9 +12,9 @@ __doc__="""HPMemoryModuleMap
 
 HPMemoryModuleMap maps the cpqSiMemModuleTable table to cpqSiMemModule objects
 
-$Id: HPMemoryModuleMap.py,v 1.5 2011/01/05 00:22:16 egor Exp $"""
+$Id: HPMemoryModuleMap.py,v 1.6 2012/10/27 16:51:20 egor Exp $"""
 
-__version__ = '$Revision: 1.5 $'[11:-2]
+__version__ = '$Revision: 1.6 $'[11:-2]
 
 from Products.ZenUtils.Utils import convToUnits
 from Products.DataCollector.plugins.CollectorPlugin import SnmpPlugin, GetTableMap
@@ -91,6 +91,9 @@ class HPMemoryModuleMap(SnmpPlugin):
                     4: 'burstEDO',
                     5: 'Synchronous',
                     6: 'RDRAM',
+                    7: 'RDIMM',
+                    8: 'UDIMM',
+                    9: 'LRDIMM',
                     }
 
     def process(self, device, results, log):

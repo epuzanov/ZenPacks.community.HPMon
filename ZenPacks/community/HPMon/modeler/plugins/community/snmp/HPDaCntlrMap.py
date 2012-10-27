@@ -1,7 +1,7 @@
 ################################################################################
 #
 # This program is part of the HPMon Zenpack for Zenoss.
-# Copyright (C) 2008, 2009, 2010, 2011 Egor Puzanov.
+# Copyright (C) 2008-2012 Egor Puzanov.
 #
 # This program can be used under the GNU General Public License version 2
 # You can find full information here: http://www.zenoss.com/oss
@@ -12,9 +12,9 @@ __doc__="""HPDaCntlrMap
 
 HPDaCntlrMap maps the cpqDaCntlrTable table to cpqDaCntlr objects
 
-$Id: HPDaCntlrMap.py,v 1.5 2011/01/05 19:20:33 egor Exp $"""
+$Id: HPDaCntlrMap.py,v 1.6 2012/10/27 16:32:27 egor Exp $"""
 
-__version__ = '$Revision: 1.5 $'[11:-2]
+__version__ = '$Revision: 1.6 $'[11:-2]
 
 from Products.ZenUtils.Utils import convToUnits
 from Products.DataCollector.plugins.CollectorPlugin import GetTableMap
@@ -87,6 +87,15 @@ class HPDaCntlrMap(HPExpansionCardMap):
             43: 'HP Smart Array P711m Controller',
             44: 'HP Smart Array P812 Controller',
             45: 'HP StorageWorks 1210m Scalable Storage Controller',
+            46: 'HP Smart Array P220i Controller',
+            47: 'HP Smart Array P222 Controller',
+            48: 'HP Smart Array P420 Controller',
+            49: 'HP Smart Array P420i Controller',
+            50: 'HP Smart Array P421 Controller',
+            51: 'HP Dynamic Smart Array B320i Controller',
+            52: 'HP Smart Array P822 Controller',
+            53: 'HP Smart Array P721m Controller',
+            54: 'HP Dynamic Smart Array B120i Controller',
             }
 
     redundancyTypes = {1: 'other',
@@ -94,6 +103,7 @@ class HPDaCntlrMap(HPExpansionCardMap):
                         3: 'Driver Duplexing',
                         4: 'Active-Standby',
                         5: 'Primary-Secondary',
+                        6: 'Active-Active',
                         }
 
 

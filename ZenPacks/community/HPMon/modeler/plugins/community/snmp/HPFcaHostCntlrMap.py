@@ -1,7 +1,7 @@
 ################################################################################
 #
 # This program is part of the HPMon Zenpack for Zenoss.
-# Copyright (C) 2008, 2009, 2010, 2011 Egor Puzanov.
+# Copyright (C) 2008-2012 Egor Puzanov.
 #
 # This program can be used under the GNU General Public License version 2
 # You can find full information here: http://www.zenoss.com/oss
@@ -12,9 +12,9 @@ __doc__="""HPFcaHostCntlrMap
 
 HPFcaHostCntlrMap maps the cpqFcaHostCntlrTable table to cpqFcaHostCntlr objects
 
-$Id: HPFcaHostCntlrMap.py,v 1.3 2011/01/05 00:19:50 egor Exp $"""
+$Id: HPFcaHostCntlrMap.py,v 1.4 2012/10/27 16:41:18 egor Exp $"""
 
-__version__ = '$Revision: 1.3 $'[11:-2]
+__version__ = '$Revision: 1.4 $'[11:-2]
 
 from Products.DataCollector.plugins.CollectorPlugin import GetTableMap
 from Products.DataCollector.plugins.DataMaps import MultiArgs
@@ -78,6 +78,8 @@ class HPFcaHostCntlrMap(HPExpansionCardMap):
                 34: 'HP StorageWorks 81E 8Gb PCI-e FC HBA',
                 35: 'HP StorageWorks 82E 8Gb PCI-e Dual Port FC HBA',
                 36: 'Emulex LPe 1205-HP 8Gb FC HBA for HP BladeSystem c-Class',
+                37: 'HP SN1000E 16Gb Single Port FC HBA',
+                38: 'HP SN1000E 16Gb Dual Port FC HBA',
                 }
 
     def process(self, device, results, log):

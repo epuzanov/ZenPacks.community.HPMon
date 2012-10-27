@@ -13580,6 +13580,12 @@ fca-82e(35)
 
 fca-1205(36)
   Emulex LPe 1205-HP 8Gb FC HBA for HP BladeSystem c-Class
+  
+fca-sn1000esp(37)
+  HP SN1000E 16Gb Single Port FC HBA
+  
+fca-sn1000edp(38)
+  HP SN1000E 16Gb Dual Port FC HBA
 </property>
 <property type="string" id="access" mode="w" >
 readonly
@@ -18011,7 +18017,7 @@ User Action: If the controller status is failed, replace the
 controller.
 </property>
 <property type="lines" id="objects" mode="w" >
-{'sysName': {'nodetype': 'object', 'module': 'RFC1213-MIB'}, 'cpqFcaHostCntlrSerialNumber': {'nodetype': 'object', 'module': 'CPQFCA-MIB'}, 'cpqFcaHostCntlrWorldWideName': {'nodetype': 'object', 'module': 'CPQFCA-MIB'}, 'cpqFcaHostCntlrModel': {'nodetype': 'object', 'module': 'CPQFCA-MIB'}, 'cpqFcaHostCntlrIndex': {'nodetype': 'object', 'module': 'CPQFCA-MIB'}, 'cpqFcaHostCntlrHwLocation': {'nodetype': 'object', 'module': 'CPQFCA-MIB'}, 'cpqFcaHostCntlrWorldWidePortName': {'nodetype': 'object', 'module': 'CPQFCA-MIB'}, 'cpqFcaHostCntlrStatus': {'nodetype': 'object', 'module': 'CPQFCA-MIB'}, 'cpqHoTrapFlags': {'nodetype': 'object', 'module': 'CPQHOST-MIB'}}
+{'sysName': {'nodetype': 'object', 'module': 'RFC1213-MIB'}, 'cpqFcaHostCntlrWorldWideName': {'nodetype': 'object', 'module': 'CPQFCA-MIB'}, 'cpqFcaHostCntlrModel': {'nodetype': 'object', 'module': 'CPQFCA-MIB'}, 'cpqFcaHostCntlrIndex': {'nodetype': 'object', 'module': 'CPQFCA-MIB'}, 'cpqFcaHostCntlrStatus': {'nodetype': 'object', 'module': 'CPQFCA-MIB'}, 'cpqFcaHostCntlrHwLocation': {'nodetype': 'object', 'module': 'CPQFCA-MIB'}, 'cpqFcaHostCntlrWorldWidePortName': {'nodetype': 'object', 'module': 'CPQFCA-MIB'}, 'cpqFcaHostCntlrSerialNumber': {'nodetype': 'object', 'module': 'CPQFCA-MIB'}, 'cpqHoTrapFlags': {'nodetype': 'object', 'module': 'CPQHOST-MIB'}}
 </property>
 </object>
 <object id='cpqFcaAccelBadDataTrap' module='Products.ZenModel.MibNotification' class='MibNotification'>
@@ -21225,7 +21231,7 @@ scalar
 current
 </property>
 <property type="string" id="description" mode="w" >
-This is the current Power Meter reading in Watts.
+ This is the current Power Meter reading in Watts.
 This value shows the most recent power reading if available. 
 On systems without Power Meter support, this value will be -1.
 </property>
@@ -21247,7 +21253,7 @@ scalar
 current
 </property>
 <property type="string" id="description" mode="w" >
-This is the previous Power Meter reading in Watts. 
+ This is the previous Power Meter reading in Watts. 
 This value shows previous power reading if available. 
 On systems without Power Meter support, this value will be -1.
 </property>
@@ -21825,6 +21831,48 @@ The following status values are supported:
 readonly
 </property>
 </object>
+<object id='cpqHeResMem2BoardOperatingFrequency' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+CPQHLTH-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.232.6.2.14.12.1.13
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+This value specifies the operational memory frequency for 
+this board or Cartridge or riser in MHz.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='cpqHeResMem2BoardOperatingVoltage' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+CPQHLTH-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.232.6.2.14.12.1.14
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+This value specifies the operational memory voltage for 
+this board or Cartridge or riser in millivolts.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
 <object id='cpqHeResMem2BoardOsMemSize' module='Products.ZenModel.MibNode' class='MibNode'>
 <property type="string" id="moduleName" mode="w" >
 CPQHLTH-MIB
@@ -21969,7 +22017,7 @@ current
 </property>
 <property type="string" id="description" mode="w" >
 This will represent the unique memory DIMM on 
-memory board or cartridge or riser.
+memory board or cartridge or riser. 
 </property>
 <property type="string" id="access" mode="w" >
 readonly
@@ -22130,8 +22178,8 @@ column
 current
 </property>
 <property type="string" id="description" mode="w" >
-The memory module frequency in MHz.  The value zero (0) will
-be given if the module frequency cannot be determined.
+The memory module maximum frequency in MHz.  The value zero 
+(0) will be given if the module frequency cannot be determined.
 </property>
 <property type="string" id="access" mode="w" >
 readonly
@@ -22178,6 +22226,27 @@ The memory module's manufacturer name.
 
 This field will be a null (size 0) string if the manufacturer
 name is not available.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='cpqHeResMem2ModuleMinVoltage' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+CPQHLTH-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.232.6.2.14.13.1.23
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+This provides the minimum voltage needed for the module to 
+operate, in millivolts.
 </property>
 <property type="string" id="access" mode="w" >
 readonly
@@ -22249,6 +22318,26 @@ part number is not available.
 readonly
 </property>
 </object>
+<object id='cpqHeResMem2ModuleRanks' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+CPQHLTH-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.232.6.2.14.13.1.24
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+This provides the number of physical ranks on the module.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
 <object id='cpqHeResMem2ModuleSerialNo' module='Products.ZenModel.MibNode' class='MibNode'>
 <property type="string" id="moduleName" mode="w" >
 CPQHLTH-MIB
@@ -22313,6 +22402,39 @@ Module memory size in kilobytes.  A kilobyte of memory is
 defined as 1024 bytes.
 
 A size of 0 indicates the module is not present.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='cpqHeResMem2ModuleSmartMemory' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+CPQHLTH-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.232.6.2.14.13.1.22
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+This indicates whether the DIMM slot is populated with an HP 
+Smart Memory DIMM.
+
+The following values are supported:
+
+   other(1):
+     HP SmartMemory not supported in this device.
+
+   notHPSmartMemory(2):
+     HP SmartMemory is NOT installed in DIMM slot (includes 
+     the case where the DIMM slot is not populated).
+
+   isHPSmartMemory(3):
+     HP SmartMemory is installed in DIMM slot.
 </property>
 <property type="string" id="access" mode="w" >
 readonly
@@ -22397,6 +22519,9 @@ The following status values are supported:
    degraded(11):
      The memory module's correctable error count has exceeded
      threshold.
+
+   spare(12):
+     The memory module is configured as a spare.
 </property>
 <property type="string" id="access" mode="w" >
 readonly
@@ -23561,7 +23686,7 @@ column
 current
 </property>
 <property type="string" id="description" mode="w" >
-The PCI bus number for this set of utilization numbers.
+The PCI bus number for this set of utilization numbers. 
 </property>
 <property type="string" id="access" mode="w" >
 readonly
@@ -23583,7 +23708,7 @@ current
 <property type="string" id="description" mode="w" >
 The PCI device number for this set of utilization numbers.
 If this value is -1, the utilization reported is for the
-aggregate of all devices on this PCI bus.
+aggregate of all devices on this PCI bus. 
 </property>
 <property type="string" id="access" mode="w" >
 readonly
@@ -23687,7 +23812,7 @@ column
 current
 </property>
 <property type="string" id="description" mode="w" >
-A unique index into each PCI utilization table entry.
+A unique index into each PCI utilization table entry. 
 </property>
 <property type="string" id="access" mode="w" >
 readonly
@@ -24004,6 +24129,11 @@ critical(15)
   If a critical(15) temperature sensor reaches its threshold,
   the cpqHeTemperatureCondition will be set to failed(4)
   and the system will shutdown.
+  
+noreaction(16)
+  this value will be defined when a threshold value is zero and 
+  system will not react on those sensor as those threshold 
+  sensors are meant for display purpose only.
 </property>
 <property type="string" id="access" mode="w" >
 readonly
@@ -24897,7 +25027,7 @@ The fault tolerant power supply condition has been set
 to degraded for the specified chassis and bay location.
 </property>
 <property type="lines" id="objects" mode="w" >
-{'sysName': {'nodetype': 'object', 'module': 'RFC1213-MIB'}, 'cpqHoTrapFlags': {'nodetype': 'object', 'module': 'CPQHOST-MIB'}, 'cpqHeFltTolPowerSupplyBay': {'nodetype': 'object', 'module': 'CPQHLTH-MIB'}, 'cpqHeFltTolPowerSupplyChassis': {'nodetype': 'object', 'module': 'CPQHLTH-MIB'}}
+{'sysName': {'nodetype': 'object', 'module': 'RFC1213-MIB'}, 'cpqHeFltTolPowerSupplyBay': {'nodetype': 'object', 'module': 'CPQHLTH-MIB'}, 'cpqHoTrapFlags': {'nodetype': 'object', 'module': 'CPQHOST-MIB'}, 'cpqHeFltTolPowerSupplyChassis': {'nodetype': 'object', 'module': 'CPQHLTH-MIB'}}
 </property>
 </object>
 <object id='cpqHe3FltTolPowerSupplyFailed' module='Products.ZenModel.MibNotification' class='MibNotification'>
@@ -24918,7 +25048,7 @@ The fault tolerant power supply condition has been set
 to failed for the specified chassis and bay location.
 </property>
 <property type="lines" id="objects" mode="w" >
-{'sysName': {'nodetype': 'object', 'module': 'RFC1213-MIB'}, 'cpqHoTrapFlags': {'nodetype': 'object', 'module': 'CPQHOST-MIB'}, 'cpqHeFltTolPowerSupplyBay': {'nodetype': 'object', 'module': 'CPQHLTH-MIB'}, 'cpqHeFltTolPowerSupplyChassis': {'nodetype': 'object', 'module': 'CPQHLTH-MIB'}}
+{'sysName': {'nodetype': 'object', 'module': 'RFC1213-MIB'}, 'cpqHeFltTolPowerSupplyBay': {'nodetype': 'object', 'module': 'CPQHLTH-MIB'}, 'cpqHoTrapFlags': {'nodetype': 'object', 'module': 'CPQHOST-MIB'}, 'cpqHeFltTolPowerSupplyChassis': {'nodetype': 'object', 'module': 'CPQHLTH-MIB'}}
 </property>
 </object>
 <object id='cpqHe3FltTolPowerSupplyInserted' module='Products.ZenModel.MibNotification' class='MibNotification'>
@@ -24939,7 +25069,7 @@ A Fault Tolerant Power Supply has been inserted into the
 specified chassis and bay location.
 </property>
 <property type="lines" id="objects" mode="w" >
-{'sysName': {'nodetype': 'object', 'module': 'RFC1213-MIB'}, 'cpqHoTrapFlags': {'nodetype': 'object', 'module': 'CPQHOST-MIB'}, 'cpqHeFltTolPowerSupplyBay': {'nodetype': 'object', 'module': 'CPQHLTH-MIB'}, 'cpqHeFltTolPowerSupplyChassis': {'nodetype': 'object', 'module': 'CPQHLTH-MIB'}}
+{'sysName': {'nodetype': 'object', 'module': 'RFC1213-MIB'}, 'cpqHeFltTolPowerSupplyBay': {'nodetype': 'object', 'module': 'CPQHLTH-MIB'}, 'cpqHoTrapFlags': {'nodetype': 'object', 'module': 'CPQHOST-MIB'}, 'cpqHeFltTolPowerSupplyChassis': {'nodetype': 'object', 'module': 'CPQHLTH-MIB'}}
 </property>
 </object>
 <object id='cpqHe3FltTolPowerSupplyRemoved' module='Products.ZenModel.MibNotification' class='MibNotification'>
@@ -24960,7 +25090,7 @@ A Fault Tolerant Power Supply has been removed from the
 specified chassis and bay location.
 </property>
 <property type="lines" id="objects" mode="w" >
-{'sysName': {'nodetype': 'object', 'module': 'RFC1213-MIB'}, 'cpqHoTrapFlags': {'nodetype': 'object', 'module': 'CPQHOST-MIB'}, 'cpqHeFltTolPowerSupplyBay': {'nodetype': 'object', 'module': 'CPQHLTH-MIB'}, 'cpqHeFltTolPowerSupplyChassis': {'nodetype': 'object', 'module': 'CPQHLTH-MIB'}}
+{'sysName': {'nodetype': 'object', 'module': 'RFC1213-MIB'}, 'cpqHeFltTolPowerSupplyBay': {'nodetype': 'object', 'module': 'CPQHLTH-MIB'}, 'cpqHoTrapFlags': {'nodetype': 'object', 'module': 'CPQHOST-MIB'}, 'cpqHeFltTolPowerSupplyChassis': {'nodetype': 'object', 'module': 'CPQHLTH-MIB'}}
 </property>
 </object>
 <object id='cpqHe3FltTolPwrSupplyDegraded' module='Products.ZenModel.MibNotification' class='MibNotification'>
@@ -25002,7 +25132,7 @@ One or more POST errors occurred.
 
 Power On Self-Test (POST) errors occur during the server
 restart process. Details of the POST error messages can 
-be found in Integrated Management Log
+be found in Integrated Management Log 
 </property>
 <property type="lines" id="objects" mode="w" >
 {'sysName': {'nodetype': 'object', 'module': 'RFC1213-MIB'}, 'cpqHoTrapFlags': {'nodetype': 'object', 'module': 'CPQHOST-MIB'}}
@@ -25756,7 +25886,7 @@ current
 One or more POST errors occurred.
 
 Power On Self-Test (POST) errors occur during the server
-restart process.
+restart process.  
 </property>
 </object>
 <object id='cpqHeResMemBoardBusError' module='Products.ZenModel.MibNotification' class='MibNotification'>
@@ -26170,25 +26300,25 @@ column
 current
 </property>
 <property type="string" id="description" mode="w" >
-Array Accelerator Board Backup Power Source.
+Cache Module Board Backup Power Source.
 
-This describes the backup power source being used by the Array
-Accelerator board.
+This describes the backup power source being used by the Cache
+Module board.
 
 The status can be:
 
 Other (1)
   Indicates that the instrument agent does not recognize the backup
-  power source used by the Array Accelerator board.  You may need 
+  power source used by the Cache Module board.  You may need 
   to upgrade the instrument agent.
 
 Battery (2)
-  Indicates that a battery is the backup power source for the Array
-  Accelerator board. 
+  Indicates that a battery is the backup power source for the Cache
+  Module board. 
  
 Capacitor (3)
   Indicates that a capacitor is the backup power source for the 
-  Array Accelerator board.
+  Cache Module board.
 </property>
 <property type="string" id="access" mode="w" >
 readonly
@@ -26208,7 +26338,7 @@ column
 current
 </property>
 <property type="string" id="description" mode="w" >
-Array Accelerator Board Bad Data.
+Cache Module Board Bad Data.
 
 The following values are valid:
 
@@ -26232,7 +26362,7 @@ Possible (3)
   * There may be a problem with the battery pack.
     See the Battery Status for more information.
 
-  * This status will also appear if the Array Accelerator
+  * This status will also appear if the Cache Module
     board is replaced with a new board that has discharged
     batteries.  No data has been lost in this case, and posted
     writes will automatically be enabled when the batteries
@@ -26256,7 +26386,7 @@ column
 current
 </property>
 <property type="string" id="description" mode="w" >
-Array Accelerator Board Backup Power Status.
+Cache Module Board Backup Power Status.
 
 This monitors the status of each backup power source on the board.  
 The backup power source can only recharge when the system has 
@@ -26267,35 +26397,87 @@ The following values are valid:
 
 Other (1)
   Indicates that the instrument agent does not recognize
-  battery status.  You may need to update your software.
+  backup power status.  You may need to update your software.
 
 Ok (2)
-  Indicates that a particular battery pack is fully charged.
+  The backup power source is fully charged.
 
-Charging (3)
-  The battery power is less than 75%.  The Drive Array
-  Controller is attempting to recharge the battery.  A
-  battery can take as long as 36 hours to fully recharge.
-  After 36 hours, if the battery has not recharged, it is
-  considered failed.
+Recharging (3)
+  The array controller has one or more cache module backup power
+  sources that are recharging.  Cache module operations such as 
+  Battery/Flash Backed Write Cache, Expansion, Extension and Migration
+  are temporarily suspended until the backup power source is fully 
+  charged.  Cache module operations will automatically resume
+  when charging is complete.
 
 Failed (4)
   The battery pack is below the sufficient voltage level and
-  has not recharged in 36 hours.  Your Array Accelerator board
+  has not recharged in 36 hours.  Your Cache Module board
   needs to be serviced.
 
 Degraded (5)
   The battery is still operating, however, one of the batteries
-  in the pack has failed to recharge properly.  Your Array
-  Accelerator board should be serviced as soon as possible.
+  in the pack has failed to recharge properly.  Your Cache
+  Module board should be serviced as soon as possible.
 
 NotPresent (6)
-  There are no batteries associated with this controller.
+  A backup power source is not present on the cache module board.
+  Some controllers do not have backup power sources.
   
 Capacitor Failed (7)
-  The capacitor is below the sufficient voltage level and
-  has not recharged in 10 minutes.  Your Array Accelerator board
-  needs to be serviced.
+  The flash backed cache module capacitor is below the sufficient 
+  voltage level and has not recharged in 10 minutes.  Your Cache 
+  Module board needs to be serviced.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='cpqDaAccelBoardCurrentTemp' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+CPQIDA-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.232.3.2.2.2.1.17
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Cache Module Board Current Temperature.
+
+This is the temperature of the cache module board in degrees 
+Celsius. The field will contain -1 if the cache module
+board temperature cannot be calculated or if the controller does not
+support reporting cache module board temperature.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='cpqDaAccelCapacitorCurrentTemp' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+CPQIDA-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.232.3.2.2.2.1.18
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Cache Module Capacitor Current Temperature.
+
+This is the temperature of the Super-Cap in degrees Celsius.
+The field will contain -1 if the Super-Cap temperature
+cannot be calculated or if the controller does not support reporting
+Super-Cap temperature.
 </property>
 <property type="string" id="access" mode="w" >
 readonly
@@ -26315,11 +26497,11 @@ column
 current
 </property>
 <property type="string" id="description" mode="w" >
-Array Accelerator Board Controller Index.
+Cache Module Board Controller Index.
 
 This value is a logical number whose meaning is OS dependent.
 The value has a direct mapping to the controller table index
-such that controller 'i' has accelerator table entry 'i'.
+such that controller 'i' has cache module table entry 'i'.
 </property>
 <property type="string" id="access" mode="w" >
 readonly
@@ -26340,7 +26522,7 @@ current
 </property>
 <property type="string" id="description" mode="w" >
 The condition of the device.  This value represents the overall
-condition of this array accelerator.
+condition of this cache module.
 </property>
 <property type="string" id="access" mode="w" >
 readonly
@@ -26360,7 +26542,7 @@ row
 current
 </property>
 <property type="string" id="description" mode="w" >
-Array Accelerator Board Entry.
+Cache Module Board Entry.
 </property>
 </object>
 <object id='cpqDaAccelErrCode' module='Products.ZenModel.MibNode' class='MibNode'>
@@ -26377,7 +26559,7 @@ column
 current
 </property>
 <property type="string" id="description" mode="w" >
-Array Accelerator Board Error Code.
+Cache Module Board Error Code.
 
 Use this to determine the status of the write cache operations.
 
@@ -26394,7 +26576,7 @@ Invalid (2)
 
 Bad Configuration (3)
   Indicates that write cache operations are temporarily
-  disabled.  The Array Accelerator board was configured
+  disabled.  The Cache Module board was configured
   for a different controller.  This error could be caused
   if boards were switched from one system to another.
   Rerun the configuration utility and ensure that the board
@@ -26425,14 +26607,14 @@ No Resources Available (6)
 
 Board Not Connected (7)
   Indicates that write cache operations are temporarily
-  disabled.  The Array Accelerator board has been
+  disabled.  The Cache Module board has been
   configured but is not currently attached to the
   controller. Check the alignment of the board and
   connections.
 
 Bad Mirror Data (8)
   Indicates that write cache operations have been
-  permanently disabled.  The Array Accelerator board stores
+  permanently disabled.  The Cache Module board stores
   mirrored copies of all data.  If data exists on the
   board when the system is first powered up, the board
   performs a data compare test between the mirrored copies.
@@ -26441,7 +26623,7 @@ Bad Mirror Data (8)
 
 Read Failure (9)
   Indicates that write cache operations have been permanently
-  disabled.  The Array Accelerator board stores mirror copies
+  disabled.  The Cache Module board stores mirror copies
   of all data.  While reading the data from the board, memory
   parity errors have occurred.  Both copies were corrupted and
   cannot be retrieved.  Data has been lost, and you should
@@ -26450,25 +26632,25 @@ Read Failure (9)
 Write Failure (10)
   Indicates that write cache operations have been permanently
   disabled.  This error occurs when an unsuccessful attempt was
-  made to write data to the Array Accelerator board.  Data could
+  made to write data to the Cache Module board.  Data could
   not be written to write cache memory in duplicate due to the
   detection of parity errors.  This error does not indicate data
-  loss.  You should service the Array Accelerator board.
+  loss.  You should service the Cache Module board.
 
 Config Command (11)
   Indicates that write cache operations have been permanently
   disabled.  The configuration of the logical drives has changed.
-  You need to reconfigure the Array Accelerator board.
+  You need to reconfigure the Cache Module board.
 
 Expand in Progress (12)
   Indicates that cache operations are temporarily disabled
   due to an expand of a logical drive.  When the expand
-  operation completes, the accelerator will be enabled.
+  operation completes, the cache module will be enabled.
 
 Snapshot In Progress (13)
   Indicates that cache operations are temporarily disabled
   due to a snapshot operation that is queued up or in progress.
-  When the snapshot operation completes, the accelerator will
+  When the snapshot operation completes, the cache module will
   be enabled.
 
 Redundant Low Battery (14)
@@ -26504,7 +26686,7 @@ Battery Hot Removed (20)
   disabled.  The cache has been disabled because a battery has
   been hot removed.
   
-Capacitor Charge Low (21)
+Flash Backed Cache Module Capacitor Charge Low (21)
   Indicates that write cache operations are temporarily
   disabled due to insufficient capacitor power.
   
@@ -26529,27 +26711,32 @@ Battery Not Supported (24)
 No Capacitor Attached (25)
   Indicates that write cache operations have been permanently
   disabled.  The cache has been disabled because there are no 
-  capacitors attached to the capacitor based cache module.
+  capacitors attached to the flash backed cache module.
   
-Capacitor Based Backup Failed (26)
+Flash Backed Cache Module Backup Failed (26)
   Indicates that write cache operations have been permanently
-  disabled.  The cache has been disabled because the capacitor 
-  based cache module backup operation has failed.
+  disabled.  The cache has been disabled because the flash 
+  backed cache module backup operation has failed.
   
-Capacitor Based Restore Failed (27)
+Flash Backed Cache Module Restore Failed (27)
   Indicates that write cache operations have been permanently
-  disabled.  The cache has been disabled because the capacitor 
-  based cache module restore operation has failed.
+  disabled.  The cache has been disabled because the flash 
+  backed cache module restore operation has failed.
   
-Capacitor Based Hardware Module Failure (28)
+Flash Backed Cache Module Hardware Failure (28)
   Indicates that write cache operations have been permanently
-  disabled.  The cache has been disabled because the capacitor 
-  based cache module has encountered a hardware failure.
+  disabled.  The cache has been disabled because the flash 
+  backed cache module has encountered a hardware failure.
   
 Capacitor Failed To Charge (29)
   Indicates that write cache operations have been permanently
-  disabled.  The cache has been disabled because the capacitor 
-  based cache module capacitor has failed to charge.
+  disabled.  The cache has been disabled because the flash 
+  backed cache module capacitor has failed to charge.
+  
+Flash Backed Cache Module Memory Being Erased (30)
+  Indicates that write cache operations have been temporarily 
+  disabled. The cache has been disabled because the flash 
+  backed cache module is erasing its flash memory.
 </property>
 <property type="string" id="access" mode="w" >
 readonly
@@ -26569,9 +26756,9 @@ column
 current
 </property>
 <property type="string" id="description" mode="w" >
-Array Accelerator Failed Batteries.
+Cache Module Failed Batteries.
 
-This lists the location of accelerator failed batteries.
+This lists the location of cache module failed batteries.
 Each octet present contains the position number of a failed
 battery.  An octet string of length zero indicates that there
 are no failed batteries or that the controller does not have
@@ -26643,10 +26830,10 @@ column
 current
 </property>
 <property type="string" id="description" mode="w" >
-Array Accelerator Board Read Errors.
+Cache Module Board Read Errors.
 
 This shows the total number of read memory parity errors that
-were detected while reading from the Array Accelerator board.
+were detected while reading from the Cache Module board.
 The mirrored copy of data on the board can be accessed to
 obtain correct data if a memory parity errors occurs.
 
@@ -26705,10 +26892,10 @@ column
 current
 </property>
 <property type="string" id="description" mode="w" >
-Array Accelerator Serial Number.
+Cache Module Serial Number.
 
-The serial number of the Array Accelerator.  This field will
-be a null (size 0) string if the accelerator does not support
+The serial number of the Cache Module.  This field will
+be a null (size 0) string if the cache module does not support
 serial number.
 </property>
 <property type="string" id="access" mode="w" >
@@ -26729,35 +26916,48 @@ column
 current
 </property>
 <property type="string" id="description" mode="w" >
-Array Accelerator Board Status.
+Cache Module/Operations Status.
 
-This describes the status of the accelerator write cache.
+This describes the status of the cache module and/or cache operations.
+
+Note that for some controller models, a cache module board that 
+physically attaches to the controller or chipset may not be an 
+available option. For these configurations, the Instrument Agent
+will continue to populate variables that are related to read caching
+operations.
 
 The status can be:
 
 Other (1)
   Indicates that the instrument agent does not recognize the
-  status of the Array Accelerator.  You may need to upgrade
+  status of the Cache Module.  You may need to upgrade
   the instrument agent.
 
 Invalid (2)
-  Indicates that an Array Accelerator board has not been
+  Indicates that a Cache Module board has not been
   installed in this system or is present but not configured.
 
 Enabled (3)
-  Indicates that write cache operations are currently configured
+  Indicates that cache operations are currently configured
   and enabled for at least one logical drive.
 
 Temporarily Disabled (4)
-  Indicates that write cache operations have been temporarily
-  disabled. View the Array Accelerator Board Error Code object
+  Indicates that cache operations have been temporarily
+  disabled. View the Cache Module Board Error Code object
   to determine why the write cache operations have been
   temporarily disabled.
 
 Permanently Disabled (5)
-  Indicates that write cache operations have been permanently
-  disabled.  View the Array Accelerator Board Error Code object
+  Indicates that cache operations have been permanently
+  disabled.  View the Cache Module Board Error Code object
   to determine why the write cache operations have been disabled.
+  
+Cache Module Flash Memory Not Attached (6)
+  Indicates that the flash memory component of the flash backed
+  cache module is not attached. This status will be set when the flash 
+  memory is not attached and the Supercap is attached. This value is
+  only used on flash backed cache modules that support removable flash
+  memory.
 </property>
 <property type="string" id="access" mode="w" >
 readonly
@@ -26777,7 +26977,11 @@ table
 current
 </property>
 <property type="string" id="description" mode="w" >
-Array Accelerator Board Table.
+Cache Module Board Table. Note that for some controller models, a 
+cache module board that physically attaches to the controller or
+chipset may not be an available option. For these configurations, the
+Instrument Agent will continue to populate variables that are related 
+to read caching operations.
 </property>
 </object>
 <object id='cpqDaAccelTotalMemory' module='Products.ZenModel.MibNode' class='MibNode'>
@@ -26796,7 +27000,7 @@ current
 <property type="string" id="description" mode="w" >
 Total Cache Memory.
 
-This value is the total amount of accelerator memory in
+This value is the total amount of cache module memory in
 kilobytes, including both battery-backed and non-battery-backed
 memory.
 </property>
@@ -26842,14 +27046,14 @@ column
 current
 </property>
 <property type="string" id="description" mode="w" >
-Array Accelerator Board Write Errors.
+Cache Module Board Write Errors.
 
 This shows the total number of write memory parity errors that
-were detected while writing to the Array Accelerator board.
+were detected while writing to the Cache Module board.
 
 Write parity errors occur when the system detects that
-information has not been transferred to the Array
-Accelerator board correctly.  A parity bit is included for
+information has not been transferred to the Cache
+Module board correctly.  A parity bit is included for
 each byte of information stored in memory.  When the
 microprocessor reads or writes data, the system counts the
 value of the bits in each byte.  If the total does not match
@@ -26969,8 +27173,8 @@ current
 </property>
 <property type="string" id="description" mode="w" >
 The condition of the device.  This value represents the
-condition of the controller and any associated array
-accelerators.
+condition of the controller and any associated cache
+modules.
 </property>
 <property type="string" id="access" mode="w" >
 readonly
@@ -27003,7 +27207,9 @@ ok (2)
   The array controller is operating properly.
 
 generalFailure (3)
-  The array controller is failed.
+  The array controller is failed. After the system is rebooted, 
+  check the variable cpqDaCntlrLastLockupCode for the controller's
+  last lockup code. 
 
 cableProblem (4)
   The array controller has a cable problem.  Please check
@@ -27012,6 +27218,11 @@ cableProblem (4)
 poweredOff (5)
   The array controller is powered off.  Please replace the
   controller and restore power to the slot.
+  
+cacheModuleMissing (6)
+  The array controller is operating without a cache module which 
+  is an unsupported configuration.  Please install a cache module
+  to the controller.
 </property>
 <property type="string" id="access" mode="w" >
 readonly
@@ -27033,7 +27244,7 @@ current
 <property type="string" id="description" mode="w" >
 The condition of the device.  This value represents the overall
 condition of this controller, and any associated logical drives,
-physical drives, and array accelerators.
+physical drives, and cache modules.
 </property>
 <property type="string" id="access" mode="w" >
 readonly
@@ -27074,6 +27285,31 @@ backup (4)
   
 asymActiveActive (5)
   This array controller is part of an asymmetrical active-active set of controllers.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='cpqDaCntlrCurrentTemp' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+CPQIDA-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.232.3.2.2.1.1.32
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Array Controller Current Temperature.
+
+This is the temperature of the array controller in degrees Celsius.  
+The field will contain -1 if the controller temperature 
+cannot be calculated or if the controller does not support reporting  
+temperature.
 </property>
 <property type="string" id="access" mode="w" >
 readonly
@@ -27264,7 +27500,58 @@ Array Controller Firmware Revision.
 
 The firmware revision of the drive array controller. This
 value can be used to help identify a particular revision
-of the controller.
+of the controller. For B-Series controllers this value is the 
+RAID Stack Revision that is running and this value may change when
+upgrading or downgrading the operating system device driver.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='cpqDaCntlrHBAModeOptionRomRev' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+CPQIDA-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.232.3.2.2.1.1.31
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Array Controller HBA Mode Option Rom Revision.
+
+The revision of option ROM that would run on this chipset or HBA (being
+used by the B-Series controller), if it were to run in HBA mode. If
+the controller does not support HBA mode option ROM revision, the
+agents will return a NULL string.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='cpqDaCntlrHbaFWRev' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+CPQIDA-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.232.3.2.2.1.1.30
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Array Controller HBA Firmware Revision.
+
+The firmware revision of the chipset or HBA being used by the 
+B-Series controller. If the controller does not support the
+HBA firmware revision, the agents will return a NULL string.
 </property>
 <property type="string" id="access" mode="w" >
 readonly
@@ -27311,6 +27598,31 @@ Array Controller Index.
 This value is a logical number whose meaning is OS dependent.
 Each physical controller has one unique controller number
 associated with it.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='cpqDaCntlrLastLockupCode' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+CPQIDA-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.232.3.2.2.1.1.33
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Array Controller Last Lockup Code.
+
+The lockup code of the array controller if a lockup occurred prior
+to the last controller reset.  This value will be nonzero if the 
+controller supports last lockup code and has a last lockup code 
+to report.
 </property>
 <property type="string" id="access" mode="w" >
 readonly
@@ -27498,6 +27810,33 @@ Smart Array P812 (44)
   
 StorageWorks 1210m (45)
   HP StorageWorks 1210m Scalable Storage Controller.
+  
+Smart Array P220i (46)
+  HP Smart Array P220i Controller.
+  
+Smart Array P222 (47)
+  HP Smart Array P222 Controller.
+  
+Smart Array P420 (48)
+  HP Smart Array P420 Controller.
+  
+Smart Array P420i (49)
+  HP Smart Array P420i Controller.
+  
+Smart Array P421 (50)
+  HP Smart Array P421 Controller.
+  
+Smart Array B320i (51)
+  HP Dynamic Smart Array B320i Controller.
+
+Smart Array P822 (52)
+  HP Smart Array P822 Controller.
+
+Smart Array P721m (53)
+  HP Smart Array P721m Controller.
+
+Smart Array B120i (54)
+  HP Dynamic Smart Array B120i Controller.
 </property>
 <property type="string" id="access" mode="w" >
 readonly
@@ -27541,7 +27880,7 @@ current
 <property type="string" id="description" mode="w" >
 Array Controller Number of External Ports.
 
-This value is the number of external SAS connectoros on the
+This value is the number of external connectors on the
 controller.
 </property>
 <property type="string" id="access" mode="w" >
@@ -27564,8 +27903,32 @@ current
 <property type="string" id="description" mode="w" >
 Array Controller Number of Internal Ports.
 
-This value is the number of internal SAS connectors on the
+This value is the number of internal connectors on the
 controller.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='cpqDaCntlrOptionRomRev' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+CPQIDA-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.232.3.2.2.1.1.29
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Array Controller Option ROM Revision.
+
+The option ROM revision of the chipset or HBA being used by the 
+B-Series controller. If the controller does not support the
+option ROM revision, the agents will return a NULL string.
 </property>
 <property type="string" id="access" mode="w" >
 readonly
@@ -27586,8 +27949,8 @@ current
 </property>
 <property type="string" id="description" mode="w" >
 The condition of the device.  This value represents the
-condition of the controller and any associated array
-accelerators.
+condition of the controller and any associated cache
+modules.
 </property>
 <property type="string" id="access" mode="w" >
 readonly
@@ -27782,9 +28145,8 @@ current
 Array Controller Performance Monitor Cpu Percent Busy.
 
 This value specifies the total CPU percent busy as a number
-from 0 to 100 inclusive.
-
-If the value cannot be determined, the value is set to -1.
+from 0 to 100 inclusive. If the value cannot be determined 
+or is not applicable, the value is set to -1.
 </property>
 <property type="string" id="access" mode="w" >
 readonly
@@ -28275,7 +28637,7 @@ column
 1.3.6.1.4.1.232.3.2.3.1.1.8
 </property>
 <property type="string" id="status" mode="w" >
-current
+obsolete
 </property>
 <property type="string" id="description" mode="w" >
 Drive Array Logical Drive Available Spares.
@@ -28284,12 +28646,149 @@ This indicates if this logical drive has one or more spares
 designated for it that are not currently in use by another drive.
 Each octet present will be a physical drive ID that is an
 available spare for this logical drive.  These are the same ID's
-which can be used as indexes into the physical drive table.
+which can be used as indices into the physical drive table.
 An octet string of length zero indicates that there are no
-available spares for this logical drive.
+available spares for this logical drive. For array controllers
+that support a larger number of drives, the Drive Array Logical 
+Drive Available Spare Extended Attachment Table should be used.
 </property>
 <property type="string" id="access" mode="w" >
 readonly
+</property>
+</object>
+<object id='cpqDaLogDrvAvailSprAttachExtIndex' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+CPQIDA-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.232.3.2.3.4.1.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Drive Array Logical Drive Available Spare Extended Attach Index.
+
+This index uniquely identifies a controller, logical drive and available 
+spare drive connection.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='cpqDaLogDrvAvailSprAvailableSpareExtended' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+CPQIDA-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.232.3.2.3.4.1.4
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Drive Array Logical Drive Available Spare Available Spare Extended.
+
+This is the available spare drive number assigned to one or more 
+logical drives.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='cpqDaLogDrvAvailSprCntlrExtended' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+CPQIDA-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.232.3.2.3.4.1.2
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Drive Array Logical Drive Available Spare Controller Extended.
+
+This value maps the available spare drives into their respective 
+controllers.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='cpqDaLogDrvAvailSprLogDrvExtended' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+CPQIDA-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.232.3.2.3.4.1.3
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Drive Array Logical Drive Available Spare Logical Drive Extended.
+
+This logical drive number keeps track of multiple instances of
+logical drives which are on the same controller.  For each
+controller index value, the logical drive index starts at 1 and
+increments for each logical drive.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='cpqDaLogDrvAvalSprExtAttachEntry' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+CPQIDA-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+row
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.232.3.2.3.4.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Drive Array Logical Drive Available Spare Extended Attachment 
+Entry.
+</property>
+</object>
+<object id='cpqDaLogDrvAvalSprExtAttachTable' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+CPQIDA-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+table
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.232.3.2.3.4
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Drive Array Logical Drive Available Spare Extended Attachment 
+Table.
+
+A table of logical drives and their available spare drives. This
+table indicates when a logical drive has one or more spare drives 
+designated for it. This table will not be populated when available
+spares are not being used.
 </property>
 </object>
 <object id='cpqDaLogDrvBlinkTime' module='Products.ZenModel.MibNode' class='MibNode'>
@@ -28324,6 +28823,28 @@ To stop the drive LEDs from blinking, set this value to 0.
 </property>
 <property type="string" id="access" mode="w" >
 readwrite
+</property>
+</object>
+<object id='cpqDaLogDrvCntlrExtended' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+CPQIDA-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.232.3.2.3.2.1.2
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Drive Array Logical Drive Controller Extended.
+
+This maps the logical drives into their respective controllers.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
 </property>
 </object>
 <object id='cpqDaLogDrvCntlrIndex' module='Products.ZenModel.MibNode' class='MibNode'>
@@ -28457,6 +28978,17 @@ RAID 50 (8)
 
 RAID 60 (9)
   Advanced data guarding (RAID 6) with multiple parity groups.
+  
+RAID 1 ADM (10) - Advanced Data Mirroring -  
+  For each physical drive, there are two or more physical drives
+  containing identical data. If a drive fails, the data can be
+  retrieved from any of the mirrored drives. 
+
+RAID 10 ADM (11) - Advanced Data Mirroring with Striping - 
+  For each physical drive, there are two or more physical drives
+  containing identical data in addition to data being striped across
+  multiple drives. If a drive fails, the data can be retrieved from 
+  any of the mirrored drives.
 </property>
 <property type="string" id="access" mode="w" >
 readonly
@@ -28476,25 +29008,25 @@ column
 current
 </property>
 <property type="string" id="description" mode="w" >
-Logical Drive Has Array Accelerator Board.
+Logical Drive Has Cache Module Board.
 
-This indicates whether the logical drive has an Array Accelerator
+This indicates whether the logical drive has a Cache Module
 board configured and enabled.  The following values are valid:
 
 Other (1)
   Indicates that the instrument agent does not recognize the
-  Array Accelerator board.  You may need to upgrade your software.
+  Cache Module board.  You may need to upgrade your software.
 
 Unavailable (2)
-  Indicates that there is no Array Accelerator board configured
+  Indicates that there is no Cache Module board configured
   for this logical drive.
 
 Enabled (3)
-  Indicates that the Array Accelerator board is configured and
+  Indicates that the Cache Module board is configured and
   enabled for this logical drive.
 
 Disabled (4)
-  Indicates that the Array Accelerator board is configured but
+  Indicates that the Cache Module board is configured but
   not enabled for this logical drive.
 </property>
 <property type="string" id="access" mode="w" >
@@ -28520,6 +29052,31 @@ Drive Array Logical Drive Index.
 This logical drive number keeps track of multiple instances of
 logical drives which are on the same controller.  For each
 controller index value, the logical drive index starts at 1 and
+increments for each logical drive.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='cpqDaLogDrvLogDrvExtended' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+CPQIDA-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.232.3.2.3.2.1.3
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Drive Array Logical Drive Extended.
+
+This logical drive number keeps track of multiple instances of
+logical drives which are on the same controller.  For each
+controller value, the logical drive value starts at 1 and
 increments for each logical drive.
 </property>
 <property type="string" id="access" mode="w" >
@@ -29013,6 +29570,92 @@ expressed in writes per second.
 readonly
 </property>
 </object>
+<object id='cpqDaLogDrvPhyDrvAttachExtIndex' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+CPQIDA-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.232.3.2.3.2.1.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Drive Array Logical Drive Extended Attach Index.
+
+This index identifies a controller, logical drive and
+physical drive connection. This index uniquely identifies 
+a connection for each attached hard drive.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='cpqDaLogDrvPhyDrvExtAttachEntry' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+CPQIDA-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+row
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.232.3.2.3.2.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Drive Array Logical Drive Extended Physical Drive Attachment 
+Entry.
+</property>
+</object>
+<object id='cpqDaLogDrvPhyDrvExtAttachTable' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+CPQIDA-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+table
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.232.3.2.3.2
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Drive Array Logical Drive Physical Drive Extended Attachment 
+Table.
+
+A table of logical drives and their associated physical drives.
+</property>
+</object>
+<object id='cpqDaLogDrvPhyDrvExtended' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+CPQIDA-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.232.3.2.3.2.1.4
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Drive Array Physical Drive Extended.
+
+This value is used for selecting the physical drive number in
+the table entry. This number keeps track of multiple instances of
+physical drives which are on the same controller.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
 <object id='cpqDaLogDrvPhyDrvIDs' module='Products.ZenModel.MibNode' class='MibNode'>
 <property type="string" id="moduleName" mode="w" >
 CPQIDA-MIB
@@ -29024,7 +29667,7 @@ column
 1.3.6.1.4.1.232.3.2.3.1.1.10
 </property>
 <property type="string" id="status" mode="w" >
-current
+obsolete
 </property>
 <property type="string" id="description" mode="w" >
 Drive Array Logical Drive Physical Drive IDs.
@@ -29032,7 +29675,10 @@ Drive Array Logical Drive Physical Drive IDs.
 This lists the physical drive IDs which are associated with this
 logical drive. These are the same IDs which can be used as
 indices into the physical drive table. Each byte of the string
-is an index.
+is an index. For array controllers that support a larger number
+of drives, the Drive Array Logical Drive Extended Physical 
+Drive Attachment Table should be used to determine drive 
+associations.
 </property>
 <property type="string" id="access" mode="w" >
 readonly
@@ -29136,7 +29782,7 @@ column
 1.3.6.1.4.1.232.3.2.3.1.1.16
 </property>
 <property type="string" id="status" mode="w" >
-current
+obsolete
 </property>
 <property type="string" id="description" mode="w" >
 Logical Drive Spare To Replacement Drive Map.
@@ -29152,7 +29798,201 @@ replacement map.  The format is:
 These 2 octets are repeated for each replaced drive.  For n
 replaced drives, the string is 2 * n octets long.  An octet
 string of length zero indicates that there are no replaced
-drives currently in use.
+drives currently in use. For array controllers that support 
+larger number of drives, the Drive Array Logical Drive 
+Spare Replacement Extended Attachment Table should be used.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='cpqDaLogDrvSplitMirrorBackupLogDrv' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+CPQIDA-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.232.3.2.3.1.1.20
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Logical Drive Split Mirror Backup Logical Drive.
+
+Indicates if this logical drive is a backup logical drive
+belonging to a split mirror.
+
+The following values are defined:
+
+other(1)
+  The instrument agent is unable to determine if this logical drive 
+  is a backup logical drive.
+
+isNotBackupLogicalDrive(2)
+  The logical drive is not a backup logical drive.
+
+isBackupLogicalDrive(3)
+  The logical drive is a backup logical drive.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='cpqDaLogDrvSprRplcAttachExtIndex' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+CPQIDA-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.232.3.2.3.3.1.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Drive Array Logical Drive Spare Replacment Extended Attach Index.
+
+This index uniquely identifies a controller, logical drive, physical drive
+and replacement drive connection.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='cpqDaLogDrvSprRplcCntlrExtended' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+CPQIDA-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.232.3.2.3.3.1.2
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Drive Array Logical Drive Spare Replacement Controller Extended.
+
+This value maps the spare replacement drives into their respective 
+controllers.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='cpqDaLogDrvSprRplcExtAttachEntry' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+CPQIDA-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+row
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.232.3.2.3.3.1
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Drive Array Logical Drive Spare Replacement Extended Attachment 
+Entry.
+</property>
+</object>
+<object id='cpqDaLogDrvSprRplcExtAttachTable' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+CPQIDA-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+table
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.232.3.2.3.3
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Drive Array Logical Drive Spare Replacement Extended Attachment 
+Table.
+
+A table of logical drives, physical drives and their replacement 
+drives.  If spare drives are not used, this table will not be 
+populated.
+</property>
+</object>
+<object id='cpqDaLogDrvSprRplcLogDrvExtended' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+CPQIDA-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.232.3.2.3.3.1.3
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Drive Array Logical Drive Spare Replace Logical Drive Extended.
+
+This logical drive number keeps track of multiple instances of
+logical drives which are on the same controller.  For each
+controller value, the logical drive value starts at 1 and
+increments for each logical drive.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='cpqDaLogDrvSprRplcReplacedPhysDrvExtended' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+CPQIDA-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.232.3.2.3.3.1.4
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Drive Array Logical Drive Spare Replace Replaced Physical
+Drive Extended.
+
+This is the replaced drive physical drive number.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='cpqDaLogDrvSprRplcSparePhysDrvExtended' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+CPQIDA-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.232.3.2.3.3.1.5
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Drive Array Logical Drive Spare Replace Spare Physical
+Drive Extended.
+
+This is the replacement spare physical drive number.
 </property>
 <property type="string" id="access" mode="w" >
 readonly
@@ -30150,6 +30990,45 @@ or IDA-2 controllers.
 readonly
 </property>
 </object>
+<object id='cpqDaPhyDrvAuthenticationStatus' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+CPQIDA-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.232.3.2.5.1.1.77
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Drive Array Physical Drive Authentication Status.
+
+The following values are defined:
+
+Other (1)
+  Indicates that the instrument agent can not determine the
+  physical drive's authentication status.
+
+Not Supported (2)
+  Indicates that authentication for this physical drive is not
+  supported.
+
+Authentication Failed(3)
+  The physical drive could not be authenticated as a genuine HP hard drive. 
+  The array controller will no longer control the drive LEDs. Please replace 
+  the hard drive with a genuine HP hard drive.
+
+Authentication Passed(4)
+  The physical drive has passed all authentication tests and has been validated
+  to be a genuine HP hard drive.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
 <object id='cpqDaPhyDrvBadRecvReads' module='Products.ZenModel.MibNode' class='MibNode'>
 <property type="string" id="moduleName" mode="w" >
 CPQIDA-MIB
@@ -30577,6 +31456,31 @@ ultra320(7)
 readonly
 </property>
 </object>
+<object id='cpqDaPhyDrvCurrentTemperature' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+CPQIDA-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.232.3.2.5.1.1.70
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Drive Array Physical Drive Current Temperature.
+
+This is the temperature of the physical drive in degrees Celsius.  
+The field will contain -1 if the drive temperature cannot be 
+calculated or if the controller does not support reporting drive 
+temperature.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
 <object id='cpqDaPhyDrvCurrentWidth' module='Products.ZenModel.MibNode' class='MibNode'>
 <property type="string" id="moduleName" mode="w" >
 CPQIDA-MIB
@@ -30773,7 +31677,7 @@ ErrorTypeOutOfRange(14)
   The Management Station should display the following string:
   'Error type =%xh' where %x is the value of the
   cpqDaPhyDrvErrType object.  This index will only be provided
-  if the specified object exceeds the valid range.
+  if the specified object exceeds the valid range. 
 </property>
 <property type="string" id="access" mode="w" >
 readonly
@@ -31231,7 +32135,7 @@ times 2^32 plus the phyDrvWrites.
 This information may be useful for determining rates.
 For instance, if you wanted to calculate the average number
 of writes per hour of operation, divide this number by the
-reference hours.
+reference hours. 
 </property>
 <property type="string" id="access" mode="w" >
 readonly
@@ -31544,6 +32448,31 @@ the agent will return a NULL string.
 readonly
 </property>
 </object>
+<object id='cpqDaPhyDrvMaximumTemperature' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+CPQIDA-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.232.3.2.5.1.1.72
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Drive Array Physical Drive Maximum Temperature.
+
+This is the maximum temperature in degrees Celsius that the drive has 
+reached.  The field will contain -1 if the maximum drive 
+temperature cannot be calculated or if the controller does not support
+reporting maximum drive temperature.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
 <object id='cpqDaPhyDrvMediaErrs' module='Products.ZenModel.MibNode' class='MibNode'>
 <property type="string" id="moduleName" mode="w" >
 CPQIDA-MIB
@@ -31582,12 +32511,12 @@ column
 current
 </property>
 <property type="string" id="description" mode="w" >
-Physical Drive Media Type.
+Drive Array Physical Drive Media Type.
 
 The following values are defined:
 
 other(1)
-  The instrument agent is unable to determine the physical drive's
+  The instrument agent is unable to determine the physical drives 
   media type.
 
 rotatingPlatters(2)
@@ -31925,9 +32854,7 @@ current
 <property type="string" id="description" mode="w" >
 Drive Array Physical Drive Access Path Drive Index.
 
-This index maps the access path to a physical drive.  The
-value of this index is the same as the one used under the
-physical drive table.
+This index maps the access path to a physical drive.
 </property>
 <property type="string" id="access" mode="w" >
 readonly
@@ -32162,6 +33089,30 @@ If the value is not supported, it is set to 4,294,967,295.
 readonly
 </property>
 </object>
+<object id='cpqDaPhyDrvPowerOnHours' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+CPQIDA-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.232.3.2.5.1.1.74
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Drive Array Physical Drive Power On Hours.
+
+This is the total number of hours that the physical disk 
+has been powered on. This value will be 4,294,967,295 if the disk 
+power on hours cannot be determined or is not supported.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
 <object id='cpqDaPhyDrvPreFailMonitoring' module='Products.ZenModel.MibNode' class='MibNode'>
 <property type="string" id="moduleName" mode="w" >
 CPQIDA-MIB
@@ -32374,7 +33325,7 @@ current
 Reference Time in hours.
 
 This shows the total number of hours that a physical drive has
-been spinning since the drive was stamped.  The drive will have
+been in operation since the drive was stamped.  The drive will have
 either been stamped when it left the factory or when you ran
 diagnostics on your new drive.  You can use the reference
 time to calculate rates for other physical drive events.
@@ -32417,6 +33368,119 @@ rpm15K(4)
 rpmSsd(5)
   The drive is made of solid state electronics and does not 
   have a rotational speed.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='cpqDaPhyDrvSSDEstTimeRemainingHours' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+CPQIDA-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.232.3.2.5.1.1.76
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Drive Array Physical Drive Solid State Estimated Time Remaining In
+Hours.
+
+This is the estimated total number of hours that the solid state
+physical disk has remaining. This value will be 4,294,967,295 if the
+solid state disk estimated time remaining in hours cannot be 
+determined or is not supported.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='cpqDaPhyDrvSSDPercntEndrnceUsed' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+CPQIDA-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.232.3.2.5.1.1.75
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Drive Array Physical Drive Solid State Percent Endurance Used.
+
+This value specifies the hundredths of the percentage  of solid state
+disk life used. The value of this field is allowed to exceed 100%. 
+
+As an example, if the value reported is 50, this would indicate .50 
+percent endurance used.            
+
+This value will be 4,294,967,295 if the percent endurance used cannot
+ be determined or is not supported.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='cpqDaPhyDrvSSDWearStatus' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+CPQIDA-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.232.3.2.5.1.1.73
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Drive Array Physical Drive Solid State Disk Wear Status.
+
+This shows the wear status of the solid state physical drive.
+
+The following values are valid for the physical drive solid state
+wear status:
+
+
+Other (1)
+  The instrument agent is unable to determine the physical drives 
+  solid state disk wear status. This value would be used for non
+  SSD drives or SSD drives that do not support wear reporting.
+
+Ok (2)
+  Indicates the solid state disk is not in any imminent danger 
+  of wear out.
+
+Fifty Six Day Threshold Passed (3)
+  Indicates that based upon the current workload, the solid state
+  disk will reach the maximum usage limit for writes (wear out)
+  within fifty-six days. You should modify your write workload or
+  begin preparing to replace your SSD drive. 
+
+Five Percent Threshold Passed (4)
+  Indicates that the solid state disk has passed the five percent
+  threshold and is at or below five percent of reaching the maximum
+  usage limit for writes (wear out). You should begin to prepare
+  to replace your SSD drive.
+
+Two Percent Threshold Passed (5)
+  Indicates that the solid state disk has passed the two percent
+  threshold and is at or below two percent of reaching the maximum
+  usage limit for writes (wear out). You should begin to prepare
+  to replace your SSD drive.
+      
+SSD Wear Out(6)
+  Indicates that a solid state drive is approaching the maximum
+  usage limit for writes (wear out) and should be replaced as soon
+  as possible.
 </property>
 <property type="string" id="access" mode="w" >
 readonly
@@ -32667,6 +33731,60 @@ be calculated or if the controller does not support SCSI drives.
 readonly
 </property>
 </object>
+<object id='cpqDaPhyDrvSmartCarrierAppFWRev' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+CPQIDA-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.232.3.2.5.1.1.78
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Physical Drive Smart Carrier Application Firmware Revision.
+
+This displays the physical drive smart carrier application
+firmware revision number.
+
+This value will be nonzero if the physical drive supports 
+authentication and cpqDaPhyDrvAuthenticationStatus has a value of 
+authenticationPassed(4).
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='cpqDaPhyDrvSmartCarrierBootldrFWRev' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+CPQIDA-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.232.3.2.5.1.1.79
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Physical Drive Smart Carrier Bootloader Firmware Revision.
+
+This displays the physical drive smart carrier bootloader
+firmware revision number.
+
+This value will be nonzero if the physical drive supports 
+authentication and cpqDaPhyDrvAuthenticationStatus has a value of 
+authenticationPassed(4).
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
 <object id='cpqDaPhyDrvSmartStatus' module='Products.ZenModel.MibNode' class='MibNode'>
 <property type="string" id="moduleName" mode="w" >
 CPQIDA-MIB
@@ -32695,6 +33813,12 @@ ok(2)
 replaceDrive(3)
   Indicates that the drive has a S.M.A.R.T predictive failure
   error and should be replaced.
+  
+replaceDriveSSDWearOut(4)
+  Indicates that the solid state drive has a S.M.A.R.T wear
+  error and is approaching the maximum usage limit for writes
+  (wear out). The solid state drive should be replaced as soon as 
+  possible.
 </property>
 <property type="string" id="access" mode="w" >
 readonly
@@ -32840,6 +33964,16 @@ Erase Done(6)
 Erase Queued(7)
   Indicates that an erase operation is currently queued for
   the drive.
+  
+SSD Wear Out(8)
+  Indicates that a solid state drive is approaching the maximum
+  usage limit for writes (wear out) and should be replaced as soon
+  as possible.
+  
+Not Authenticated(9)
+  Indicates the physical drive could not be authenticated as a genuine 
+  HP hard drive. The array controller will no longer control the drive 
+  LEDs. Please replace the hard drive with a genuine HP hard drive.
 </property>
 <property type="string" id="access" mode="w" >
 readonly
@@ -32862,6 +33996,31 @@ current
 Drive Array Physical Drive Table.
 
 A table of physical drive entries.
+</property>
+</object>
+<object id='cpqDaPhyDrvTemperatureThreshold' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+CPQIDA-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.232.3.2.5.1.1.71
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Drive Array Physical Drive Temperature Threshold.
+
+This is the temperature in degrees Celsius at which the drive says it is
+overheated.  The field will contain -1 if the drive temperature
+threshold cannot be calculated or if the controller does not support 
+reporting drive temperature threshold.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
 </property>
 </object>
 <object id='cpqDaPhyDrvThr' module='Products.ZenModel.MibNode' class='MibNode'>
@@ -34144,7 +35303,7 @@ times 2^32 plus the phyDrvWrites.
 This information may be useful for determining rates.
 For instance, if you wanted to calculate the average number of
 writes per hour of operation, divide this number by the reference
-hours.
+hours. 
 </property>
 <property type="string" id="access" mode="w" >
 readonly
@@ -36745,7 +37904,7 @@ cpqDaPhyDrvBusNumber indicates the SCSI bus number associated
 with the drive.
 </property>
 <property type="lines" id="objects" mode="w" >
-{'sysName': {'nodetype': 'object', 'module': 'RFC1213-MIB'}, 'cpqHoTrapFlags': {'nodetype': 'object', 'module': 'CPQHOST-MIB'}, 'cpqDaPhyDrvThreshPassed': {'nodetype': 'object', 'module': 'CPQIDA-MIB'}, 'cpqDaPhyDrvBusNumber': {'nodetype': 'object', 'module': 'CPQIDA-MIB'}}
+{'sysName': {'nodetype': 'object', 'module': 'RFC1213-MIB'}, 'cpqHoTrapFlags': {'nodetype': 'object', 'module': 'CPQHOST-MIB'}, 'cpqDaPhyDrvBusNumber': {'nodetype': 'object', 'module': 'CPQIDA-MIB'}, 'cpqDaPhyDrvThreshPassed': {'nodetype': 'object', 'module': 'CPQIDA-MIB'}}
 </property>
 </object>
 <object id='cpqDa3SpareStatusChange' module='Products.ZenModel.MibNotification' class='MibNotification'>
@@ -37030,11 +38189,11 @@ notification
 current
 </property>
 <property type="string" id="description" mode="w" >
-Accelerator Board Bad Data.
+Cache Module Board Bad Data.
 
-This trap signifies that the agent has detected an array
-accelerator cache board that has lost backup power.  If
-data was being stored in the accelerator cache memory when the
+This trap signifies that the agent has detected a cache
+module board that has lost backup power.  If
+data was being stored in the cache module memory when the
 server lost power, that data has been lost. The backup power 
 source is indicated by cpqDaAccelBackupPowerSource.
 
@@ -37058,14 +38217,14 @@ notification
 current
 </property>
 <property type="string" id="description" mode="w" >
-Accelerator Board Backup Power Source Failed.
+Cache Module Board Backup Power Source Failed.
 
 This trap signifies that the agent has detected a backup
-power source failure associated with the array accelerator cache 
+power source failure associated with the cache module 
 board. The backup power source is indicated by 
 cpqDaAccelBackupPowerSource.
 
-User Action: Replace the Accelerator Cache Board.
+User Action: Replace the Backup Power Source.
 </property>
 <property type="lines" id="objects" mode="w" >
 {'sysName': {'nodetype': 'object', 'module': 'RFC1213-MIB'}, 'cpqDaCntlrHwLocation': {'nodetype': 'object', 'module': 'CPQIDA-MIB'}, 'cpqDaAccelSerialNumber': {'nodetype': 'object', 'module': 'CPQIDA-MIB'}, 'cpqDaCntlrModel': {'nodetype': 'object', 'module': 'CPQIDA-MIB'}, 'cpqDaAccelCntlrIndex': {'nodetype': 'object', 'module': 'CPQIDA-MIB'}, 'cpqDaAccelTotalMemory': {'nodetype': 'object', 'module': 'CPQIDA-MIB'}, 'cpqHoTrapFlags': {'nodetype': 'object', 'module': 'CPQHOST-MIB'}}
@@ -37085,14 +38244,16 @@ notification
 current
 </property>
 <property type="string" id="description" mode="w" >
-Accelerator Board Status Change.
+Cache Module Board Status Change.
 
 This trap signifies that the agent has detected a change in
-the status of an array accelerator cache board.  The current
+the status of a cache module board.  The current
 status is represented by the variable cpqDaAccelStatus.
 
-User Action: If the accelerator board status is permDisabled(5),
-you may need to replace the accelerator board.
+User Action: If the cache module board status is permDisabled(5),
+you may need to replace the cache module board. If the cache 
+module board status is cacheModFlashMemNotAttached(6), install
+the flash memory.
 </property>
 <property type="lines" id="objects" mode="w" >
 {'sysName': {'nodetype': 'object', 'module': 'RFC1213-MIB'}, 'cpqDaCntlrHwLocation': {'nodetype': 'object', 'module': 'CPQIDA-MIB'}, 'cpqDaAccelSerialNumber': {'nodetype': 'object', 'module': 'CPQIDA-MIB'}, 'cpqDaAccelStatus': {'nodetype': 'object', 'module': 'CPQIDA-MIB'}, 'cpqDaAccelErrCode': {'nodetype': 'object', 'module': 'CPQIDA-MIB'}, 'cpqDaCntlrModel': {'nodetype': 'object', 'module': 'CPQIDA-MIB'}, 'cpqDaAccelCntlrIndex': {'nodetype': 'object', 'module': 'CPQIDA-MIB'}, 'cpqDaAccelTotalMemory': {'nodetype': 'object', 'module': 'CPQIDA-MIB'}, 'cpqHoTrapFlags': {'nodetype': 'object', 'module': 'CPQHOST-MIB'}}
@@ -37119,9 +38280,14 @@ the status of a drive array controller.  The variable
 cpqDaCntlrBoardStatus indicates the current controller status.
 
 User Action: If the board status is generalFailure(3), you
-may need to replace the controller.  If the board status is
-cableProblem(4), check the cable connections between the
-controller and the storage system.
+may need to reboot the server or replace the controller.  
+After the system is rebooted, check the variable 
+cpqDaCntlrLastLockupCode for the controllers last lockup code. 
+If the board status is cableProblem(4), check the cable connections
+between the controller and the storage system. If the board status 
+is cacheModuleMissing(6), the array controller is operating in 
+an unsupported configuration and requires that a cache module 
+be attached to the controller.
 </property>
 <property type="lines" id="objects" mode="w" >
 {'sysName': {'nodetype': 'object', 'module': 'RFC1213-MIB'}, 'cpqDaCntlrHwLocation': {'nodetype': 'object', 'module': 'CPQIDA-MIB'}, 'cpqDaCntlrBoardStatus': {'nodetype': 'object', 'module': 'CPQIDA-MIB'}, 'cpqDaCntlrModel': {'nodetype': 'object', 'module': 'CPQIDA-MIB'}, 'cpqDaCntlrIndex': {'nodetype': 'object', 'module': 'CPQIDA-MIB'}, 'cpqDaAccelTotalMemory': {'nodetype': 'object', 'module': 'CPQIDA-MIB'}, 'cpqHoTrapFlags': {'nodetype': 'object', 'module': 'CPQHOST-MIB'}, 'cpqDaCntlrFWRev': {'nodetype': 'object', 'module': 'CPQIDA-MIB'}, 'cpqDaCntlrSerialNumber': {'nodetype': 'object', 'module': 'CPQIDA-MIB'}}
@@ -37386,11 +38552,12 @@ This trap signifies that the agent has detected a change in the
 status of a drive array physical drive.  The variable
 cpaDaPhyDrvStatus indicates the current physical drive status.
 
-User Action: If the physical drive status is failed(3) or
-predictiveFailure(4), replace the drive.
+User Action: If the physical drive status is failed(3), 
+predictiveFailure(4), ssdWearOut(8) or notAuthenticated(9)
+replace the drive.
 </property>
 <property type="lines" id="objects" mode="w" >
-{'sysName': {'nodetype': 'object', 'module': 'RFC1213-MIB'}, 'cpqDaPhyDrvBusNumber': {'nodetype': 'object', 'module': 'CPQIDA-MIB'}, 'cpqDaPhyDrvModel': {'nodetype': 'object', 'module': 'CPQIDA-MIB'}, 'cpqDaCntlrHwLocation': {'nodetype': 'object', 'module': 'CPQIDA-MIB'}, 'cpqDaPhyDrvFailureCode': {'nodetype': 'object', 'module': 'CPQIDA-MIB'}, 'cpqDaPhyDrvIndex': {'nodetype': 'object', 'module': 'CPQIDA-MIB'}, 'cpqDaPhyDrvType': {'nodetype': 'object', 'module': 'CPQIDA-MIB'}, 'cpqDaPhyDrvSerialNum': {'nodetype': 'object', 'module': 'CPQIDA-MIB'}, 'cpqDaPhyDrvLocationString': {'nodetype': 'object', 'module': 'CPQIDA-MIB'}, 'cpqDaPhyDrvFWRev': {'nodetype': 'object', 'module': 'CPQIDA-MIB'}, 'cpqDaPhyDrvStatus': {'nodetype': 'object', 'module': 'CPQIDA-MIB'}, 'cpqDaPhyDrvCntlrIndex': {'nodetype': 'object', 'module': 'CPQIDA-MIB'}, 'cpqHoTrapFlags': {'nodetype': 'object', 'module': 'CPQHOST-MIB'}}
+{'sysName': {'nodetype': 'object', 'module': 'RFC1213-MIB'}, 'cpqDaPhyDrvBusNumber': {'nodetype': 'object', 'module': 'CPQIDA-MIB'}, 'cpqDaPhyDrvModel': {'nodetype': 'object', 'module': 'CPQIDA-MIB'}, 'cpqDaCntlrHwLocation': {'nodetype': 'object', 'module': 'CPQIDA-MIB'}, 'cpqDaPhyDrvIndex': {'nodetype': 'object', 'module': 'CPQIDA-MIB'}, 'cpqDaPhyDrvFailureCode': {'nodetype': 'object', 'module': 'CPQIDA-MIB'}, 'cpqDaPhyDrvLocationString': {'nodetype': 'object', 'module': 'CPQIDA-MIB'}, 'cpqDaPhyDrvType': {'nodetype': 'object', 'module': 'CPQIDA-MIB'}, 'cpqDaPhyDrvSerialNum': {'nodetype': 'object', 'module': 'CPQIDA-MIB'}, 'cpqDaPhyDrvFWRev': {'nodetype': 'object', 'module': 'CPQIDA-MIB'}, 'cpqDaPhyDrvStatus': {'nodetype': 'object', 'module': 'CPQIDA-MIB'}, 'cpqDaPhyDrvCntlrIndex': {'nodetype': 'object', 'module': 'CPQIDA-MIB'}, 'cpqHoTrapFlags': {'nodetype': 'object', 'module': 'CPQHOST-MIB'}}
 </property>
 </object>
 <object id='cpqDa7SpareStatusChange' module='Products.ZenModel.MibNotification' class='MibNotification'>
@@ -37544,8 +38711,8 @@ This trap signifies that the agent has detected a change in
 the status of a drive array partner controller.  The variable
 cpqDaCntlrPartnerBoardStatus indicates the current partner 
 controller status. The variable cpqDaCntlrSerialNumber indicates
-the controller's serial number and cpqDaCntlrPartnerSerialNumber
-indicates the partner controller's serial number.
+the controllers serial number and cpqDaCntlrPartnerSerialNumber
+indicates the partner controllers serial number.
 
 User Action: Check the partner controller for problems. If lost 
 communication with the partner controller is the result of a user 
@@ -37606,6 +38773,33 @@ cpqDaLogDrvStatus indicates the current logical drive status.
 </property>
 <property type="lines" id="objects" mode="w" >
 {'cpqDaLogDrvStatus': {'nodetype': 'object', 'module': 'CPQIDA-MIB'}}
+</property>
+</object>
+<object id='cpqDaPhyDrvSSDWearStatusChange' module='Products.ZenModel.MibNotification' class='MibNotification'>
+<property type="string" id="moduleName" mode="w" >
+CPQIDA-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+notification
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.232.0.3049
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Solid State Disk Wear Status Change.
+
+This trap signifies that the agent has detected a change in the
+SSD wear status of a drive array physical drive.  The variable
+cpqDaPhyDrvSSDWearStatus indicates the current SSD wear status.
+
+User Action: If the SSD wear status is ssdWearOut(6), replace
+the drive.
+</property>
+<property type="lines" id="objects" mode="w" >
+{'sysName': {'nodetype': 'object', 'module': 'RFC1213-MIB'}, 'cpqDaPhyDrvModel': {'nodetype': 'object', 'module': 'CPQIDA-MIB'}, 'cpqDaCntlrHwLocation': {'nodetype': 'object', 'module': 'CPQIDA-MIB'}, 'cpqDaPhyDrvLocationString': {'nodetype': 'object', 'module': 'CPQIDA-MIB'}, 'cpqDaPhyDrvIndex': {'nodetype': 'object', 'module': 'CPQIDA-MIB'}, 'cpqDaPhyDrvType': {'nodetype': 'object', 'module': 'CPQIDA-MIB'}, 'cpqDaPhyDrvSerialNum': {'nodetype': 'object', 'module': 'CPQIDA-MIB'}, 'cpqDaPhyDrvFWRev': {'nodetype': 'object', 'module': 'CPQIDA-MIB'}, 'cpqDaPhyDrvSSDWearStatus': {'nodetype': 'object', 'module': 'CPQIDA-MIB'}, 'cpqDaPhyDrvCntlrIndex': {'nodetype': 'object', 'module': 'CPQIDA-MIB'}, 'cpqHoTrapFlags': {'nodetype': 'object', 'module': 'CPQHOST-MIB'}}
 </property>
 </object>
 <object id='cpqDaPhyDrvStatusChange' module='Products.ZenModel.MibNotification' class='MibNotification'>
@@ -38067,6 +39261,38 @@ false(3)
 readonly
 </property>
 </object>
+<object id='cpqIdeAtaDiskMediaType' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+CPQIDE-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.232.14.2.4.1.1.18
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+SATA Physical Drive Media Type.
+
+The following values are defined:
+
+other(1)
+  The instrument agent is unable to determine the physical drives 
+  media type.
+
+rotatingPlatters(2)
+  The physical drive media is composed of rotating platters.
+
+solidState(3)
+  The physical drive media is composed of solid state electronics.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
 <object id='cpqIdeAtaDiskModel' module='Products.ZenModel.MibNode' class='MibNode'>
 <property type="string" id="moduleName" mode="w" >
 CPQIDE-MIB
@@ -38185,6 +39411,143 @@ ATA Disk OS Name.
 The OS name for this ATA disk.  This field will be a null
 (size 0) string if the agent does not support OS name or if the
 ATA disk is part of a logical drive.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='cpqIdeAtaDiskPowerOnHours' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+CPQIDE-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.232.14.2.4.1.1.20
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+SATA Physical Drive Power On Hours.
+
+This is the total number of hours that the physical disk 
+has been powered on. This value will be 4,294,967,295 if the disk 
+power on hours cannot be determined or is not supported.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='cpqIdeAtaDiskSSDEstTimeRemainingHours' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+CPQIDE-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.232.14.2.4.1.1.22
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+SATA Physical Drive Solid State Estimated Time Remaining In
+Hours.
+
+This is the estimated total number of hours that the solid state
+physical disk has remaining. This value will be 4,294,967,295 if the
+solid state disk estimated time remaining in hours cannot be 
+determined or is not supported.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='cpqIdeAtaDiskSSDPercntEndrnceUsed' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+CPQIDE-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.232.14.2.4.1.1.21
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+SATA Physical Drive Solid State Percent Endurance Used.
+
+This value specifies the hundredths of the percentage  of solid state
+disk life used. The value of this field is allowed to exceed 100%. 
+
+As an example, if the value reported is 50, this would indicate .50 
+percent endurance used.            
+
+This value will be 4,294,967,295 if the percent endurance used cannot
+ be determined or is not supported.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='cpqIdeAtaDiskSSDWearStatus' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+CPQIDE-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.232.14.2.4.1.1.19
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+SATA Physical Drive Solid State Disk Wear Status.
+
+This shows the wear status of the solid state physical drive.
+
+The following values are valid for the physical drive solid state
+wear status:
+
+
+Other (1)
+  The instrument agent is unable to determine the physical drives 
+  solid state disk wear status. This value would be used for non
+  SSD drives or SSD drives that do not support wear reporting.
+
+Ok (2)
+  Indicates the solid state disk is not in any imminent danger 
+  of wear out.
+
+Fifty Six Day Threshold Passed (3)
+  Indicates that based upon the current workload, the solid state
+  disk will reach the maximum usage limit for writes (wear out)
+  within fifty-six days. You should modify your write workload or
+  begin preparing to replace your SSD drive. 
+
+Five Percent Threshold Passed (4)
+  Indicates that the solid state disk has passed the five percent
+  threshold and is at or below five percent of reaching the maximum
+  usage limit for writes (wear out). You should begin to prepare
+  to replace your SSD drive.
+
+Two Percent Threshold Passed (5)
+  Indicates that the solid state disk has passed the two percent
+  threshold and is at or below two percent of reaching the maximum
+  usage limit for writes (wear out). You should begin to prepare
+  to replace your SSD drive.
+      
+SSD Wear Out(6)
+  Indicates that a solid state drive is approaching the maximum
+  usage limit for writes (wear out) and should be replaced as soon
+  as possible.
 </property>
 <property type="string" id="access" mode="w" >
 readonly
@@ -39983,6 +41346,33 @@ readwrite
 </object>
 </tomanycont>
 <tomanycont id='notifications'>
+<object id='cpqIdeAtaDiskSSDWearStatusChange' module='Products.ZenModel.MibNotification' class='MibNotification'>
+<property type="string" id="moduleName" mode="w" >
+CPQIDE-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+notification
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.232.0.14006
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Solid State Disk Wear Status Change.
+
+This trap signifies that the agent has detected a change in the
+SSD wear status of a SATA physical drive.  The variable
+cpqIdeAtaDiskSSDWearStatus indicates the current SSD wear status.
+
+User Action: If the SSD wear status is ssdWearOut(6), replace
+the drive.
+</property>
+<property type="lines" id="objects" mode="w" >
+{'sysName': {'nodetype': 'object', 'module': 'RFC1213-MIB'}, 'cpqIdeAtaDiskSerialNumber': {'nodetype': 'object', 'module': 'CPQIDE-MIB'}, 'cpqIdeAtaDiskSSDWearStatus': {'nodetype': 'object', 'module': 'CPQIDE-MIB'}, 'cpqIdeAtaDiskFwRev': {'nodetype': 'object', 'module': 'CPQIDE-MIB'}, 'cpqIdeAtaDiskControllerIndex': {'nodetype': 'object', 'module': 'CPQIDE-MIB'}, 'cpqIdeAtaDiskChannel': {'nodetype': 'object', 'module': 'CPQIDE-MIB'}, 'cpqIdeAtaDiskNumber': {'nodetype': 'object', 'module': 'CPQIDE-MIB'}, 'cpqIdeAtaDiskIndex': {'nodetype': 'object', 'module': 'CPQIDE-MIB'}, 'cpqIdeAtaDiskModel': {'nodetype': 'object', 'module': 'CPQIDE-MIB'}, 'cpqHoTrapFlags': {'nodetype': 'object', 'module': 'CPQHOST-MIB'}}
+</property>
+</object>
 <object id='cpqIdeAtaDiskStatusChange' module='Products.ZenModel.MibNotification' class='MibNotification'>
 <property type="string" id="moduleName" mode="w" >
 CPQIDE-MIB
@@ -40003,8 +41393,8 @@ This trap signifies that the agent has detected a change in the
 status of an ATA disk drive.  The variable cpqIdeAtaDiskStatus
 indicates the current disk drive status.
 
-User Action: If the physical drive status is smartError(3) or
-failed(4), replace the drive.
+User Action: If the physical drive status is smartError(3), 
+failed(4) or ssdWearOut(5) replace the drive.
 </property>
 <property type="lines" id="objects" mode="w" >
 {'sysName': {'nodetype': 'object', 'module': 'RFC1213-MIB'}, 'cpqIdeAtaDiskSerialNumber': {'nodetype': 'object', 'module': 'CPQIDE-MIB'}, 'cpqIdeAtaDiskFwRev': {'nodetype': 'object', 'module': 'CPQIDE-MIB'}, 'cpqIdeAtaDiskControllerIndex': {'nodetype': 'object', 'module': 'CPQIDE-MIB'}, 'cpqIdeAtaDiskChannel': {'nodetype': 'object', 'module': 'CPQIDE-MIB'}, 'cpqIdeAtaDiskStatus': {'nodetype': 'object', 'module': 'CPQIDE-MIB'}, 'cpqIdeAtaDiskNumber': {'nodetype': 'object', 'module': 'CPQIDE-MIB'}, 'cpqIdeAtaDiskIndex': {'nodetype': 'object', 'module': 'CPQIDE-MIB'}, 'cpqIdeAtaDiskModel': {'nodetype': 'object', 'module': 'CPQIDE-MIB'}, 'cpqHoTrapFlags': {'nodetype': 'object', 'module': 'CPQHOST-MIB'}}
@@ -40221,7 +41611,7 @@ enabled.
 cpqNicIfLogMapAdvancedTeaming AND 8 is 8, Dynamic dual channel is
 enabled.
        cpqNicIfLogMapAdvancedTeaming AND 16 is 16, Router Path Failover is
-enabled.
+enabled.	
 </property>
 <property type="string" id="access" mode="w" >
 readonly
@@ -40266,6 +41656,35 @@ failed(4)
   groupFailed(5).  This indicates that all the adapters
   in the logical group have failed and no network traffic
   is occurring.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='cpqNicIfLogMapDHCP' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+CPQNIC-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.232.18.2.2.1.1.22
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+This value indicates whether logical adapter ip address
+was obtained via a DHCP server.
+
+The following values are valid:
+
+true(1)
+ ip address is a dhcp address.
+
+false(2)
+ ip address is a static address.
 </property>
 <property type="string" id="access" mode="w" >
 readonly
@@ -43496,7 +44915,7 @@ SCSI CD Library Firmware Revision.
 This is used to differentiate the firmware versions
 which have the same CD library vendor and model (as specified in
 cpqCdLibraryVendor and cpqCdLibraryModel). This can be retrieved
-by the SCSI inquiry command.
+by the SCSI inquiry command. 
 </property>
 <property type="string" id="access" mode="w" >
 readonly
@@ -43891,6 +45310,12 @@ sas4int(4)     HP 4 Internal Port SAS HBA with RAID
 sasSc44Ge(5)   HP SC44Ge Host Bus Adapter
 sasSc40Ge(6)   HP SC40Ge HBA
 sasSc08Ge(7)   HP SC08Ge Host Bus Adapter
+sasSc08e(8)    HP SC08e Host Bus Adapter
+sasH220i(9)    HP H220i Host Bus Adapter
+sasH221(10)    HP H221 Host Bus Adapter
+sasH210i(11)   HP H210i Host Bus Adapter
+sasH220(12)    HP H220 Host Bus Adapter
+sasH222(13)    HP H222 Host Bus Adapter
 </property>
 <property type="string" id="access" mode="w" >
 readonly
@@ -44373,6 +45798,45 @@ node
 1.3.6.1.4.1.232.5.5.2
 </property>
 </object>
+<object id='cpqSasPhyDrvAuthenticationStatus' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+CPQSCSI-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.232.5.5.2.1.1.23
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+SAS Physical Drive Authentication Status.
+
+The following values are defined:
+
+Other (1)
+  Indicates that the instrument agent can not determine the
+  physical drive's authentication status.
+
+Not Supported (2)
+  Indicates that authentication for this physical drive is not
+  supported.
+
+Authentication Failed(3)
+  The physical drive could not be authenticated as a genuine HP hard drive. The 
+  host bus adapter will no longer control the drive LEDs. Please replace the 
+  hard drive with a genuine HP hard drive.
+
+Authentication Passed(4)
+  The physical drive has passed all authentication tests and has been validated
+  to be a genuine HP hard drive.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
 <object id='cpqSasPhyDrvCondition' module='Products.ZenModel.MibNode' class='MibNode'>
 <property type="string" id="moduleName" mode="w" >
 CPQSCSI-MIB
@@ -44551,6 +46015,38 @@ will return a NULL string.
 readonly
 </property>
 </object>
+<object id='cpqSasPhyDrvMediaType' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+CPQSCSI-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.232.5.5.2.1.1.18
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+SAS Physical Drive Media Type.
+
+The following values are defined:
+
+other(1)
+  The instrument agent is unable to determine the physical drives 
+  media type.
+
+rotatingPlatters(2)
+  The physical drive media is composed of rotating platters.
+
+solidState(3)
+  The physical drive media is composed of solid state electronics.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
 <object id='cpqSasPhyDrvMemberLogDrv' module='Products.ZenModel.MibNode' class='MibNode'>
 <property type="string" id="moduleName" mode="w" >
 CPQSCSI-MIB
@@ -44667,6 +46163,30 @@ external(3)
 readonly
 </property>
 </object>
+<object id='cpqSasPhyDrvPowerOnHours' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+CPQSCSI-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.232.5.5.2.1.1.20
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+SAS Physical Drive Power On Hours.
+
+This is the total number of hours that the physical disk 
+has been powered on. This value will be 4,294,967,295 if the disk 
+power on hours cannot be determined or is not supported.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
 <object id='cpqSasPhyDrvRotationalSpeed' module='Products.ZenModel.MibNode' class='MibNode'>
 <property type="string" id="moduleName" mode="w" >
 CPQSCSI-MIB
@@ -44690,13 +46210,130 @@ other(1)
   this drive.
 
 rpm7200(2)
- The rotational speed for this drive is 7200 rpm.
+  The rotational speed for this drive is 7200 rpm.
 
 rpm10K(3)
- The rotational speed for this drive is 10000 rpm.
+  The rotational speed for this drive is 10000 rpm.
 
 rpm15K(4)
- The rotational speed for this drive is 15000 rpm.
+  The rotational speed for this drive is 15000 rpm.
+ 
+rpmSsd(5)
+  The drive is made of solid state electronics and does not 
+  have a rotational speed.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='cpqSasPhyDrvSSDEstTimeRemainingHours' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+CPQSCSI-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.232.5.5.2.1.1.22
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+SAS Physical Drive Solid State Estimated Time Remaining In
+Hours.
+
+This is the estimated total number of hours that the solid state
+physical disk has remaining. This value will be 4,294,967,295 if the
+solid state disk estimated time remaining in hours cannot be 
+determined or is not supported.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='cpqSasPhyDrvSSDPercntEndrnceUsed' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+CPQSCSI-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.232.5.5.2.1.1.21
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+SAS Physical Drive Solid State Percent Endurance Used.
+
+This value specifies the hundredths of the percentage  of solid state
+disk life used. The value of this field is allowed to exceed 100%. 
+
+As an example, if the value reported is 50, this would indicate .50 
+percent endurance used.            
+
+This value will be 4,294,967,295 if the percent endurance used cannot
+ be determined or is not supported.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='cpqSasPhyDrvSSDWearStatus' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+CPQSCSI-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.232.5.5.2.1.1.19
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+SAS Physical Drive Solid State Disk Wear Status.
+
+This shows the wear status of the solid state physical drive.
+
+The following values are valid for the physical drive solid state
+wear status:
+
+
+Other (1)
+  The instrument agent is unable to determine the physical drives 
+  solid state disk wear status. This value would be used for non
+  SSD drives or SSD drives that do not support wear reporting.
+
+Ok (2)
+  Indicates the solid state disk is not in any imminent danger 
+  of wear out.
+
+Fifty Six Day Threshold Passed (3)
+  Indicates that based upon the current workload, the solid state
+  disk will reach the maximum usage limit for writes (wear out)
+  within fifty-six days. You should modify your write workload or
+  begin preparing to replace your SSD drive. 
+
+Five Percent Threshold Passed (4)
+  Indicates that the solid state disk has passed the five percent
+  threshold and is at or below five percent of reaching the maximum
+  usage limit for writes (wear out). You should begin to prepare
+  to replace your SSD drive.
+
+Two Percent Threshold Passed (5)
+  Indicates that the solid state disk has passed the two percent
+  threshold and is at or below two percent of reaching the maximum
+  usage limit for writes (wear out). You should begin to prepare
+  to replace your SSD drive.
+      
+SSD Wear Out(6)
+  Indicates that a solid state drive is approaching the maximum
+  usage limit for writes (wear out) and should be replaced as soon
+  as possible.
 </property>
 <property type="string" id="access" mode="w" >
 readonly
@@ -44773,6 +46410,60 @@ value may differ from the advertised size of a drive.
 readonly
 </property>
 </object>
+<object id='cpqSasPhyDrvSmartCarrierAppFWRev' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+CPQSCSI-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.232.5.5.2.1.1.24
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+SAS Physical Drive Smart Carrier Application Firmware Revision.
+
+This displays the physical drive smart carrier application
+firmware revision number.
+
+This value will be nonzero if the physical drive supports 
+authentication and cpqSasPhyDrvAuthenticationStatus has a value of 
+authenticationPassed(4).
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='cpqSasPhyDrvSmartCarrierBootldrFWRev' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+CPQSCSI-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+column
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.232.5.5.2.1.1.25
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+SAS Physical Drive Smart Carrier Bootloader Firmware Revision.
+
+This displays the physical drive smart carrier bootloader
+firmware revision number.
+
+This value will be nonzero if the physical drive supports 
+authentication and cpqSasPhyDrvAuthenticationStatus has a value of 
+authenticationPassed(4).
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
 <object id='cpqSasPhyDrvStatus' module='Products.ZenModel.MibNode' class='MibNode'>
 <property type="string" id="moduleName" mode="w" >
 CPQSCSI-MIB
@@ -44827,6 +46518,25 @@ missingWasOffline(8)
 missingWasFailed(9)
   Indicates that a physical drive had a status of failed(5) and
   is no longer present.  The drive has been removed.
+  
+ssdWearOut(10)
+  Indicates that the solid state drive has a S.M.A.R.T wear
+  error and is approaching the maximum usage limit for writes
+  (wear out). The solid state drive should be replaced as soon as 
+  possible.
+  
+missingWasSSDWearOut(11)
+  Indicates that a physical drive had a status of ssdWearout(10)
+  and is no longer present. The drive has been removed.
+  
+notAuthenticated(12)
+  Indicates the physical drive could not be authenticated as a genuine
+  HP hard drive. The host bus adapter will no longer control the drive 
+  LEDs. Please replace the hard drive with a genuine HP hard drive.
+  
+missingNotAuthenticated(13)
+  Indicates that a physical drive had a status of notAuthenticated(12)
+  and is no longer present. The drive has been removed.
 </property>
 <property type="string" id="access" mode="w" >
 readonly
@@ -45769,7 +47479,7 @@ SCSI CD-ROM Firmware Revision.
 This is used to differentiate the firmware versions
 which have the same CD-ROM drive vendor and model (as specified by
 cpqScsiCdVendor and cpqScsiCdModel). This can be retrieved by the
-SCSI inquiry command.
+SCSI inquiry command. 
 </property>
 <property type="string" id="access" mode="w" >
 readonly
@@ -51542,7 +53252,7 @@ SAS tape drive.  The current tape drive status is
 indicated in the cpqSasTapeDrvStatus variable.
 </property>
 <property type="lines" id="objects" mode="w" >
-{'cpqSasTapeDrvSasAddress': {'nodetype': 'object', 'module': 'CPQSCSI-MIB'}, 'cpqSasTapeDrvFWRev': {'nodetype': 'object', 'module': 'CPQSCSI-MIB'}, 'cpqSasTapeDrvName': {'nodetype': 'object', 'module': 'CPQSCSI-MIB'}, 'cpqSasTapeDrvIndex': {'nodetype': 'object', 'module': 'CPQSCSI-MIB'}, 'cpqSasTapeDrvHbaIndex': {'nodetype': 'object', 'module': 'CPQSCSI-MIB'}, 'cpqSasTapeDrvLocationString': {'nodetype': 'object', 'module': 'CPQSCSI-MIB'}, 'cpqSasTapeDrvSerialNumber': {'nodetype': 'object', 'module': 'CPQSCSI-MIB'}, 'sysName': {'nodetype': 'object', 'module': 'RFC1213-MIB'}, 'cpqSasHbaHwLocation': {'nodetype': 'object', 'module': 'CPQSCSI-MIB'}, 'cpqSasTapeDrvStatus': {'nodetype': 'object', 'module': 'CPQSCSI-MIB'}, 'cpqHoTrapFlags': {'nodetype': 'object', 'module': 'CPQHOST-MIB'}}
+{'cpqSasTapeDrvSasAddress': {'nodetype': 'object', 'module': 'CPQSCSI-MIB'}, 'cpqSasTapeDrvName': {'nodetype': 'object', 'module': 'CPQSCSI-MIB'}, 'cpqSasTapeDrvIndex': {'nodetype': 'object', 'module': 'CPQSCSI-MIB'}, 'cpqSasTapeDrvHbaIndex': {'nodetype': 'object', 'module': 'CPQSCSI-MIB'}, 'cpqSasHbaHwLocation': {'nodetype': 'object', 'module': 'CPQSCSI-MIB'}, 'cpqSasTapeDrvLocationString': {'nodetype': 'object', 'module': 'CPQSCSI-MIB'}, 'cpqSasTapeDrvSerialNumber': {'nodetype': 'object', 'module': 'CPQSCSI-MIB'}, 'sysName': {'nodetype': 'object', 'module': 'RFC1213-MIB'}, 'cpqSasTapeDrvFWRev': {'nodetype': 'object', 'module': 'CPQSCSI-MIB'}, 'cpqSasTapeDrvStatus': {'nodetype': 'object', 'module': 'CPQSCSI-MIB'}, 'cpqHoTrapFlags': {'nodetype': 'object', 'module': 'CPQHOST-MIB'}}
 </property>
 </object>
 <object id='cpqSasLogDrvStatusChange' module='Products.ZenModel.MibNotification' class='MibNotification'>
@@ -51569,6 +53279,33 @@ indicated in the cpqSasLogDrvStatus variable.
 {'sysName': {'nodetype': 'object', 'module': 'RFC1213-MIB'}, 'cpqSasHbaHwLocation': {'nodetype': 'object', 'module': 'CPQSCSI-MIB'}, 'cpqSasLogDrvStatus': {'nodetype': 'object', 'module': 'CPQSCSI-MIB'}, 'cpqSasLogDrvIndex': {'nodetype': 'object', 'module': 'CPQSCSI-MIB'}, 'cpqSasLogDrvHbaIndex': {'nodetype': 'object', 'module': 'CPQSCSI-MIB'}, 'cpqSasLogDrvOsName': {'nodetype': 'object', 'module': 'CPQSCSI-MIB'}, 'cpqHoTrapFlags': {'nodetype': 'object', 'module': 'CPQHOST-MIB'}}
 </property>
 </object>
+<object id='cpqSasPhyDrvSSDWearStatusChange' module='Products.ZenModel.MibNotification' class='MibNotification'>
+<property type="string" id="moduleName" mode="w" >
+CPQSCSI-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+notification
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.232.0.5026
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+Solid State Disk Wear Status Change.
+
+This trap signifies that the agent has detected a change in the
+SSD wear status of a SAS or SATA physical drive.  The variable
+cpqSasPhyDrvSSDWearStatus indicates the current SSD wear status.
+
+User Action: If the SSD wear status is ssdWearOut(6), replace
+the drive.
+</property>
+<property type="lines" id="objects" mode="w" >
+{'cpqSasPhyDrvModel': {'nodetype': 'object', 'module': 'CPQSCSI-MIB'}, 'sysName': {'nodetype': 'object', 'module': 'RFC1213-MIB'}, 'cpqSasPhyDrvSerialNumber': {'nodetype': 'object', 'module': 'CPQSCSI-MIB'}, 'cpqSasHbaHwLocation': {'nodetype': 'object', 'module': 'CPQSCSI-MIB'}, 'cpqSasPhyDrvSSDWearStatus': {'nodetype': 'object', 'module': 'CPQSCSI-MIB'}, 'cpqSasPhyDrvHbaIndex': {'nodetype': 'object', 'module': 'CPQSCSI-MIB'}, 'cpqSasPhyDrvType': {'nodetype': 'object', 'module': 'CPQSCSI-MIB'}, 'cpqSasPhyDrvSasAddress': {'nodetype': 'object', 'module': 'CPQSCSI-MIB'}, 'cpqSasPhyDrvFWRev': {'nodetype': 'object', 'module': 'CPQSCSI-MIB'}, 'cpqSasPhyDrvLocationString': {'nodetype': 'object', 'module': 'CPQSCSI-MIB'}, 'cpqSasPhyDrvIndex': {'nodetype': 'object', 'module': 'CPQSCSI-MIB'}, 'cpqHoTrapFlags': {'nodetype': 'object', 'module': 'CPQHOST-MIB'}}
+</property>
+</object>
 <object id='cpqSasPhyDrvStatusChange' module='Products.ZenModel.MibNotification' class='MibNotification'>
 <property type="string" id="moduleName" mode="w" >
 CPQSCSI-MIB
@@ -51588,6 +53325,10 @@ Physical Drive Status Change.
 The Storage Agent has detected a change in the status of a
 SAS or SATA physical drive.  The current physical drive status
 is indicated in the cpqSasPhyDrvStatus variable.
+
+User Action: If the physical drive status is predictiveFailure(3),
+failed(5), ssdWearOut(10) or notAuthenticated(12)
+replace the drive.
 </property>
 <property type="lines" id="objects" mode="w" >
 {'cpqSasPhyDrvModel': {'nodetype': 'object', 'module': 'CPQSCSI-MIB'}, 'sysName': {'nodetype': 'object', 'module': 'RFC1213-MIB'}, 'cpqSasPhyDrvSerialNumber': {'nodetype': 'object', 'module': 'CPQSCSI-MIB'}, 'cpqSasHbaHwLocation': {'nodetype': 'object', 'module': 'CPQSCSI-MIB'}, 'cpqSasPhyDrvStatus': {'nodetype': 'object', 'module': 'CPQSCSI-MIB'}, 'cpqSasPhyDrvHbaIndex': {'nodetype': 'object', 'module': 'CPQSCSI-MIB'}, 'cpqSasPhyDrvType': {'nodetype': 'object', 'module': 'CPQSCSI-MIB'}, 'cpqSasPhyDrvSasAddress': {'nodetype': 'object', 'module': 'CPQSCSI-MIB'}, 'cpqSasPhyDrvFWRev': {'nodetype': 'object', 'module': 'CPQSCSI-MIB'}, 'cpqSasPhyDrvLocationString': {'nodetype': 'object', 'module': 'CPQSCSI-MIB'}, 'cpqSasPhyDrvIndex': {'nodetype': 'object', 'module': 'CPQSCSI-MIB'}, 'cpqHoTrapFlags': {'nodetype': 'object', 'module': 'CPQHOST-MIB'}}
@@ -52839,6 +54580,9 @@ pciLightsOut100series(8)
   
 pciIntegratedLightsOutRemoteInsight3(9)
   This is the Integrated Lights-Out 3 Edition.
+
+pciIntegratedLightsOutRemoteInsight4(10)
+  This is the Integrated Lights-Out 4 Edition.
 </property>
 <property type="string" id="access" mode="w" >
 readonly
@@ -53061,6 +54805,26 @@ NOTE:   bit 31 is the most significant bit, bit 0 is the least
         significant.
 
 A value of 0 means no errors have occurred.
+</property>
+<property type="string" id="access" mode="w" >
+readonly
+</property>
+</object>
+<object id='cpqSm2CntlrServerPowerState' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+CPQSM2-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+scalar
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.232.9.2.2.32
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The current power state for the server.  The power cap reach state indicates there was an attempt to power on, but the server could not reserve enough power. 
 </property>
 <property type="string" id="access" mode="w" >
 readonly
@@ -55090,6 +56854,39 @@ node
 1.3.6.1.4.1.232.9.4.3
 </property>
 </object>
+<object id='cpqSm2ProdRILO2' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+CPQSM2-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.232.9.4.7
+</property>
+</object>
+<object id='cpqSm2ProdRILO3' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+CPQSM2-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.232.9.4.9
+</property>
+</object>
+<object id='cpqSm2ProdRILO4' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+CPQSM2-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.232.9.4.10
+</property>
+</object>
 <object id='cpqSm2ProdRILOE' module='Products.ZenModel.MibNode' class='MibNode'>
 <property type="string" id="moduleName" mode="w" >
 CPQSM2-MIB
@@ -55110,6 +56907,17 @@ node
 </property>
 <property type="string" id="oid" mode="w" >
 1.3.6.1.4.1.232.9.4.6
+</property>
+</object>
+<object id='cpqSm2ProdRLO100' module='Products.ZenModel.MibNode' class='MibNode'>
+<property type="string" id="moduleName" mode="w" >
+CPQSM2-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+node
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.232.9.4.8
 </property>
 </object>
 <object id='cpqSm2ProdiLo' module='Products.ZenModel.MibNode' class='MibNode'>
@@ -55461,6 +57269,66 @@ detected a server fatal error.
 </property>
 <property type="lines" id="objects" mode="w" >
 {'sysName': {'nodetype': 'object', 'module': 'RFC1213-MIB'}}
+</property>
+</object>
+<object id='cpqSm2ServerPowerOff' module='Products.ZenModel.MibNotification' class='MibNotification'>
+<property type="string" id="moduleName" mode="w" >
+CPQSM2-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+notification
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.232.0.9018
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The server has been powered off. This will be sent once the server has been powered off, either by OS, or the power button. 
+</property>
+<property type="lines" id="objects" mode="w" >
+{'sysName': {'nodetype': 'object', 'module': 'RFC1213-MIB'}, 'cpqHoGUIDCanonical': {'nodetype': 'object', 'module': 'CPQHOST-MIB'}, 'cpqHoTrapFlags': {'nodetype': 'object', 'module': 'CPQHOST-MIB'}}
+</property>
+</object>
+<object id='cpqSm2ServerPowerOn' module='Products.ZenModel.MibNotification' class='MibNotification'>
+<property type="string" id="moduleName" mode="w" >
+CPQSM2-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+notification
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.232.0.9017
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+The server has been powered on. This will be sent once a server power on transition has occurred.
+</property>
+<property type="lines" id="objects" mode="w" >
+{'sysName': {'nodetype': 'object', 'module': 'RFC1213-MIB'}, 'cpqHoGUIDCanonical': {'nodetype': 'object', 'module': 'CPQHOST-MIB'}, 'cpqHoTrapFlags': {'nodetype': 'object', 'module': 'CPQHOST-MIB'}}
+</property>
+</object>
+<object id='cpqSm2ServerPowerOnFailure' module='Products.ZenModel.MibNotification' class='MibNotification'>
+<property type="string" id="moduleName" mode="w" >
+CPQSM2-MIB
+</property>
+<property type="string" id="nodetype" mode="w" >
+notification
+</property>
+<property type="string" id="oid" mode="w" >
+1.3.6.1.4.1.232.0.9019
+</property>
+<property type="string" id="status" mode="w" >
+current
+</property>
+<property type="string" id="description" mode="w" >
+A request was made to power on the server, however the server could not be powered on due to a failure condition.
+</property>
+<property type="lines" id="objects" mode="w" >
+{'sysName': {'nodetype': 'object', 'module': 'RFC1213-MIB'}, 'cpqHoGUIDCanonical': {'nodetype': 'object', 'module': 'CPQHOST-MIB'}, 'cpqHoTrapFlags': {'nodetype': 'object', 'module': 'CPQHOST-MIB'}}
 </property>
 </object>
 <object id='cpqSm2ServerPowerOutage' module='Products.ZenModel.MibNotification' class='MibNotification'>
