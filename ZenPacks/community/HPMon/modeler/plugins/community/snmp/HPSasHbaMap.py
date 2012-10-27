@@ -12,9 +12,9 @@ __doc__="""HPSasHbaMap
 
 HPSasHbaMap maps the cpqSasHbaTable table to cpqSasHba objects
 
-$Id: HPSasHbaMap.py,v 1.4 2012/10/27 16:54:49 egor Exp $"""
+$Id: HPSasHbaMap.py,v 1.5 2012/10/27 17:52:34 egor Exp $"""
 
-__version__ = '$Revision: 1.4 $'[11:-2]
+__version__ = '$Revision: 1.5 $'[11:-2]
 
 from Products.DataCollector.plugins.CollectorPlugin import GetTableMap
 from Products.DataCollector.plugins.DataMaps import MultiArgs
@@ -66,6 +66,9 @@ class HPSasHbaMap(HPExpansionCardMap):
                 om.snmpindex = oid.strip('.')
                 om.id = self.prepId("cpqSasHba%s" % om.snmpindex)
                 om.slot = getattr(om, 'slot', 0) or 0
+                if ' ' in str(om.slot):
+                    try: om.slot = int(om.slot.rsplit(' ', 1)[-1])
+                    except: om.slot = 0
                 model = self.models.get(int(getattr(om, 'setProductKey', 1)),
                     '%s (%s)'%(self.models[1], getattr(om, 'setProductKey', 1)))
                 om.setProductKey = MultiArgs(model, model.split()[0])
