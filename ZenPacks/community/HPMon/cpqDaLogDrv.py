@@ -1,7 +1,7 @@
 ################################################################################
 #
 # This program is part of the HPMon Zenpack for Zenoss.
-# Copyright (C) 2008, 2009, 2010, 2011 Egor Puzanov.
+# Copyright (C) 2008-2012 Egor Puzanov.
 #
 # This program can be used under the GNU General Public License version 2
 # You can find full information here: http://www.zenoss.com/oss
@@ -12,9 +12,9 @@ __doc__="""cpqDaLogDrv
 
 cpqDaLogDrv is an abstraction of a HP DA Logical Disk.
 
-$Id: cpqDaLogDrv.py,v 1.3 2011/01/04 23:17:24 egor Exp $"""
+$Id: cpqDaLogDrv.py,v 1.4 2012/11/01 17:38:00 egor Exp $"""
 
-__version__ = "$Revision: 1.3 $"[11:-2]
+__version__ = "$Revision: 1.4 $"[11:-2]
 
 import inspect
 from HPLogicalDisk import HPLogicalDisk
@@ -53,22 +53,11 @@ class cpqDaLogDrv(HPLogicalDisk):
 
     def _getSnmpIndex(self):
         frame = inspect.currentframe(2)
-        ifindex = None
+        ifindex = ''
 
         try:
-            # This works in Zenoss versions <= 3.
-            if 'templ' in frame.f_locals:
-                if frame.f_locals['templ'].id != 'cpqDaLogDrvPerf':
-                    ifindex = ''
-                else:
-                    ifindex = '.' + self.__ifindex
-
-            # This works in Zenoss versions >= 4.
-            elif 'oid' in frame.f_locals:
-                if frame.f_locals['oid'].startswith('1.3.6.1.4.1.232.3.2.8.1'):
-                    ifindex = '.' + self.__ifindex
-                else:
-                    ifindex = ''
+            if frame.f_locals.get('oid') == '1.3.6.1.4.1.232.3.2.8.1.1.5':
+                ifindex = '.' + self.__ifindex
         finally:
             del frame
 

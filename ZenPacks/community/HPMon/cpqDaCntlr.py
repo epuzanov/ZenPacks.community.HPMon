@@ -1,7 +1,7 @@
 ################################################################################
 #
 # This program is part of the HPMon Zenpack for Zenoss.
-# Copyright (C) 2008, 2009, 2010, 2011 Egor Puzanov.
+# Copyright (C) 2008-2012 Egor Puzanov.
 #
 # This program can be used under the GNU General Public License version 2
 # You can find full information here: http://www.zenoss.com/oss
@@ -12,9 +12,9 @@ __doc__="""cpqDaCntlr
 
 cpqDaCntlr is an abstraction of a HP Smart Array Controller.
 
-$Id: cpqDaCntlr.py,v 1.3 2011/01/04 23:16:33 egor Exp $"""
+$Id: cpqDaCntlr.py,v 1.4 2012/11/01 17:21:06 egor Exp $"""
 
-__version__ = "$Revision: 1.3 $"[11:-2]
+__version__ = "$Revision: 1.4 $"[11:-2]
 
 import inspect
 from HPExpansionCard import HPExpansionCard
@@ -94,22 +94,11 @@ class cpqDaCntlr(HPExpansionCard):
 
     def _getSnmpIndex(self):
         frame = inspect.currentframe(2)
-        ifindex = None
+        ifindex = ''
 
         try:
-            # This works in Zensos versions <= 3.
-            if 'templ' in frame.f_locals:
-                if frame.f_locals['templ'].id != 'cpqDaCntlrPerf':
-                    ifindex = ''
-                else:
-                    ifindex = '.' + self.__ifindex
-
-            # This works in Zenoss versions >= 4.
-            elif 'oid' in frame.f_locals:
-                if frame.f_locals['oid'].startswith('1.3.6.1.4.1.232.3.2.7.1'):
-                    ifindex = '.' + self.__ifindex
-                else:
-                    ifindex = ''
+            if frame.f_locals.get('oid') == '1.3.6.1.4.1.232.3.2.7.1.1.6':
+                ifindex = '.' + self.__ifindex
 
         finally:
             del frame
