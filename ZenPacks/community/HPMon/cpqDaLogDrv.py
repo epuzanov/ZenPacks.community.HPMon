@@ -12,9 +12,9 @@ __doc__="""cpqDaLogDrv
 
 cpqDaLogDrv is an abstraction of a HP DA Logical Disk.
 
-$Id: cpqDaLogDrv.py,v 1.4 2012/11/01 17:38:00 egor Exp $"""
+$Id: cpqDaLogDrv.py,v 1.5 2012/11/02 18:39:28 egor Exp $"""
 
-__version__ = "$Revision: 1.4 $"[11:-2]
+__version__ = "$Revision: 1.5 $"[11:-2]
 
 import inspect
 from HPLogicalDisk import HPLogicalDisk
@@ -52,15 +52,13 @@ class cpqDaLogDrv(HPLogicalDisk):
         return templates
 
     def _getSnmpIndex(self):
-        frame = inspect.currentframe(2)
+        frm = inspect.currentframe(2)
         ifindex = ''
-
         try:
-            if frame.f_locals.get('oid') == '1.3.6.1.4.1.232.3.2.8.1.1.5':
+            if frm.f_locals.get('oid','').startswith('1.3.6.1.4.1.232.3.2.8.1'):
                 ifindex = '.' + self.__ifindex
         finally:
-            del frame
-
+            del frm
         return self.snmpindex + ifindex
 
     def _setSnmpIndex(self, value):
